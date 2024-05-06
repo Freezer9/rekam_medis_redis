@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-class ProfileView extends StatelessWidget {
-  const ProfileView({super.key});
+class ProfileViewUser extends StatelessWidget {
+  const ProfileViewUser({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +51,7 @@ class ProfileView extends StatelessWidget {
                     buildTextField('Nama', 'assets/profile.png', 'Faris'),
                     buildTextField('NRP', 'assets/nrp.png', '3122600044'),
                     buildTextField('Tanggal Lahir', 'assets/icon.png', 'Jepang, 08 Februari 2004'),
+                    buildTextField('Program Studi', 'assets/prodi.png', 'D4 Teknik Mekatronika'),
                     buildTextField('Angkatan', 'assets/time.png', '2021'),
                   ],
                 ),
@@ -98,7 +99,7 @@ class ProfileView extends StatelessWidget {
         child: TextField(
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.w500),
           controller: controller,
-          readOnly: true, // Membuat TextField tidak dapat diedit
+          readOnly: true,
           decoration: InputDecoration(
             labelText: labelText,
             prefixIcon: Image.asset(iconPath, width: 24, height: 24),
@@ -113,5 +114,4 @@ class ProfileView extends StatelessWidget {
     ),
   );
 }
-
 }
