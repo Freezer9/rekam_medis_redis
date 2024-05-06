@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:rekam_medis_redis/dokter_views/dashboard_dr_view.dart';
 
 void main() {
   runApp(const MainApp());
@@ -13,7 +12,7 @@ class MainApp extends StatelessWidget {
     return const MaterialApp(
       home: Scaffold(
         body: Center(
-          child: DasboardDokterView(), // Use the DashboardDokterView here
+          child: Text('Hello World!'),
         ),
       ),
     );
