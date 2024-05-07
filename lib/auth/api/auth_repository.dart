@@ -13,18 +13,18 @@ class AuthRepository {
 
   Stream<AuthState> get authState => _client.auth.onAuthStateChange;
 
-  Future<DosenModel> signInDosen({
-    required String username,
-    required String password,
-  }) async {
-    final result = await _client
-        .from("dosen")
-        .select()
-        .match({'nip': username, 'password': password});
+  // Future<DosenModel> signInDosen({
+  //   required String username,
+  //   required String password,
+  // }) async {
+  //   final result = await _client
+  //       .from("dosen")
+  //       .select()
+  //       .match({'nip': username, 'password': password});
 
-    // TODO: Handle sign in dosen
-    // final data = DosenModel.fromJson(result);
-  }
+  //   // TODO: Handle sign in dosen
+  //   // final data = DosenModel.fromJson(result);
+  // }
 
   Future<AuthResponse> signInDokter({
     required String email,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rekam_medis_redis/core/routes.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rekam_medis_redis/presentation/pages/input_data_page.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 Future<void> main() async {
@@ -17,14 +18,16 @@ class MainApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final routes = ref.read(routeProvider);
-    return MaterialApp.router(
+    // final routes = ref.read(routeProvider);
+    // return MaterialApp.router(
+      return MaterialApp(
       title: "Supabase Flutter",
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      routerConfig: routes,
+      home: InputData(),
+      // routerConfig: routes,
     );
   }
 }
