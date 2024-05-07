@@ -157,7 +157,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         .signInPasien(
             username: _usernameCtrl.text, password: _passwordCtrl.text)
         .then((value) {
-      context.push('/home/${widget.role.index}');
+      context.push(
+        '/home/${widget.role.index}',
+      );
     }).catchError((error) {
       if (error is AuthApiException) {
         ScaffoldMessenger.of(context).showSnackBar(

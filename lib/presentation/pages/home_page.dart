@@ -31,7 +31,7 @@ class HomePage extends ConsumerWidget {
                       borderRadius: BorderRadius.circular(10),
                       color: Colors.red,
                     ),
-                    child: Text(
+                    child: const Text(
                       'Logout',
                       style: TextStyle(
                         fontSize: 14,
@@ -41,7 +41,6 @@ class HomePage extends ConsumerWidget {
                     ),
                   ),
                 ),
-                Text(data!.email!),
               ],
             ),
           );

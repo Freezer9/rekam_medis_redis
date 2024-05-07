@@ -25,9 +25,11 @@ final _routes = GoRouter(
     ),
     GoRoute(
       path: '/home/:role',
-      builder: (context, state) => HomePage(
-        role: Role.values[int.parse(state.pathParameters['role']!)],
-      ),
+      builder: (context, state) {
+        return HomePage(
+          role: Role.values[int.parse(state.pathParameters['role']!)],
+        );
+      },
     ),
   ],
 );
