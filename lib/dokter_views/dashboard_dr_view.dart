@@ -1,30 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:rekam_medis_redis/datafake/pasien.dart';
 import 'package:rekam_medis_redis/dokter_views/profile_page_dokter.dart';
+import 'package:rekam_medis_redis/widgets/patients_card.dart';
 
 class DasboardDokterView extends StatelessWidget {
-  const DasboardDokterView({super.key});
+  const DasboardDokterView({Key? key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        color: Colors.white,
-        child: Column(
-          children: [
-            Container(
-              padding: const EdgeInsets.all(30.0),
-              margin: const EdgeInsets.only(top: 70),
+      resizeToAvoidBottomInset: false,
+      body: Stack(
+        children: [
+          Positioned.fill(
+            child: Container(
+              padding: EdgeInsets.all(20.0),
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/bg.png"),
+                  fit: BoxFit.fill,
+                ),
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  SizedBox(height: 70),
                   Row(
                     children: [
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Hello User',
+                            'Hello Dokter',
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 18,
@@ -43,36 +50,34 @@ class DasboardDokterView extends StatelessWidget {
                       ),
                       Spacer(),
                       GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => ProfileViewDokter()),
-                        );
-                      },
-                      child: Image.network(
-                        'https://uxwing.com/wp-content/themes/uxwing/download/peoples-avatars/man-user-circle-icon.png',
-                        width: 80,
-                        height: 80,
-                        fit: BoxFit.cover,
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => ProfileViewDokter()),
+                          );
+                        },
+                        child: Image.asset(
+                          "assets/Image1.png",
+                          width: 80,
+                          height: 80,
+                          fit: BoxFit.cover,
+                        ),
                       ),
-                    ),
-
                     ],
                   ),
+                  SizedBox(height: 20),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    margin: const EdgeInsets.only(top: 20),
+                    padding: EdgeInsets.symmetric(horizontal: 16.0),
+                    margin: EdgeInsets.only(top: 20),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       color: const Color.fromRGBO(230, 234, 242, 1),
                     ),
                     child: TextField(
                       decoration: InputDecoration(
-                        hintText: 'Cari riwayat rekam medis terbaru',
-                        
+                        hintText: 'Ini apa ya?',
                         border: InputBorder.none,
-                        contentPadding:
-                            const EdgeInsets.symmetric(vertical: 12),
+                        contentPadding: EdgeInsets.symmetric(vertical: 12),
                         suffixIcon: Icon(
                           Icons.search,
                           color: Colors.black,
@@ -83,104 +88,46 @@ class DasboardDokterView extends StatelessWidget {
                 ],
               ),
             ),
-             SizedBox(height: 20), 
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 20),
-                child: Text(
-                  'Rekam Medis Terbaru...',
-                  style: TextStyle(
-                    color: Color.fromARGB(255,210,228,255),
-                    fontSize: 18,
-                    fontWeight: FontWeight.normal,
-                  ),
-                ),
-              ),
-            ),
-            Expanded(
-              flex: 2,
-              child: ListView.builder(
-                padding: const EdgeInsets.only(top: 20),
-                itemCount: patientsData.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return _buildPasienCard(
-                    patientsData[index]['name']!,
-                    patientsData[index]['id']!,
-                    patientsData[index]['date']!,
-                  );
-                },
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildPasienCard(String name, String id, String date) {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-      width: double.infinity,
-      height: 100,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-            color: Color.fromRGBO(0, 0, 0, 0.25),
-            blurRadius: 4,
           ),
-        ],
-        color: Colors.white,
-        border: Border.all(
-          color: Color.fromRGBO(210, 228, 255, 1),
-          width: 1,
-        ),
-      ),
-      child: Row(
-        children: <Widget>[
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: 24),
-            width: 60,
-            height: 60,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              image: DecorationImage(
-                image: NetworkImage(
-                    'https://uxwing.com/wp-content/themes/uxwing/download/peoples-avatars/man-user-circle-icon.png',
-                  ),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          Expanded(
+          Positioned(
+            top: MediaQuery.of(context).size.height * 0.3,
+            bottom: 0,
+            left: 0,
+            right: 0,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  name,
-                  style: TextStyle(
-                    color: Color.fromRGBO(25, 28, 32, 1),
-                    fontFamily: 'Plus Jakarta Sans',
-                    fontSize: 15,
+              children: [
+                SizedBox(height: 20), 
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 20),
+                    child: Text(
+                      'Rekam Medis Terbaru...',
+                      style: TextStyle(
+                        color: Color.fromARGB(255,210,228,255),
+                        fontSize: 18,
+                        fontWeight: FontWeight.normal,
+                      ),
+                    ),
                   ),
                 ),
-                SizedBox(height: 5),
-                Text(
-                  id,
-                  style: TextStyle(
-                    color: Color.fromRGBO(67, 71, 78, 1),
-                    fontFamily: 'Plus Jakarta Sans',
-                    fontSize: 12,
-                  ),
-                ),
-                Text(
-                  date,
-                  style: TextStyle(
-                    color: Color.fromRGBO(67, 71, 78, 1),
-                    fontFamily: 'Plus Jakarta Sans',
-                    fontSize: 12,
+                Expanded(
+                  flex: 2,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    margin: const EdgeInsets.only(top: 20),
+                    color: Colors.transparent, 
+                    child: ListView.builder(
+                      padding: EdgeInsets.zero,
+                      itemCount: patientsData.length,
+                      itemBuilder: (BuildContext context, int index) {
+                         return WidgetUtils.buildPasienCard(
+                          patientsData[index]['name']!,
+                          patientsData[index]['id']!,
+                          patientsData[index]['date']!,
+                        );
+                      },
+                    ),
                   ),
                 ),
               ],
