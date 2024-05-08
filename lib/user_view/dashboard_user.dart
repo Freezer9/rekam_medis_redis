@@ -6,7 +6,7 @@ import 'package:rekam_medis_redis/widgets/artikel_widget.dart';
 import 'package:rekam_medis_redis/widgets/patients_card.dart';
 
 class DashboardUser extends StatelessWidget {
-  const DashboardUser({Key? key});
+  const DashboardUser({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +77,7 @@ class DashboardUser extends StatelessWidget {
           Positioned(
             left: 0,
             right: 0,
-            top: MediaQuery.of(context).size.height * 0.25,
+            top: MediaQuery.of(context).size.height * 0.2,
             bottom: 0,
             child: Column(
               children: [
@@ -119,12 +119,12 @@ class DashboardUser extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: 20),
+                
                 Expanded(
                   flex: 2,
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
-                    margin: const EdgeInsets.only(top: 5, bottom: 5), // Adjusted margin
+                    margin: const EdgeInsets.only(top: 5, bottom: 5), 
                     color: Colors.transparent,
                     child: ListView.builder(
                       padding: EdgeInsets.zero,
@@ -143,13 +143,13 @@ class DashboardUser extends StatelessWidget {
             ),
           ),
           Positioned(
-            top: MediaQuery.of(context).size.height * 0.5,
+            top: MediaQuery.of(context).size.height * 0.44,
             bottom: 0,
             left: 0,
             right: 0,
             child: Column(
               children: [
-                SizedBox(height: 10),
+               
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Padding(
@@ -165,7 +165,7 @@ class DashboardUser extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(height: 10),
+                
                 Expanded(
                   flex: 2,
                   child: Container(

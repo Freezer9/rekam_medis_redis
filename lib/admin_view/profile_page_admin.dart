@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:rekam_medis_redis/admin_view/dashboard_page_admin.dart';
 
 class ProfileViewAdmin extends StatelessWidget {
   const ProfileViewAdmin({super.key});
@@ -16,7 +17,10 @@ class ProfileViewAdmin extends StatelessWidget {
         backgroundColor: Color(0xFFA2C9FE),
         centerTitle: true,
         leading: IconButton(
-          onPressed: () {},
+          onPressed: () {
+              MaterialPageRoute(builder: (context) => DashboardAdminPage());
+
+          },
           icon: Icon(
             Icons.arrow_back,
             color: Colors.black,
