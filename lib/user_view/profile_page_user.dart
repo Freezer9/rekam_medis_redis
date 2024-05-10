@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:rekam_medis_redis/user_view/dashboard_user.dart';
 
 class ProfileViewUser extends StatelessWidget {
   const ProfileViewUser({super.key});
@@ -16,7 +17,10 @@ class ProfileViewUser extends StatelessWidget {
         backgroundColor: Color(0xFFA2C9FE),
         centerTitle: true,
         leading: IconButton(
-          onPressed: () {},
+          onPressed: () {
+              MaterialPageRoute(builder: (context) => DashboardUser());
+            
+          },
           icon: Icon(
             Icons.arrow_back,
             color: Colors.black,
