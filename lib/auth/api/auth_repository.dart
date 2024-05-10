@@ -21,6 +21,7 @@ class AuthRepository {
     final checkTableMahasiswa =
         await _client.from('mahasiswa').select().match({'id': result.user!.id});
 
+    print(checkTableMahasiswa);
     if (checkTableMahasiswa.isNotEmpty) {
       return result;
     } else {

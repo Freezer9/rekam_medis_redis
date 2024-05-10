@@ -1,21 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:rekam_medis_redis/datafake/artikel.dart';
-import 'package:rekam_medis_redis/datafake/pasien.dart';
-import 'package:rekam_medis_redis/user_view/profile_page_user.dart';
-import 'package:rekam_medis_redis/widgets/artikel_widget.dart';
-import 'package:rekam_medis_redis/widgets/patients_card.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rekam_medis_redis/auth/auth.dart';
+import 'package:rekam_medis_redis/data/faker/artikel.dart';
+import 'package:rekam_medis_redis/data/faker/pasien.dart';
+import 'package:rekam_medis_redis/presentation/pages/profile/profile_user_page.dart';
+import 'package:rekam_medis_redis/presentation/widgets/artikel_widget.dart';
+import 'package:rekam_medis_redis/presentation/widgets/patients_card.dart';
 
-class DashboardUser extends StatelessWidget {
-  const DashboardUser({super.key});
+class DashboardUserPage extends ConsumerWidget {
+  const DashboardUserPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final data = ref.watch(authUserProvider).asData?.value;
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               image: DecorationImage(
                 image: AssetImage("assets/bg.png"),
                 fit: BoxFit.fill,
@@ -24,26 +28,26 @@ class DashboardUser extends StatelessWidget {
           ),
           Positioned.fill(
             child: Container(
-              padding: EdgeInsets.all(20.0),
-              color: Colors.transparent, 
+              padding: const EdgeInsets.all(20.0),
+              color: Colors.transparent,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: 70),
+                  const SizedBox(height: 70),
                   Row(
                     children: [
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Hello User',
-                            style: TextStyle(
+                            'Hello ${data?.email}',
+                            style: const TextStyle(
                               color: Colors.black,
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          Text(
+                          const Text(
                             'How Was ur day?',
                             style: TextStyle(
                               color: Colors.black,
@@ -53,12 +57,13 @@ class DashboardUser extends StatelessWidget {
                           ),
                         ],
                       ),
-                      Spacer(),
+                      const Spacer(),
                       GestureDetector(
                         onTap: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => ProfileViewUser()),
+                            MaterialPageRoute(
+                                builder: (context) => const ProfileUserPage()),
                           );
                         },
                         child: Image.asset(
@@ -81,12 +86,12 @@ class DashboardUser extends StatelessWidget {
             bottom: 0,
             child: Column(
               children: [
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 20),
+                    const Padding(
+                      padding: EdgeInsets.only(left: 20),
                       child: Text(
                         'Riwayat Terakhir',
                         style: TextStyle(
@@ -106,7 +111,7 @@ class DashboardUser extends StatelessWidget {
                           //   MaterialPageRoute(builder: (context) => ()),
                           // );
                         },
-                        child: Text(
+                        child: const Text(
                           'More...',
                           style: TextStyle(
                             color: Colors.black,
@@ -119,12 +124,11 @@ class DashboardUser extends StatelessWidget {
                     ),
                   ],
                 ),
-                
                 Expanded(
                   flex: 2,
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
-                    margin: const EdgeInsets.only(top: 5, bottom: 5), 
+                    margin: const EdgeInsets.only(top: 5, bottom: 5),
                     color: Colors.transparent,
                     child: ListView.builder(
                       padding: EdgeInsets.zero,
@@ -149,11 +153,10 @@ class DashboardUser extends StatelessWidget {
             right: 0,
             child: Column(
               children: [
-               
-                Align(
+                const Align(
                   alignment: Alignment.centerLeft,
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 20),
+                    padding: EdgeInsets.only(left: 20),
                     child: Text(
                       'Artikel',
                       style: TextStyle(
@@ -165,12 +168,11 @@ class DashboardUser extends StatelessWidget {
                     ),
                   ),
                 ),
-                
                 Expanded(
                   flex: 2,
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
-                    margin: const EdgeInsets.only(top: 5, bottom: 5), 
+                    margin: const EdgeInsets.only(top: 5, bottom: 5),
                     color: Colors.transparent,
                     child: ListView.builder(
                       padding: EdgeInsets.zero,
@@ -185,6 +187,13 @@ class DashboardUser extends StatelessWidget {
                       },
                     ),
                   ),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    ref.read(authRepositoryProvider).signOut();
+                    Navigator.pop(context);
+                  },
+                  child: const Text('Sign Out'),
                 ),
               ],
             ),

@@ -1,19 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:rekam_medis_redis/admin_view/profile_page_admin.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rekam_medis_redis/auth/auth.dart';
+import 'package:rekam_medis_redis/presentation/pages/admin/data_user_page.dart';
 
-class DashboardAdminPage extends StatelessWidget {
+class DashboardAdminPage extends ConsumerWidget {
   const DashboardAdminPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final data = ref.watch(authUserProvider).asData?.value;
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
           Positioned.fill(
             child: Container(
-              padding: EdgeInsets.all(20.0),
-              decoration: BoxDecoration(
+              padding: const EdgeInsets.all(20.0),
+              decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage("assets/bg.png"),
                   fit: BoxFit.fill,
@@ -22,21 +26,21 @@ class DashboardAdminPage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: 70),
+                  const SizedBox(height: 70),
                   Row(
                     children: [
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Hello Admin',
-                            style: TextStyle(
+                            'Hello ${data?.email}',
+                            style: const TextStyle(
                               color: Colors.black,
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          Text(
+                          const Text(
                             'How Was ur day?',
                             style: TextStyle(
                               color: Colors.black,
@@ -46,12 +50,13 @@ class DashboardAdminPage extends StatelessWidget {
                           ),
                         ],
                       ),
-                      Spacer(),
+                      const Spacer(),
                       GestureDetector(
                         onTap: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => ProfileViewAdmin()),
+                            MaterialPageRoute(
+                                builder: (context) => const ProfileAdminPage()),
                           );
                         },
                         child: Image.network(
@@ -63,14 +68,14 @@ class DashboardAdminPage extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: 16.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       color: const Color.fromRGBO(230, 234, 242, 1),
                     ),
-                    child: TextField(
+                    child: const TextField(
                       decoration: InputDecoration(
                         hintText: 'Ini apa ya?',
                         border: InputBorder.none,
@@ -86,17 +91,16 @@ class DashboardAdminPage extends StatelessWidget {
               ),
             ),
           ),
- 
           Positioned(
-            top: 240, 
+            top: 240,
             left: 0,
             right: 0,
             child: Container(
-              padding: EdgeInsets.all(20.0),
+              padding: const EdgeInsets.all(20.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     'Input data...',
                     style: TextStyle(
                       color: Color.fromARGB(255, 210, 228, 255),
@@ -104,64 +108,61 @@ class DashboardAdminPage extends StatelessWidget {
                       fontWeight: FontWeight.normal,
                     ),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Container(
                     height: 150,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         GestureDetector(
-                          onTap: () {
-                            
-                          },
+                          onTap: () {},
                           child: Card(
-                            color: Color(0xFFD2E4FF), 
+                            color: const Color(0xFFD2E4FF),
                             child: Container(
-                              width: MediaQuery.of(context).size.width * 0.42, 
-                              padding: EdgeInsets.all(10),
+                              width: MediaQuery.of(context).size.width * 0.42,
+                              padding: const EdgeInsets.all(10),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Image.asset(
-                                    'assets/circle_acc.png', 
-                                    width: 30, 
+                                    'assets/circle_acc.png',
+                                    width: 30,
                                     height: 30,
                                   ),
-                                  SizedBox(height: 10),
-                                  Text(
+                                  const SizedBox(height: 10),
+                                  const Text(
                                     'Input data Pasien',
                                     style: TextStyle(
                                       color: Color(0xFF38608F),
-                                    ),),
-
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),
                           ),
                         ),
                         GestureDetector(
-                          onTap: () {
-                            
-                          },
+                          onTap: () {},
                           child: Card(
-                            color: Color(0xFFD2E4FF), 
+                            color: const Color(0xFFD2E4FF),
                             child: Container(
-                              width: MediaQuery.of(context).size.width * 0.42, 
-                              padding: EdgeInsets.all(10),
+                              width: MediaQuery.of(context).size.width * 0.42,
+                              padding: const EdgeInsets.all(10),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Image.asset(
-                                    'assets/circle_acc.png', 
-                                    width: 30, 
+                                    'assets/circle_acc.png',
+                                    width: 30,
                                     height: 30,
                                   ),
-                                  SizedBox(height: 10),
-                                   Text(
+                                  const SizedBox(height: 10),
+                                  const Text(
                                     'Input data Dokter',
                                     style: TextStyle(
                                       color: Color(0xFF38608F),
-                                    ),),
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),
@@ -169,6 +170,13 @@ class DashboardAdminPage extends StatelessWidget {
                         ),
                       ],
                     ),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      ref.read(authRepositoryProvider).signOut();
+                      Navigator.pop(context);
+                    },
+                    child: const Text('Sign Out'),
                   ),
                 ],
               ),

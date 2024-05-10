@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rekam_medis_redis/auth/auth.dart';
-import 'package:rekam_medis_redis/data/models/user_model.dart';
+import 'package:rekam_medis_redis/data/enums/role.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class LoginPage extends ConsumerStatefulWidget {

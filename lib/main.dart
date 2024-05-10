@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:rekam_medis_redis/admin_view/dashboard_page_admin.dart';
-import 'package:rekam_medis_redis/dokter_views/dashboard_dr_view.dart';
-import 'package:rekam_medis_redis/user_view/dashboard_user.dart';
-=======
 import 'package:rekam_medis_redis/core/routes.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
