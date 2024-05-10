@@ -1,5 +1,9 @@
 import 'package:go_router/go_router.dart';
 import 'package:rekam_medis_redis/auth/view/login.dart';
+import 'package:rekam_medis_redis/presentation/pages/dashboard_page.dart';
+import 'package:rekam_medis_redis/presentation/pages/home_page.dart';
+import 'package:rekam_medis_redis/data/models/user_model.dart';
+import 'package:rekam_medis_redis/presentation/pages/input_data_page.dart';
 import 'package:rekam_medis_redis/data/enums/role.dart';
 import 'package:rekam_medis_redis/presentation/pages/home_page.dart';
 import 'package:rekam_medis_redis/presentation/pages/select_page.dart';
@@ -31,5 +35,11 @@ final _routes = GoRouter(
         );
       },
     ),
+    GoRoute(
+      path: '/inputdata',
+      builder: (context, state) => InputData(
+        
+      )
+    )
   ],
 );
