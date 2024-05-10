@@ -1,5 +1,3 @@
-import 'package:rekam_medis_redis/data/models/dosen_model.dart';
-import 'package:rekam_medis_redis/data/models/mahasiswa_model.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -13,18 +11,30 @@ class AuthRepository {
 
   Stream<AuthState> get authState => _client.auth.onAuthStateChange;
 
-  // Future<DosenModel> signInDosen({
-  //   required String username,
-  //   required String password,
-  // }) async {
-  //   final result = await _client
-  //       .from("dosen")
-  //       .select()
-  //       .match({'nip': username, 'password': password});
+  Future<AuthResponse> signInPasien({
+    required String username,
+    required String password,
+  }) async {
+    final result = await _client.auth
+        .signInWithPassword(email: username, password: password);
 
-  //   // TODO: Handle sign in dosen
-  //   // final data = DosenModel.fromJson(result);
-  // }
+    final checkTableMahasiswa =
+        await _client.from('mahasiswa').select().match({'id': result.user!.id});
+
+    print(checkTableMahasiswa);
+    if (checkTableMahasiswa.isNotEmpty) {
+      return result;
+    } else {
+      final checkTableDosen =
+          await _client.from('dosen').select().match({'id': result.user!.id});
+
+      if (checkTableDosen.isNotEmpty) {
+        return result;
+      } else {
+        throw AuthApiException('User not found');
+      }
+    }
+  }
 
   Future<AuthResponse> signInDokter({
     required String email,
@@ -33,15 +43,13 @@ class AuthRepository {
     final result =
         await _client.auth.signInWithPassword(email: email, password: password);
 
-    final checkTable = await _client
-        .from('dokter')
-        .select()
-        .match({'user_id': result.user!.id});
+    final checkTable =
+        await _client.from('dokter').select().match({'id': result.user!.id});
 
     if (checkTable.isNotEmpty) {
       return result;
     } else {
-      throw Exception('User not found');
+      throw AuthApiException('User not found');
     }
   }
 

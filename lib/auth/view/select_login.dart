@@ -1,7 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:rekam_medis_redis/data/models/user_model.dart';
+import 'package:rekam_medis_redis/data/enums/role.dart';
 
 class SelectLogin extends StatefulWidget {
   const SelectLogin({super.key});
