@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:rekam_medis_redis/auth/auth.dart';
 import 'package:rekam_medis_redis/presentation/pages/admin/data_user_page.dart';
 
@@ -8,7 +9,7 @@ class DashboardAdminPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final data = ref.watch(authUserProvider).asData?.value;
+    // final data = ref.watch(authUserProvider).asData?.value;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -33,7 +34,7 @@ class DashboardAdminPage extends ConsumerWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Hello ${data?.email}',
+                            'Hello Sepuh 🙏',
                             style: const TextStyle(
                               color: Colors.black,
                               fontSize: 18,
@@ -115,7 +116,9 @@ class DashboardAdminPage extends ConsumerWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            context.push('/inputdata');
+                          },
                           child: Card(
                             color: const Color(0xFFD2E4FF),
                             child: Container(
@@ -142,7 +145,9 @@ class DashboardAdminPage extends ConsumerWidget {
                           ),
                         ),
                         GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            context.push('/inputdata');
+                          },
                           child: Card(
                             color: const Color(0xFFD2E4FF),
                             child: Container(

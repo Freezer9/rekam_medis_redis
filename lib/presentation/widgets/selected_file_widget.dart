@@ -7,20 +7,20 @@ class SelectedFile extends StatelessWidget {
   final Function() onDelete;
 
   const SelectedFile({
-    Key? key,
+    super.key,
     required this.selectedFile,
     required this.onDelete,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.fromLTRB(20, 10, 20, 10),
-      padding: EdgeInsets.all(17.0),
+      margin: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+      padding: const EdgeInsets.all(17.0),
       width: 320,
       height: 110,
       decoration: BoxDecoration(
-        color: Color(0xFF5195D6),
+        color: const Color(0xFF5195D6),
         borderRadius: BorderRadius.circular(10),
         boxShadow: [
           BoxShadow(
@@ -38,19 +38,19 @@ class SelectedFile extends StatelessWidget {
             height: 50,
             width: 50,
           ),
-          SizedBox(
+          const SizedBox(
             width: 10.0,
           ),
           Expanded(
             child: Text(
               path.basename(selectedFile.path),
-              style:
-                  TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
+              style: const TextStyle(
+                  color: Colors.white, fontWeight: FontWeight.w500),
               overflow: TextOverflow.ellipsis,
             ),
           ),
           IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.close,
               color: Color(0xFFBA1A1A),
             ),

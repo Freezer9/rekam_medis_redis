@@ -21,6 +21,9 @@ dependencies:
   dotted_border: ^2.1.0
   http: ^1.2.1
   path: ^1.9.0
+  csv: ^6.0.0
+  open_file: ^3.3.2
+  gpassword: ^0.0.1
 
 dev_dependencies:
   flutter_test:
