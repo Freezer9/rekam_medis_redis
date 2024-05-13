@@ -24,6 +24,7 @@ dependencies:
   csv: ^6.0.0
   open_file: ^3.3.2
   gpassword: ^0.0.1
+  autocomplete_textfield: ^2.0.1
 
 dev_dependencies:
   flutter_test:
@@ -34,5 +35,3 @@ flutter:
   uses-material-design: true
   assets:
     - assets/
-    - assets/images/
-    - assets/icons/
