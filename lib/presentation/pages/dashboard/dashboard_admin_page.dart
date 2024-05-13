@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rekam_medis_redis/auth/auth.dart';
 import 'package:rekam_medis_redis/presentation/pages/admin/data_user_page.dart';
+import 'package:rekam_medis_redis/presentation/pages/input_data_page.dart';
 
 class DashboardAdminPage extends ConsumerWidget {
   const DashboardAdminPage({super.key});
@@ -115,7 +116,14 @@ class DashboardAdminPage extends ConsumerWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const InputData()),
+                            );
+                          },
                           child: Card(
                             color: const Color(0xFFD2E4FF),
                             child: Container(

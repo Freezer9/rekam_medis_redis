@@ -18,16 +18,16 @@ class MainApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // final routes = ref.read(routeProvider);
-    // return MaterialApp.router(
-      return MaterialApp(
+    final routes = ref.read(routeProvider);
+    return MaterialApp.router(
+    //   return MaterialApp(
       title: "Supabase Flutter",
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: InputData(),
-      // routerConfig: routes,
+      // home: InputData(),
+      routerConfig: routes,
     );
   }
 }

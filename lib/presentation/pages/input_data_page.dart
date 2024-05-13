@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:path/path.dart' as path;
+import 'package:rekam_medis_redis/presentation/pages/dashboard/dashboard_admin_page.dart';
 import 'package:rekam_medis_redis/presentation/widget/selected_file_widget.dart';
 import 'package:rekam_medis_redis/presentation/widget/unselected_file_widget.dart';
 
@@ -104,7 +105,13 @@ class _InputDataState extends State<InputData> {
             Icons.arrow_back,
             color: Colors.black,
           ),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const DashboardAdminPage()),
+            );
+          },
         ),
         bottom: PreferredSize(
           child: Container(

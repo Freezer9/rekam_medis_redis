@@ -139,7 +139,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         .read(authRepositoryProvider)
         .signInAdmin(email: _usernameCtrl.text, password: _passwordCtrl.text)
         .then((value) {
-      context.push('/inputdata');
+      context.push(
+        '/home/${widget.role.index}',
+      );
     }).catchError((error) {
       if (error is AuthApiException) {
         ScaffoldMessenger.of(context).showSnackBar(
