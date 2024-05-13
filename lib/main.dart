@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:rekam_medis_redis/admin_view/dashboard_page_admin.dart';
 import 'package:rekam_medis_redis/dokter_views/dashboard_dr_view.dart';
+import 'package:rekam_medis_redis/dokter_views/input_obat.dart';
+import 'package:rekam_medis_redis/dokter_views/riwayat_redis.dart';
 import 'package:rekam_medis_redis/user_view/dashboard_user.dart';
 
 void main() {
@@ -14,7 +16,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     
     return const MaterialApp(
-      home: DashboardUser(),
+      home: RiwayatReDis(),
       ); 
   }
 }

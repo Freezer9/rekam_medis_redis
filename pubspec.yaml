@@ -9,7 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
- 
+  autocomplete_textfield: ^2.0.1
 
 dev_dependencies:
   flutter_test:
