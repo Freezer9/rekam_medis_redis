@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rekam_medis_redis/auth/auth.dart';
 import 'package:rekam_medis_redis/data/faker/pasien.dart';
 import 'package:rekam_medis_redis/presentation/pages/profile/profile_dokter_page.dart';
-import 'package:rekam_medis_redis/presentation/widgets/patients_card.dart';
+import 'package:rekam_medis_redis/presentation/widgets/patients_widget.dart';
 
 class DashboardDokterPage extends ConsumerWidget {
   const DashboardDokterPage({super.key});
@@ -35,7 +35,7 @@ class DashboardDokterPage extends ConsumerWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Hello ${data?.email}',
+                            'Hello ${data?.userMetadata?['nama']}',
                             style: const TextStyle(
                               color: Colors.black,
                               fontSize: 18,

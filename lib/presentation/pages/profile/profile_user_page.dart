@@ -1,12 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rekam_medis_redis/auth/auth.dart';
 
-class ProfileUserPage extends StatelessWidget {
+class ProfileUserPage extends ConsumerWidget {
   const ProfileUserPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final data = ref.watch(authUserProvider).asData?.value;
+
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
@@ -44,13 +48,22 @@ class ProfileUserPage extends StatelessWidget {
                 padding: EdgeInsets.all(25.0),
                 child: Column(
                   children: [
-                    buildTextField('Nama', 'assets/profile.png', 'Faris'),
-                    buildTextField('NRP', 'assets/nrp.png', '3122600044'),
-                    buildTextField('Tanggal Lahir', 'assets/icon.png',
-                        'Jepang, 08 Februari 2004'),
-                    buildTextField('Program Studi', 'assets/prodi.png',
-                        'D4 Teknik Mekatronika'),
-                    buildTextField('Angkatan', 'assets/time.png', '2021'),
+                    buildTextField('Nama', 'assets/profile.png',
+                        data?.userMetadata?['nama']),
+                    buildTextField(
+                        'NRP',
+                        'assets/nrp.png',
+                        data?.userMetadata?['nrp'] ??
+                            data?.userMetadata?['nip']),
+                    buildTextField('Tempat, Tanggal Lahir', 'assets/icon.png',
+                        data?.userMetadata?['ttl']),
+                    buildTextField(
+                        'Program Studi',
+                        'assets/prodi.png',
+                        data?.userMetadata?['prodi'] ??
+                            data?.userMetadata?['departemen']),
+                    buildTextField('Angkatan', 'assets/time.png',
+                        data?.userMetadata!['tahun'].toString() ?? ''),
                   ],
                 ),
               ),

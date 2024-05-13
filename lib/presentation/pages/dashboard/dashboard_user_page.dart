@@ -5,7 +5,7 @@ import 'package:rekam_medis_redis/data/faker/artikel.dart';
 import 'package:rekam_medis_redis/data/faker/pasien.dart';
 import 'package:rekam_medis_redis/presentation/pages/profile/profile_user_page.dart';
 import 'package:rekam_medis_redis/presentation/widgets/artikel_widget.dart';
-import 'package:rekam_medis_redis/presentation/widgets/patients_card.dart';
+import 'package:rekam_medis_redis/presentation/widgets/patients_widget.dart';
 
 class DashboardUserPage extends ConsumerWidget {
   const DashboardUserPage({super.key});
@@ -40,7 +40,7 @@ class DashboardUserPage extends ConsumerWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Hello ${data?.email}',
+                            'Hello ${data?.userMetadata?['nama']}',
                             style: const TextStyle(
                               color: Colors.black,
                               fontSize: 18,

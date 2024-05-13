@@ -21,14 +21,15 @@ class AuthRepository {
     final checkTableMahasiswa =
         await _client.from('mahasiswa').select().match({'id': result.user!.id});
 
-    print(checkTableMahasiswa);
     if (checkTableMahasiswa.isNotEmpty) {
+      result.user?.userMetadata?.addAll(checkTableMahasiswa.first);
       return result;
     } else {
       final checkTableDosen =
           await _client.from('dosen').select().match({'id': result.user!.id});
 
       if (checkTableDosen.isNotEmpty) {
+        result.user?.userMetadata?.addAll(checkTableDosen.first);
         return result;
       } else {
         throw AuthApiException('User not found');
@@ -43,10 +44,11 @@ class AuthRepository {
     final result =
         await _client.auth.signInWithPassword(email: email, password: password);
 
-    final checkTable =
+    final checkTableDokter =
         await _client.from('dokter').select().match({'id': result.user!.id});
 
-    if (checkTable.isNotEmpty) {
+    if (checkTableDokter.isNotEmpty) {
+      result.user?.userMetadata?.addAll(checkTableDokter.first);
       return result;
     } else {
       throw AuthApiException('User not found');
