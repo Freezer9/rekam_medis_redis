@@ -1,9 +1,12 @@
 import 'package:go_router/go_router.dart';
 import 'package:rekam_medis_redis/auth/view/login.dart';
 import 'package:rekam_medis_redis/auth/view/select_login.dart';
+import 'package:rekam_medis_redis/presentation/pages/profile/profile_dokter_page.dart';
 import 'package:rekam_medis_redis/presentation/pages/user/admin/input_data_page.dart';
 import 'package:rekam_medis_redis/presentation/pages/home_page.dart';
 import 'package:rekam_medis_redis/data/enums/role.dart';
+import 'package:rekam_medis_redis/presentation/pages/user/dokter/detail_riwayat_page.dart';
+import 'package:rekam_medis_redis/presentation/pages/user/dokter/riwayat_pasien_page.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'routes.g.dart';
@@ -33,6 +36,24 @@ final _routes = GoRouter(
     GoRoute(
       path: '/inputdata',
       builder: (context, state) => const InputData(),
+    ),
+    GoRoute(
+      path: '/detail-pasien',
+      builder: (context, state) {
+        final data = state.extra as Map<String, String>;
+        return DetailRiwayatPage(data: data);
+      },
+    ),
+    GoRoute(
+      path: '/profile-dokter',
+      builder: (context, state) => const ProfileDokterPage(),
+    ),
+    GoRoute(
+      path: '/riwayat-pasien',
+      builder: (context, state) {
+        final data = state.extra as Map<String, String>;
+        return RiwayatPasienPage(data: data);
+      },
     )
   ],
 );

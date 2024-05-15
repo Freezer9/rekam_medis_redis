@@ -134,11 +134,7 @@ class DashboardUserPage extends ConsumerWidget {
                       padding: EdgeInsets.zero,
                       itemCount: 1,
                       itemBuilder: (BuildContext context, int index) {
-                        return WidgetUtils.buildPasienCard(
-                          patientsData[index]['name']!,
-                          patientsData[index]['id']!,
-                          patientsData[index]['date']!,
-                        );
+                        return PasienCard(data: patientsData[index]);
                       },
                     ),
                   ),

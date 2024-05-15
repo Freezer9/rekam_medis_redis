@@ -36,7 +36,7 @@ class ProfileDokterPage extends StatelessWidget {
               Container(
                 width: double.infinity,
                 child: Image.asset(
-                  "assets/background.png",
+                  "assets/images/background.png",
                   fit: BoxFit.fill,
                 ),
               ),
@@ -57,13 +57,13 @@ class ProfileDokterPage extends StatelessWidget {
                 padding: const EdgeInsets.all(25.0),
                 child: Column(
                   children: [
-                    buildTextField('Nama', 'assets/profile.png', 'Faris'),
-                    buildTextField('NRP', 'assets/nrp.png', '3122600044'),
-                    buildTextField('Tanggal Lahir', 'assets/icon.png',
+                    buildTextField('Nama', 'assets/icons/profile.png', 'Faris'),
+                    buildTextField('NRP', 'assets/icons/nrp.png', '3122600044'),
+                    buildTextField('Tanggal Lahir', 'assets/icons/tanggal.png',
                         'Jepang, 08 Februari 2004'),
-                    buildTextField('Program Studi', 'assets/prodi.png',
+                    buildTextField('Program Studi', 'assets/icons/prodi.png',
                         'D4 Teknik Mekatronika'),
-                    buildTextField('Angkatan', 'assets/time.png', '2021'),
+                    buildTextField('Angkatan', 'assets/icons/time.png', '2021'),
                   ],
                 ),
               ),

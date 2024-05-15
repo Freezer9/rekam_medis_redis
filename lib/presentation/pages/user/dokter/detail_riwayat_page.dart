@@ -2,23 +2,30 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-class DetailRiwayat extends StatefulWidget {
+class DetailRiwayatPage extends StatefulWidget {
+  final Map<String, String> data;
+
+  const DetailRiwayatPage({
+    super.key,
+    required this.data,
+  });
+
   @override
-  _DetailRiwayatState createState() => _DetailRiwayatState();
+  _DetailRiwayatPageState createState() => _DetailRiwayatPageState();
 }
 
-class _DetailRiwayatState extends State<DetailRiwayat> {
+class _DetailRiwayatPageState extends State<DetailRiwayatPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Catatan Dokter',
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.of(context).pop();
           },
@@ -33,12 +40,13 @@ class _DetailRiwayatState extends State<DetailRiwayat> {
               Row(
                 children: [
                   Image.asset(
-                    'assets/keluhan.png', // Sesuaikan dengan path gambar ikon keluhan
+                    'assets/icons/keluhan.png', // Sesuaikan dengan path gambar ikon keluhan
                     width: 24, // Sesuaikan dengan lebar ikon
                     height: 24, // Sesuaikan dengan tinggi ikon
                   ),
-                  SizedBox(width: 8), // Spasi antara ikon dan teks "Keluhan"
-                  Text(
+                  const SizedBox(
+                      width: 8), // Spasi antara ikon dan teks "Keluhan"
+                  const Text(
                     'Keluhan',
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
@@ -50,40 +58,32 @@ class _DetailRiwayatState extends State<DetailRiwayat> {
                     onPressed: () {
                       // Aksi ketika tombol "Radang" diklik
                     },
-                    child: Text('Radang'),
+                    child: const Text('Radang'),
                   ),
-                  SizedBox(
-                      width:
-                          8), // Spasi antara tombol "Radang" dan "Batuk Berdahak"
+                  const SizedBox(width: 8),
                   ElevatedButton(
-                    onPressed: () {
-                      // Aksi ketika tombol "Batuk Berdahak" diklik
-                    },
-                    child: Text('Batuk Berdahak'),
+                    onPressed: () {},
+                    child: const Text('Batuk Berdahak'),
                   ),
-                  SizedBox(
-                      width:
-                          8), // Spasi antara tombol "Batuk Berdahak" dan "Muntah"
+                  const SizedBox(width: 8),
                   ElevatedButton(
-                    onPressed: () {
-                      // Aksi ketika tombol "Muntah" diklik
-                    },
-                    child: Text('Muntah'),
+                    onPressed: () {},
+                    child: const Text('Muntah'),
                   ),
                 ],
               ),
-              SizedBox(height: 8),
-              Divider(),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
+              const Divider(),
+              const SizedBox(height: 8),
               Row(
                 children: [
                   Image.asset(
-                    'assets/riwayat.png', // Sesuaikan dengan path gambar ikon keluhan
-                    width: 24, // Sesuaikan dengan lebar ikon
-                    height: 24, // Sesuaikan dengan tinggi ikon
+                    'assets/icons/riwayat.png',
+                    width: 24,
+                    height: 24,
                   ),
-                  SizedBox(width: 8), // Spasi antara ikon dan teks "Keluhan"
-                  Text(
+                  const SizedBox(width: 8),
+                  const Text(
                     'Riwayat Penyakit',
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
@@ -95,45 +95,48 @@ class _DetailRiwayatState extends State<DetailRiwayat> {
                     onPressed: () {
                       // Aksi ketika tombol "Corona" diklik
                     },
-                    child: Text('Corona'),
+                    child: const Text('Corona'),
                   ),
-                  SizedBox(width: 8), // Spasi antara tombol "Corona" dan "Asma"
+                  const SizedBox(
+                      width: 8), // Spasi antara tombol "Corona" dan "Asma"
                   ElevatedButton(
                     onPressed: () {
                       // Aksi ketika tombol "Asma" diklik
                     },
-                    child: Text('Asma'),
+                    child: const Text('Asma'),
                   ),
                 ],
               ),
-              Divider(),
-              SizedBox(height: 8),
+              const Divider(),
+              const SizedBox(height: 8),
               Row(
                 children: [
                   Image.asset(
-                    'assets/diagnosis.png', // Sesuaikan dengan path gambar ikon keluhan
+                    'assets/icons/diagnosis.png', // Sesuaikan dengan path gambar ikon keluhan
                     width: 24, // Sesuaikan dengan lebar ikon
                     height: 24, // Sesuaikan dengan tinggi ikon
                   ),
-                  SizedBox(width: 8), // Spasi antara ikon dan teks "Keluhan"
-                  Text(
+                  const SizedBox(
+                      width: 8), // Spasi antara ikon dan teks "Keluhan"
+                  const Text(
                     'Diagnosis',
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                 ],
               ),
-              Text('Infeksi Saluran Pernapasan Akut'),
-              Divider(),
-              SizedBox(height: 8),
+              const Text('Infeksi Saluran Pernapasan Akut'),
+              const Divider(),
+              const SizedBox(height: 8),
               Row(
                 children: [
                   Image.asset(
-                    'assets/resep.png', // Sesuaikan dengan path gambar ikon keluhan
+                    'assets/icons/resep.png', // Sesuaikan dengan path gambar ikon keluhan
                     width: 24, // Sesuaikan dengan lebar ikon
                     height: 24, // Sesuaikan dengan tinggi ikon
                   ),
-                  SizedBox(width: 8), // Spasi antara ikon dan teks "Keluhan"
-                  Text(
+                  const SizedBox(
+                      width: 8), // Spasi antara ikon dan teks "Keluhan"
+                  const Text(
                     'Resep',
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
@@ -142,72 +145,72 @@ class _DetailRiwayatState extends State<DetailRiwayat> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Mucera 30 mg 10 Tablet'),
-                  SizedBox(height: 4),
+                  const Text('Mucera 30 mg 10 Tablet'),
+                  const SizedBox(height: 4),
                   Wrap(
                     children: [
                       ElevatedButton(
                         onPressed: () {
                           // Aksi ketika tombol "Corona" diklik
                         },
-                        child: Text('Setelah makan'),
+                        child: const Text('Setelah makan'),
                       ),
-                      SizedBox(
+                      const SizedBox(
                           width: 8), // Spasi antara tombol "Corona" dan "Asma"
                       ElevatedButton(
                         onPressed: () {
                           // Aksi ketika tombol "Asma" diklik
                         },
-                        child: Text('3 x sehari'),
+                        child: const Text('3 x sehari'),
                       ),
-                      SizedBox(
+                      const SizedBox(
                           width: 8), // Spasi antara tombol "Corona" dan "Asma"
                       ElevatedButton(
                         onPressed: () {
                           // Aksi ketika tombol "Asma" diklik
                         },
-                        child: Text('2 tablet sekali'),
+                        child: const Text('2 tablet sekali'),
                       ),
                     ],
                   ),
-                  SizedBox(height: 4),
-                  Padding(
-                    padding: const EdgeInsets.only(
+                  const SizedBox(height: 4),
+                  const Padding(
+                    padding: EdgeInsets.only(
                         left: 28.0), // Menggeser teks "Catatan:" ke kanan
                     child: Text('Catatan: Antibiotik, habiskan'),
                   ),
-                  Divider(),
-                  Text('Cefadroxil 500 mg 10 Kapsul'),
-                  SizedBox(height: 4),
+                  const Divider(),
+                  const Text('Cefadroxil 500 mg 10 Kapsul'),
+                  const SizedBox(height: 4),
                   Wrap(
                     children: [
                       ElevatedButton(
                         onPressed: () {
                           // Aksi ketika tombol "Corona" diklik
                         },
-                        child: Text('Sebelum makan'),
+                        child: const Text('Sebelum makan'),
                       ),
-                      SizedBox(
+                      const SizedBox(
                           width: 8), // Spasi antara tombol "Corona" dan "Asma"
                       ElevatedButton(
                         onPressed: () {
                           // Aksi ketika tombol "Asma" diklik
                         },
-                        child: Text('3 x sehari'),
+                        child: const Text('3 x sehari'),
                       ),
-                      SizedBox(
+                      const SizedBox(
                           width: 8), // Spasi antara tombol "Corona" dan "Asma"
                       ElevatedButton(
                         onPressed: () {
                           // Aksi ketika tombol "Asma" diklik
                         },
-                        child: Text('2 kapsul'),
+                        child: const Text('2 kapsul'),
                       ),
                     ],
                   ),
-                  SizedBox(height: 4),
-                  Padding(
-                    padding: const EdgeInsets.only(
+                  const SizedBox(height: 4),
+                  const Padding(
+                    padding: EdgeInsets.only(
                         left: 28.0), // Menggeser teks "Catatan:" ke kanan
                     child: Text('Catatan: Antibiotik, habiskan'),
                   ),

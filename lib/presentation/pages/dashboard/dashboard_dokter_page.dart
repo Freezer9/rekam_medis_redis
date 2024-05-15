@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:rekam_medis_redis/auth/auth.dart';
 import 'package:rekam_medis_redis/data/faker/pasien.dart';
-import 'package:rekam_medis_redis/presentation/pages/profile/profile_dokter_page.dart';
 import 'package:rekam_medis_redis/presentation/widgets/patients_widget.dart';
 
 class DashboardDokterPage extends ConsumerWidget {
@@ -21,7 +21,7 @@ class DashboardDokterPage extends ConsumerWidget {
               padding: const EdgeInsets.all(20.0),
               decoration: const BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage("assets/bg.png"),
+                  image: AssetImage("assets/images/bg.png"),
                   fit: BoxFit.fill,
                 ),
               ),
@@ -55,15 +55,10 @@ class DashboardDokterPage extends ConsumerWidget {
                       const Spacer(),
                       GestureDetector(
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    const ProfileDokterPage()),
-                          );
+                          context.push('/profile-dokter');
                         },
                         child: Image.asset(
-                          "assets/Image1.png",
+                          "assets/icons/avatar.png",
                           width: 80,
                           height: 80,
                           fit: BoxFit.cover,
@@ -90,13 +85,6 @@ class DashboardDokterPage extends ConsumerWidget {
                         ),
                       ),
                     ),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      ref.read(authRepositoryProvider).signOut();
-                      Navigator.pop(context);
-                    },
-                    child: const Text('Sign Out'),
                   ),
                 ],
               ),
@@ -134,14 +122,22 @@ class DashboardDokterPage extends ConsumerWidget {
                       padding: EdgeInsets.zero,
                       itemCount: patientsData.length,
                       itemBuilder: (BuildContext context, int index) {
-                        return WidgetUtils.buildPasienCard(
-                          patientsData[index]['name']!,
-                          patientsData[index]['id']!,
-                          patientsData[index]['date']!,
-                        );
+                        return GestureDetector(
+                            onTap: () {
+                              context.push('/riwayat-pasien',
+                                  extra: patientsData[index]);
+                            },
+                            child: PasienCard(data: patientsData[index]));
                       },
                     ),
                   ),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    ref.read(authRepositoryProvider).signOut();
+                    Navigator.pop(context);
+                  },
+                  child: const Text('Sign Out'),
                 ),
               ],
             ),

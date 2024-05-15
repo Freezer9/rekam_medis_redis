@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:rekam_medis_redis/data/faker/pasien.dart';
 import 'package:rekam_medis_redis/presentation/widgets/patients_widget.dart';
 
-class RiwayatReDis extends StatelessWidget {
-  const RiwayatReDis({Key? key}) : super(key: key);
+class RiwayatPasienPage extends StatelessWidget {
+  final Map<String, String> data;
+  const RiwayatPasienPage({
+    super.key,
+    required this.data,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -46,8 +51,11 @@ class RiwayatReDis extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
                   children: filteredPatients.map((data) {
-                    return WidgetUtils.buildPasienCard(
-                        data['doc']!, data['doctitle']!, data['date']!);
+                    return GestureDetector(
+                        onTap: () {
+                          context.push('/detail-pasien', extra: data);
+                        },
+                        child: PasienCard(data: data));
                   }).toList(),
                 ),
               ),
@@ -99,24 +107,24 @@ class RiwayatReDis extends StatelessWidget {
         border: Border.all(width: 1.0, color: const Color(0xffC3C6CF)),
         borderRadius: BorderRadius.circular(10),
         color: Colors.white,
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
             spreadRadius: 0.2,
             blurRadius: 2,
-            color: const Color(0xFF38608F),
+            color: Color(0xFF38608F),
           ),
         ],
       ),
       padding: const EdgeInsets.all(20.0),
       child: Column(
         children: [
-          _buildTextField('Nama', 'assets/profile.png', 'Faris'),
-          _buildTextField('NRP', 'assets/nrp.png', '3122600044'),
-          _buildTextField(
-              'Tanggal Lahir', 'assets/icon.png', 'Jepang, 08 Februari 2004'),
-          _buildTextField(
-              'Program Studi', 'assets/prodi.png', 'D4 Teknik Mekatronika'),
-          _buildTextField('Angkatan', 'assets/time.png', '2021'),
+          _buildTextField('Nama', 'assets/icons/profile.png', data['name']!),
+          _buildTextField('NRP', 'assets/icons/nrp.png', data['id']!),
+          _buildTextField('Tanggal Lahir', 'assets/icons/tanggal.png',
+              'Jepang, 08 Februari 2004'),
+          _buildTextField('Program Studi', 'assets/icons/prodi.png',
+              'D4 Teknik Mekatronika'),
+          _buildTextField('Angkatan', 'assets/icons/time.png', '2021'),
         ],
       ),
     );

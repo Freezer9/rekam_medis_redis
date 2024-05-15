@@ -50,7 +50,7 @@ class _InputObatState extends State<InputObat> {
                   GestureDetector(
                     onTap: () {},
                     child: Image.asset(
-                      'assets/Dropdown.png',
+                      'assets/icons/dropdown.png',
                       width: 20,
                       height: 20,
                     ),
@@ -68,11 +68,12 @@ class _InputObatState extends State<InputObat> {
                       }).toList(),
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
-                          borderSide: BorderSide(color: Color(0xFF38608F)),
+                          borderSide:
+                              const BorderSide(color: Color(0xFF38608F)),
                           borderRadius: BorderRadius.circular(5.0),
                         ),
-                        contentPadding:
-                            EdgeInsets.symmetric(horizontal: 10, vertical: 12),
+                        contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 12),
                       ),
                       itemFilter: (item, query) {
                         return item
@@ -111,7 +112,7 @@ class _InputObatState extends State<InputObat> {
                         }
                       });
                     },
-                    child: Image.asset('assets/minus.png'),
+                    child: Image.asset('assets/icons/minus.png'),
                   ),
                   Expanded(
                     child: Text(
@@ -125,7 +126,7 @@ class _InputObatState extends State<InputObat> {
                         _kuantitasObat++;
                       });
                     },
-                    child: Image.asset('assets/plus (2).png'),
+                    child: Image.asset('assets/icons/plus.png'),
                   ),
                   Expanded(
                     flex: 3,
@@ -146,7 +147,7 @@ class _InputObatState extends State<InputObat> {
                       },
                       child: ListTile(
                         title: Text(_selectedType ?? ' '),
-                        trailing: Image.asset("assets/Dropdown.png"),
+                        trailing: Image.asset("assets/icons/dropdown.png"),
                       ),
                     ),
                   ),
@@ -168,7 +169,7 @@ class _InputObatState extends State<InputObat> {
                         }
                       });
                     },
-                    child: Image.asset('assets/minus.png'),
+                    child: Image.asset('assets/icons/minus.png'),
                   ),
                   Expanded(
                     child: Text(
@@ -182,7 +183,7 @@ class _InputObatState extends State<InputObat> {
                         _kuantitasTipe++;
                       });
                     },
-                    child: Image.asset('assets/plus (2).png'),
+                    child: Image.asset('assets/icons/plus.png'),
                   ),
                   const Expanded(
                     flex: 3,
@@ -203,7 +204,7 @@ class _InputObatState extends State<InputObat> {
                         }
                       });
                     },
-                    child: Image.asset('assets/minus.png'),
+                    child: Image.asset('assets/icons/minus.png'),
                   ),
                   Expanded(
                     child: Text(
@@ -217,7 +218,7 @@ class _InputObatState extends State<InputObat> {
                         _kuantitasWaktu++;
                       });
                     },
-                    child: Image.asset('assets/plus (2).png'),
+                    child: Image.asset('assets/icons/plus.png'),
                   ),
                   Expanded(
                     flex: 3,
@@ -238,7 +239,7 @@ class _InputObatState extends State<InputObat> {
                       },
                       child: ListTile(
                         title: Text(_selectedTypeOf ?? ' '),
-                        trailing: Image.asset("assets/Dropdown.png"),
+                        trailing: Image.asset("assets/icons/dropdown.png"),
                       ),
                     ),
                   ),
@@ -260,9 +261,9 @@ class _InputObatState extends State<InputObat> {
                         _selectedWaktu = value;
                       });
                     },
-                    activeColor: Color(0xFF38608F),
+                    activeColor: const Color(0xFF38608F),
                   ),
-                  Text("Sebelum Makan"),
+                  const Text("Sebelum Makan"),
                   Radio(
                     value: 2,
                     groupValue: _selectedWaktu,
@@ -271,9 +272,9 @@ class _InputObatState extends State<InputObat> {
                         _selectedWaktu = value;
                       });
                     },
-                    activeColor: Color(0xFF38608F),
+                    activeColor: const Color(0xFF38608F),
                   ),
-                  Text("Saat Makan"),
+                  const Text("Saat Makan"),
                 ],
               ),
               Row(
@@ -286,9 +287,9 @@ class _InputObatState extends State<InputObat> {
                         _selectedWaktu = value;
                       });
                     },
-                    activeColor: Color(0xFF38608F),
+                    activeColor: const Color(0xFF38608F),
                   ),
-                  Text("Sesudah Makan"),
+                  const Text("Sesudah Makan"),
                   Radio(
                     value: 4,
                     groupValue: _selectedWaktu,
@@ -297,9 +298,9 @@ class _InputObatState extends State<InputObat> {
                         _selectedWaktu = value;
                       });
                     },
-                    activeColor: Color(0xFF38608F),
+                    activeColor: const Color(0xFF38608F),
                   ),
-                  Text("Sebelum Tidur"),
+                  const Text("Sebelum Tidur"),
                 ],
               ),
               const Padding(
@@ -313,7 +314,7 @@ class _InputObatState extends State<InputObat> {
                 child: TextField(
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
-                      borderSide: BorderSide(color: Color(0xFF38608F)),
+                      borderSide: const BorderSide(color: Color(0xFF38608F)),
                       borderRadius: BorderRadius.circular(5.0),
                     ),
                   ),
@@ -325,7 +326,7 @@ class _InputObatState extends State<InputObat> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(top: 10),
+                padding: const EdgeInsets.only(top: 10),
                 child: Container(
                   width: double.infinity,
                   child: ElevatedButton(
