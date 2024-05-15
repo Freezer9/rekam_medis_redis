@@ -1,14 +1,30 @@
 name: rekam_medis_redis
 description: "A new Flutter project."
-publish_to: 'none'
+publish_to: "none"
 version: 0.1.0
 
 environment:
-  sdk: '>=3.3.1 <4.0.0'
+  sdk: ">=3.3.1 <4.0.0"
 
 dependencies:
+  build_runner: ^2.4.9
+  crypto: ^3.0.3
   flutter:
     sdk: flutter
+
+  flutter_riverpod: ^2.5.1
+  go_router: ^14.0.2
+  riverpod_annotation: ^2.3.5
+  riverpod_generator: ^2.4.0
+  supabase_flutter: ^2.5.2
+  file_picker: ^8.0.3
+  dotted_border: ^2.1.0
+  http: ^1.2.1
+  path: ^1.9.0
+  csv: ^6.0.0
+  open_file: ^3.3.2
+  gpassword: ^0.0.1
+  autocomplete_textfield: ^2.0.1
 
 dev_dependencies:
   flutter_test:
@@ -18,4 +34,4 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-  - assets/
+    - assets/
