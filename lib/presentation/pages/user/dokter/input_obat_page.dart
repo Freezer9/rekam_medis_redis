@@ -4,14 +4,18 @@ import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:flutter/widgets.dart';
 import 'package:rekam_medis_redis/data/faker/obat.dart';
 
-class InputObat extends StatefulWidget {
-  const InputObat({super.key});
+class InputObatPage extends StatefulWidget {
+  final Map<String, dynamic> data;
+  const InputObatPage({
+    super.key,
+    required this.data,
+  });
 
   @override
-  _InputObatState createState() => _InputObatState();
+  _InputObatPageState createState() => _InputObatPageState();
 }
 
-class _InputObatState extends State<InputObat> {
+class _InputObatPageState extends State<InputObatPage> {
   String? _selectedObat;
   String? _selectedType;
   String? _selectedTypeOf;
@@ -29,13 +33,13 @@ class _InputObatState extends State<InputObat> {
       appBar: AppBar(
         centerTitle: true,
         title: const Text("Resep Obat"),
-        leading: BackButton(
-          onPressed: () => Navigator.pop(context),
-        ),
+        shadowColor: Colors.black,
+        backgroundColor: Colors.white,
+        elevation: 1,
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.only(top: 40, left: 30, right: 30),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -57,6 +61,7 @@ class _InputObatState extends State<InputObat> {
                   ),
                 ],
               ),
+              const SizedBox(height: 10),
               Row(
                 children: [
                   Expanded(
@@ -68,8 +73,8 @@ class _InputObatState extends State<InputObat> {
                       }).toList(),
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
-                          borderSide:
-                              const BorderSide(color: Color(0xFF38608F)),
+                          borderSide: const BorderSide(
+                              color: Color(0xFF38608F), width: 2.0),
                           borderRadius: BorderRadius.circular(5.0),
                         ),
                         contentPadding: const EdgeInsets.symmetric(
@@ -98,236 +103,210 @@ class _InputObatState extends State<InputObat> {
                   ),
                 ],
               ),
-              const Padding(
-                padding: EdgeInsets.only(top: 10.0, bottom: 3.0, left: 4.0),
-                child: Text("Kuantitas"),
-              ),
-              Row(
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        if (_kuantitasObat > 1) {
-                          _kuantitasObat--;
-                        }
-                      });
-                    },
-                    child: Image.asset('assets/icons/minus.png'),
-                  ),
-                  Expanded(
-                    child: Text(
-                      _kuantitasObat.toString(),
-                      textAlign: TextAlign.center,
+              Container(
+                margin: const EdgeInsets.only(top: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text("Kuantitas", style: TextStyle(fontSize: 16)),
+                    Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              if (_kuantitasObat > 1) {
+                                _kuantitasObat--;
+                              }
+                            });
+                          },
+                          child: Image.asset('assets/icons/minus.png'),
+                        ),
+                        Expanded(
+                          child: Text(
+                            _kuantitasObat.toString(),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _kuantitasObat++;
+                            });
+                          },
+                          child: Image.asset('assets/icons/plus.png'),
+                        ),
+                        Expanded(
+                          flex: 3,
+                          child: PopupMenuButton<String>(
+                            initialValue: _selectedType,
+                            onSelected: (String? value) {
+                              setState(() {
+                                _selectedType = value;
+                              });
+                            },
+                            itemBuilder: (BuildContext context) {
+                              return obat.map((Map<String, String> value) {
+                                return PopupMenuItem<String>(
+                                  value: value['tipe'],
+                                  child: Text(value['tipe']!),
+                                );
+                              }).toList();
+                            },
+                            child: ListTile(
+                              title: Text(_selectedType ?? ' '),
+                              trailing:
+                                  Image.asset("assets/icons/dropdown.png"),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        _kuantitasObat++;
-                      });
-                    },
-                    child: Image.asset('assets/icons/plus.png'),
-                  ),
-                  Expanded(
-                    flex: 3,
-                    child: PopupMenuButton<String>(
-                      initialValue: _selectedType,
-                      onSelected: (String? value) {
-                        setState(() {
-                          _selectedType = value;
-                        });
-                      },
-                      itemBuilder: (BuildContext context) {
-                        return obat.map((Map<String, String> value) {
-                          return PopupMenuItem<String>(
-                            value: value['tipe'],
-                            child: Text(value['tipe']!),
-                          );
-                        }).toList();
-                      },
-                      child: ListTile(
-                        title: Text(_selectedType ?? ' '),
-                        trailing: Image.asset("assets/icons/dropdown.png"),
+                  ],
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(top: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text("Cara Penggunaan",
+                        style: TextStyle(fontSize: 16)),
+                    const SizedBox(height: 10),
+                    Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              if (_kuantitasTipe > 1) {
+                                _kuantitasTipe--;
+                              }
+                            });
+                          },
+                          child: Image.asset('assets/icons/minus.png'),
+                        ),
+                        Expanded(
+                          child: Text(
+                            _kuantitasTipe.toString(),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _kuantitasTipe++;
+                            });
+                          },
+                          child: Image.asset('assets/icons/plus.png'),
+                        ),
+                        const Expanded(
+                          flex: 3,
+                          child: Padding(
+                            padding: EdgeInsets.only(left: 20),
+                            child: Text("Per Hari"),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              if (_kuantitasWaktu > 1) {
+                                _kuantitasWaktu--;
+                              }
+                            });
+                          },
+                          child: Image.asset('assets/icons/minus.png'),
+                        ),
+                        Expanded(
+                          child: Text(
+                            _kuantitasWaktu.toString(),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _kuantitasWaktu++;
+                            });
+                          },
+                          child: Image.asset('assets/icons/plus.png'),
+                        ),
+                        Expanded(
+                          flex: 3,
+                          child: PopupMenuButton<String>(
+                            initialValue: _selectedTypeOf,
+                            onSelected: (String? value) {
+                              setState(() {
+                                _selectedTypeOf = value;
+                              });
+                            },
+                            itemBuilder: (BuildContext context) {
+                              return obat.map((Map<String, String> value) {
+                                return PopupMenuItem<String>(
+                                  value: value['penggunaan'],
+                                  child: Text(value['penggunaan']!),
+                                );
+                              }).toList();
+                            },
+                            child: ListTile(
+                              title: Text(_selectedTypeOf ?? ' '),
+                              trailing:
+                                  Image.asset("assets/icons/dropdown.png"),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(top: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text("Waktu Penggunaan",
+                        style: TextStyle(fontSize: 16)),
+                    waktuPenggunaanButton("Sebelum Makan", 1),
+                    waktuPenggunaanButton("Saat Makan", 2),
+                    waktuPenggunaanButton("Sesudah Makan", 3),
+                    waktuPenggunaanButton("Sebelum Tidur", 4),
+                  ],
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(top: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text("Catatan", style: TextStyle(fontSize: 16)),
+                    const SizedBox(height: 8),
+                    SizedBox(
+                      child: TextField(
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderSide:
+                                const BorderSide(color: Color(0xFF38608F)),
+                            borderRadius: BorderRadius.circular(5.0),
+                          ),
+                          contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 12),
+                        ),
+                        onChanged: (value) {
+                          setState(() {
+                            _catatan = value;
+                          });
+                        },
                       ),
                     ),
-                  ),
-                ],
-              ),
-              const Padding(
-                padding: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 4.0),
-                child: Text(
-                  "Cara Penggunaan",
-                ),
-              ),
-              Row(
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        if (_kuantitasTipe > 1) {
-                          _kuantitasTipe--;
-                        }
-                      });
-                    },
-                    child: Image.asset('assets/icons/minus.png'),
-                  ),
-                  Expanded(
-                    child: Text(
-                      _kuantitasTipe.toString(),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        _kuantitasTipe++;
-                      });
-                    },
-                    child: Image.asset('assets/icons/plus.png'),
-                  ),
-                  const Expanded(
-                    flex: 3,
-                    child: Padding(
-                      padding: EdgeInsets.only(left: 20),
-                      child: Text("Per Hari"),
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        if (_kuantitasWaktu > 1) {
-                          _kuantitasWaktu--;
-                        }
-                      });
-                    },
-                    child: Image.asset('assets/icons/minus.png'),
-                  ),
-                  Expanded(
-                    child: Text(
-                      _kuantitasWaktu.toString(),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        _kuantitasWaktu++;
-                      });
-                    },
-                    child: Image.asset('assets/icons/plus.png'),
-                  ),
-                  Expanded(
-                    flex: 3,
-                    child: PopupMenuButton<String>(
-                      initialValue: _selectedTypeOf,
-                      onSelected: (String? value) {
-                        setState(() {
-                          _selectedTypeOf = value;
-                        });
-                      },
-                      itemBuilder: (BuildContext context) {
-                        return obat.map((Map<String, String> value) {
-                          return PopupMenuItem<String>(
-                            value: value['penggunaan'],
-                            child: Text(value['penggunaan']!),
-                          );
-                        }).toList();
-                      },
-                      child: ListTile(
-                        title: Text(_selectedTypeOf ?? ' '),
-                        trailing: Image.asset("assets/icons/dropdown.png"),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const Padding(
-                padding: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 4.0),
-                child: Text(
-                  "Waktu Penggunaan",
-                ),
-              ),
-              Row(
-                children: [
-                  Radio(
-                    value: 1,
-                    groupValue: _selectedWaktu,
-                    onChanged: (value) {
-                      setState(() {
-                        _selectedWaktu = value;
-                      });
-                    },
-                    activeColor: const Color(0xFF38608F),
-                  ),
-                  const Text("Sebelum Makan"),
-                  Radio(
-                    value: 2,
-                    groupValue: _selectedWaktu,
-                    onChanged: (value) {
-                      setState(() {
-                        _selectedWaktu = value;
-                      });
-                    },
-                    activeColor: const Color(0xFF38608F),
-                  ),
-                  const Text("Saat Makan"),
-                ],
-              ),
-              Row(
-                children: [
-                  Radio(
-                    value: 3,
-                    groupValue: _selectedWaktu,
-                    onChanged: (value) {
-                      setState(() {
-                        _selectedWaktu = value;
-                      });
-                    },
-                    activeColor: const Color(0xFF38608F),
-                  ),
-                  const Text("Sesudah Makan"),
-                  Radio(
-                    value: 4,
-                    groupValue: _selectedWaktu,
-                    onChanged: (value) {
-                      setState(() {
-                        _selectedWaktu = value;
-                      });
-                    },
-                    activeColor: const Color(0xFF38608F),
-                  ),
-                  const Text("Sebelum Tidur"),
-                ],
-              ),
-              const Padding(
-                padding: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 4.0),
-                child: Text(
-                  "Catatan",
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(5.0),
-                child: TextField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Color(0xFF38608F)),
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
-                  ),
-                  onChanged: (value) {
-                    setState(() {
-                      _catatan = value;
-                    });
-                  },
+                  ],
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 10),
-                child: Container(
+                child: SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {},
@@ -372,6 +351,25 @@ class _InputObatState extends State<InputObat> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget waktuPenggunaanButton(String text, int value) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Radio(
+          value: value,
+          groupValue: _selectedWaktu,
+          onChanged: (value) {
+            setState(() {
+              _selectedWaktu = value;
+            });
+          },
+          activeColor: const Color(0xFF38608F),
+        ),
+        Text(text),
+      ],
     );
   }
 }

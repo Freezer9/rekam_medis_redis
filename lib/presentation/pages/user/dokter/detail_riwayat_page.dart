@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:rekam_medis_redis/core/themes.dart';
+import 'package:rekam_medis_redis/data/faker/catatan.dart';
 
 class DetailRiwayatPage extends StatefulWidget {
   final Map<String, String> data;
@@ -15,211 +17,136 @@ class DetailRiwayatPage extends StatefulWidget {
 }
 
 class _DetailRiwayatPageState extends State<DetailRiwayatPage> {
+  final catatan = catatanDokter[0];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
           'Catatan Dokter',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
         ),
         centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
+        shadowColor: Colors.black,
+        backgroundColor: Colors.white,
+        elevation: 1,
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.only(left: 28, right: 28),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                children: [
-                  Image.asset(
-                    'assets/icons/keluhan.png', // Sesuaikan dengan path gambar ikon keluhan
-                    width: 24, // Sesuaikan dengan lebar ikon
-                    height: 24, // Sesuaikan dengan tinggi ikon
-                  ),
-                  const SizedBox(
-                      width: 8), // Spasi antara ikon dan teks "Keluhan"
-                  const Text(
-                    'Keluhan',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-              Wrap(
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      // Aksi ketika tombol "Radang" diklik
-                    },
-                    child: const Text('Radang'),
-                  ),
-                  const SizedBox(width: 8),
-                  ElevatedButton(
-                    onPressed: () {},
-                    child: const Text('Batuk Berdahak'),
-                  ),
-                  const SizedBox(width: 8),
-                  ElevatedButton(
-                    onPressed: () {},
-                    child: const Text('Muntah'),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 8),
+              catatanContainer(
+                  'assets/icons/keluhan.png', "Keluhan", catatan['keluhan']),
               const Divider(),
-              const SizedBox(height: 8),
-              Row(
-                children: [
-                  Image.asset(
-                    'assets/icons/riwayat.png',
-                    width: 24,
-                    height: 24,
-                  ),
-                  const SizedBox(width: 8),
-                  const Text(
-                    'Riwayat Penyakit',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-              Wrap(
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      // Aksi ketika tombol "Corona" diklik
-                    },
-                    child: const Text('Corona'),
-                  ),
-                  const SizedBox(
-                      width: 8), // Spasi antara tombol "Corona" dan "Asma"
-                  ElevatedButton(
-                    onPressed: () {
-                      // Aksi ketika tombol "Asma" diklik
-                    },
-                    child: const Text('Asma'),
-                  ),
-                ],
-              ),
+              catatanContainer('assets/icons/riwayat.png', 'Riwayat Penyakit',
+                  catatan['riwayat']),
               const Divider(),
-              const SizedBox(height: 8),
-              Row(
-                children: [
-                  Image.asset(
-                    'assets/icons/diagnosis.png', // Sesuaikan dengan path gambar ikon keluhan
-                    width: 24, // Sesuaikan dengan lebar ikon
-                    height: 24, // Sesuaikan dengan tinggi ikon
-                  ),
-                  const SizedBox(
-                      width: 8), // Spasi antara ikon dan teks "Keluhan"
-                  const Text(
-                    'Diagnosis',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-              const Text('Infeksi Saluran Pernapasan Akut'),
+              catatanContainer('assets/icons/diagnosis.png', 'Diagnosis',
+                  catatan['diagnosis']),
               const Divider(),
-              const SizedBox(height: 8),
-              Row(
-                children: [
-                  Image.asset(
-                    'assets/icons/resep.png', // Sesuaikan dengan path gambar ikon keluhan
-                    width: 24, // Sesuaikan dengan lebar ikon
-                    height: 24, // Sesuaikan dengan tinggi ikon
-                  ),
-                  const SizedBox(
-                      width: 8), // Spasi antara ikon dan teks "Keluhan"
-                  const Text(
-                    'Resep',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text('Mucera 30 mg 10 Tablet'),
-                  const SizedBox(height: 4),
-                  Wrap(
-                    children: [
-                      ElevatedButton(
-                        onPressed: () {
-                          // Aksi ketika tombol "Corona" diklik
-                        },
-                        child: const Text('Setelah makan'),
-                      ),
-                      const SizedBox(
-                          width: 8), // Spasi antara tombol "Corona" dan "Asma"
-                      ElevatedButton(
-                        onPressed: () {
-                          // Aksi ketika tombol "Asma" diklik
-                        },
-                        child: const Text('3 x sehari'),
-                      ),
-                      const SizedBox(
-                          width: 8), // Spasi antara tombol "Corona" dan "Asma"
-                      ElevatedButton(
-                        onPressed: () {
-                          // Aksi ketika tombol "Asma" diklik
-                        },
-                        child: const Text('2 tablet sekali'),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 4),
-                  const Padding(
-                    padding: EdgeInsets.only(
-                        left: 28.0), // Menggeser teks "Catatan:" ke kanan
-                    child: Text('Catatan: Antibiotik, habiskan'),
-                  ),
-                  const Divider(),
-                  const Text('Cefadroxil 500 mg 10 Kapsul'),
-                  const SizedBox(height: 4),
-                  Wrap(
-                    children: [
-                      ElevatedButton(
-                        onPressed: () {
-                          // Aksi ketika tombol "Corona" diklik
-                        },
-                        child: const Text('Sebelum makan'),
-                      ),
-                      const SizedBox(
-                          width: 8), // Spasi antara tombol "Corona" dan "Asma"
-                      ElevatedButton(
-                        onPressed: () {
-                          // Aksi ketika tombol "Asma" diklik
-                        },
-                        child: const Text('3 x sehari'),
-                      ),
-                      const SizedBox(
-                          width: 8), // Spasi antara tombol "Corona" dan "Asma"
-                      ElevatedButton(
-                        onPressed: () {
-                          // Aksi ketika tombol "Asma" diklik
-                        },
-                        child: const Text('2 kapsul'),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 4),
-                  const Padding(
-                    padding: EdgeInsets.only(
-                        left: 28.0), // Menggeser teks "Catatan:" ke kanan
-                    child: Text('Catatan: Antibiotik, habiskan'),
-                  ),
-                ],
+              Container(
+                margin: const EdgeInsets.only(top: 20, bottom: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    catatanTitle('assets/icons/resep.png', "Resep"),
+                    const SizedBox(height: 12.5),
+                    Column(
+                      children: catatan['resep']
+                          .map<Widget>((e) => resepBox(e))
+                          .toList(),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Container catatanContainer(String asset, String title, List catatan) {
+    return Container(
+      margin: const EdgeInsets.only(top: 20, bottom: 20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          catatanTitle(asset, title),
+          const SizedBox(height: 12.5),
+          chipWrapper(catatan),
+        ],
+      ),
+    );
+  }
+
+  Widget resepBox(Map<String, String> resep) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 18),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(resep['obat']!,
+              style:
+                  const TextStyle(fontSize: 14, fontWeight: FontWeight.w500)),
+          const SizedBox(height: 4),
+          chipWrapperResep(resep),
+          const SizedBox(height: 8),
+          Text('Catatan: ${resep['catatan']!}'),
+          const SizedBox(height: 8),
+          const Divider(),
+        ],
+      ),
+    );
+  }
+
+  Wrap chipWrapperResep(Map<String, String> resep) {
+    return Wrap(
+      spacing: 8,
+      runSpacing: 8,
+      children: [
+        chipWidget(resep['when']!, color: const Color(0xFFFCE186)),
+        chipWidget(resep['dose']!),
+        chipWidget(resep['much']!, color: const Color(0xFFDFD5EC)),
+      ],
+    );
+  }
+
+  Wrap chipWrapper(List catatan) {
+    return Wrap(
+      spacing: 8,
+      runSpacing: 8,
+      children: catatan.map<Widget>((e) => chipWidget(e)).toList(),
+    );
+  }
+
+  Row catatanTitle(String asset, String title) {
+    return Row(
+      children: [
+        Image.asset(
+          asset,
+          width: 24,
+          height: 24,
+        ),
+        const SizedBox(width: 10),
+        Text(
+          title,
+          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
+      ],
+    );
+  }
+
+  Container chipWidget(String text, {Color color = containerColor}) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Text(text),
     );
   }
 }

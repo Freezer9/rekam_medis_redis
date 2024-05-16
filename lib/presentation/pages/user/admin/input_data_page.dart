@@ -1,5 +1,6 @@
 // ignore_for_file: library_private_types_in_public_api
 
+import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
@@ -183,57 +184,25 @@ class _InputDataState extends State<InputData> {
             'tahun': data[5],
           });
 
-          // buang data yang null
           records.removeWhere((element) => element.containsValue(''));
         }
 
-        // Implementasi penyimpanan data ke database
         for (int i = 0; i < records.length; i++) {
           GPassword gPassword = GPassword();
           String password = gPassword.generate(passwordLength: 8);
-          final AuthResponse auth = await _client.auth.signUp(
+          final auth = await _client.auth.admin.createUser(AdminUserAttributes(
             email: records[i]["email"],
             password: password,
-          );
+          ));
 
           records[i]["id"] = auth.user!.id;
           records[i]["created_at"] = DateTime.now().toIso8601String();
 
-          final insertData = await _client.from('mahasiswa').insert(records[i]);
+          await _client.from('mahasiswa').insert(records[i]);
 
           records[i]["password"] = password;
 
           print(records[i]);
-
-          if (insertData.error != null) {
-            showDialog(
-              context: context,
-              builder: (context) => AlertDialog(
-                title: const Text('Error'),
-                content: Text(insertData.error!.message),
-                actions: [
-                  TextButton(
-                    onPressed: () => Navigator.pop(context),
-                    child: const Text('OK'),
-                  ),
-                ],
-              ),
-            );
-          } else {
-            showDialog(
-              context: context,
-              builder: (context) => AlertDialog(
-                title: const Text('Success'),
-                content: const Text('Data has been saved successfully.'),
-                actions: [
-                  TextButton(
-                    onPressed: () => Navigator.pop(context),
-                    child: const Text('OK'),
-                  ),
-                ],
-              ),
-            );
-          }
         }
       });
     }

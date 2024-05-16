@@ -98,20 +98,6 @@ class DashboardDokterPage extends ConsumerWidget {
             child: Column(
               children: [
                 const SizedBox(height: 20),
-                const Align(
-                  alignment: Alignment.centerLeft,
-                  child: Padding(
-                    padding: EdgeInsets.only(left: 20),
-                    child: Text(
-                      'Rekam Medis Terbaru...',
-                      style: TextStyle(
-                        color: Color.fromARGB(255, 210, 228, 255),
-                        fontSize: 18,
-                        fontWeight: FontWeight.normal,
-                      ),
-                    ),
-                  ),
-                ),
                 Expanded(
                   flex: 2,
                   child: Container(
