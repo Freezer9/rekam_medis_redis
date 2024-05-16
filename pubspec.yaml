@@ -26,6 +26,7 @@ dependencies:
   gpassword: ^0.0.1
   autocomplete_textfield: ^2.0.1
   intl: ^0.19.0
+  permission_handler: ^11.3.1
 
 dev_dependencies:
   flutter_test:

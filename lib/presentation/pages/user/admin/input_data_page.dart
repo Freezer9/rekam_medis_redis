@@ -9,6 +9,8 @@ import 'package:rekam_medis_redis/presentation/widgets/selected_file_widget.dart
 import 'package:rekam_medis_redis/presentation/widgets/unselected_file_widget.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:gpassword/gpassword.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class InputData extends StatefulWidget {
   const InputData({super.key});
@@ -169,8 +171,7 @@ class _InputDataState extends State<InputData> {
       final _client = Supabase.instance.client;
       final records = <Map<String, dynamic>>[];
 
-      // Implementasi logika penyimpanan file
-      _selectedFiles.forEach((file) async {
+      for (File file in _selectedFiles) {
         final input = File(file.path).readAsLinesSync();
 
         for (int i = 1; i < input.length; i++) {
@@ -204,7 +205,76 @@ class _InputDataState extends State<InputData> {
 
           print(records[i]);
         }
-      });
+      }
+
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+            title: const Text('Success'),
+            content: const Text('File berhasil diSimpan'),
+            actions: [
+              TextButton(
+                onPressed: () async {
+                  Navigator.pop(context);
+                  setState(() {
+                    _selectedFiles.clear();
+                  });
+                  try {
+                    final userData = await _fetchUserData();
+                    final csvContent = _convertToCSV(userData);
+                    await _downloadFile(csvContent, 'user_data.csv');
+                  } catch (e) {
+                    print('Error downloading file: $e');
+                  }
+                },
+                child: const Text('OK'),
+              ),
+            ]),
+      );
+    }
+  }
+
+  Future<List<Map<String, dynamic>>> _fetchUserData() async {
+    final _client = Supabase.instance.client;
+
+    final List<User> users = await _client.auth.admin.listUsers();
+    if (users == null) {
+      throw Exception('Error fetching user data');
+    }
+
+    // Convert List<User> to List<Map<String, dynamic>>
+    List<Map<String, dynamic>> userData = users.map((user) {
+      return {
+        'email': user.email,
+      };
+    }).toList();
+
+    return userData;
+  }
+
+  String _convertToCSV(List<Map<String, dynamic>> data) {
+    if (data.isEmpty) return '';
+
+    final headers = data.first.keys.join(',');
+    final rows = data.map((row) {
+      return row.values.map((value) => value.toString()).join(',');
+    }).join('\n');
+
+    return '$headers\n$rows';
+  }
+
+  Future<void> _downloadFile(String content, String filename) async {
+    final status = await Permission.storage.request();
+    if (status.isGranted) {
+      final directory = await getExternalStorageDirectory();
+      final file = File('${directory!.path}/$filename');
+      await file.writeAsString(content);
+
+      // Optionally, you can trigger a platform-specific way to open the file
+      // For example, using the `open_file` package
+      // OpenFile.open(file.path);
+    } else {
+      throw Exception('Storage permission denied');
     }
   }
 }
