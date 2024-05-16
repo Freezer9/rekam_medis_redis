@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rekam_medis_redis/auth/auth.dart';
-import 'package:rekam_medis_redis/presentation/pages/admin/data_user_page.dart';
+import 'package:rekam_medis_redis/presentation/pages/user/admin/data_user_page.dart';
 
 class DashboardAdminPage extends ConsumerWidget {
   const DashboardAdminPage({super.key});
@@ -20,7 +20,7 @@ class DashboardAdminPage extends ConsumerWidget {
               padding: const EdgeInsets.all(20.0),
               decoration: const BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage("assets/bg.png"),
+                  image: AssetImage("assets/images/bg.png"),
                   fit: BoxFit.fill,
                 ),
               ),
@@ -128,7 +128,7 @@ class DashboardAdminPage extends ConsumerWidget {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Image.asset(
-                                    'assets/circle_acc.png',
+                                    'assets/icons/circle_acc.png',
                                     width: 30,
                                     height: 30,
                                   ),
@@ -157,7 +157,7 @@ class DashboardAdminPage extends ConsumerWidget {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Image.asset(
-                                    'assets/circle_acc.png',
+                                    'assets/icons/circle_acc.png',
                                     width: 30,
                                     height: 30,
                                   ),

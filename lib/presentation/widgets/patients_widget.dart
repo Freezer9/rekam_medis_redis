@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
 
-class WidgetUtils {
-  static Widget buildPasienCard(String name, String id, String date) {
+class PasienCard extends StatelessWidget {
+  final Map<String, String> data;
+
+  const PasienCard({
+    super.key,
+    required this.data,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 10),
       width: double.infinity,
@@ -29,7 +37,7 @@ class WidgetUtils {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               image: const DecorationImage(
-                image: AssetImage("assets/Image1.png"),
+                image: AssetImage("assets/icons/avatar.png"),
                 fit: BoxFit.cover,
               ),
             ),
@@ -40,7 +48,7 @@ class WidgetUtils {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  name,
+                  data['name']!,
                   style: const TextStyle(
                     color: Color.fromRGBO(25, 28, 32, 1),
                     fontFamily: 'Plus Jakarta Sans',
@@ -49,7 +57,7 @@ class WidgetUtils {
                 ),
                 const SizedBox(height: 5),
                 Text(
-                  id,
+                  data['id']!,
                   style: const TextStyle(
                     color: Color.fromRGBO(67, 71, 78, 1),
                     fontFamily: 'Plus Jakarta Sans',
@@ -57,7 +65,7 @@ class WidgetUtils {
                   ),
                 ),
                 Text(
-                  date,
+                  data['date']!,
                   style: const TextStyle(
                     color: Color.fromRGBO(67, 71, 78, 1),
                     fontFamily: 'Plus Jakarta Sans',
