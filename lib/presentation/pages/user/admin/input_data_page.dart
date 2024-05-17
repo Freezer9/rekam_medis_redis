@@ -241,8 +241,6 @@ class _InputDataState extends State<InputData> {
     if (users == null) {
       throw Exception('Error fetching user data');
     }
-
-    // Convert List<User> to List<Map<String, dynamic>>
     List<Map<String, dynamic>> userData = users.map((user) {
       return {
         'email': user.email,
@@ -270,9 +268,6 @@ class _InputDataState extends State<InputData> {
       final file = File('${directory!.path}/$filename');
       await file.writeAsString(content);
 
-      // Optionally, you can trigger a platform-specific way to open the file
-      // For example, using the `open_file` package
-      // OpenFile.open(file.path);
     } else {
       throw Exception('Storage permission denied');
     }
