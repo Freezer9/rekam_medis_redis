@@ -14,6 +14,6 @@ class TestMainApp extends StatelessWidget {
       title: 'KonsulDok',
       debugShowCheckedModeBanner: false,
       home: DataPasien(),
-      );
-    }
+    );
+  }
 }

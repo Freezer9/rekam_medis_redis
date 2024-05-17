@@ -172,6 +172,7 @@ class _DataPasienState extends State<DataPasien> {
                     displayStringForOption: (Contact option) => option.name,
                     onSelected: (Contact selection) {
                       _onContactSelectedKeluhan(selection);
+                      
                     },
                     fieldViewBuilder: (BuildContext context,
                         TextEditingController textEditingController,
@@ -186,10 +187,8 @@ class _DataPasienState extends State<DataPasien> {
                           ),
                         ),
                         onSubmitted: (value) {
-                          if (_searchHistoryKeluhan.isNotEmpty) {
-                            _onSearchSubmittedKeluhan(value);
-                            onFieldSubmitted();
-                          }
+                          _onSearchSubmittedKeluhan(value);
+                          onFieldSubmitted();
                           textEditingController.clear();
                         },
                       );
@@ -266,6 +265,7 @@ class _DataPasienState extends State<DataPasien> {
                         onSubmitted: (value) {
                           _onSearchSubmittedRiwayat(value);
                           onFieldSubmitted();
+                          textEditingController.clear();
                         },
                       );
                     },
