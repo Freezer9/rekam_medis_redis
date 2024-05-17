@@ -142,7 +142,7 @@ class _DetailRiwayatState extends State<DetailRiwayat> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Mucera 30 mg 10 Tablet'),
+                  Text('Mucera 40 mg 10 Tablet'),
                   SizedBox(height: 4),
                   Wrap(
                     children: [
@@ -177,7 +177,7 @@ class _DetailRiwayatState extends State<DetailRiwayat> {
                     child: Text('Catatan: Antibiotik, habiskan'),
                   ),
                   Divider(),
-                  Text('Cefadroxil 500 mg 10 Kapsul'),
+                  Text('Cefadroxil 500 mg 67 Kapsul'),
                   SizedBox(height: 4),
                   Wrap(
                     children: [

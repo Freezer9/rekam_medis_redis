@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:rekam_medis_redis/widget/data_pasien_bella.dart';
 
 void main() {
-  runApp(const MainApp());
+  runApp(TestMainApp());
 }
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+class TestMainApp extends StatelessWidget {
+  const TestMainApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
-    );
-  }
+      title: 'KonsulDok',
+      debugShowCheckedModeBanner: false,
+      home: DataPasien(),
+      );
+    }
 }
