@@ -34,10 +34,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 20,
-              vertical: 30,
-            ),
+            padding: const EdgeInsets.only(left: 35, right: 35, top: 50),
             child: Form(
               key: _formKey,
               autovalidateMode: _autovalidateMode,
@@ -62,34 +59,32 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                       _passwordCtrl, 'Password', 'Please enter your password',
                       obscureText: true),
                   const SizedBox(height: 20),
-                  SizedBox(
-                    child: TextButton(
-                      style: TextButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        backgroundColor: const Color(0xFF5195D6),
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 12,
-                          horizontal: 80,
-                        ),
+                  TextButton(
+                    style: TextButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
                       ),
-                      onPressed: _isSubmitting
-                          ? null
-                          : () {
-                              if (_formKey.currentState!.validate()) {
-                                _signIn(widget.role);
-                              } else {
-                                setState(() {
-                                  _autovalidateMode = AutovalidateMode.always;
-                                });
-                              }
-                            },
-                      child: const Text(
-                        'Login',
-                        style: TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.w500),
+                      backgroundColor: const Color(0xFF5195D6),
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 12,
+                        horizontal: 80,
                       ),
+                    ),
+                    onPressed: _isSubmitting
+                        ? null
+                        : () {
+                            if (_formKey.currentState!.validate()) {
+                              _signIn(widget.role);
+                            } else {
+                              setState(() {
+                                _autovalidateMode = AutovalidateMode.always;
+                              });
+                            }
+                          },
+                    child: const Text(
+                      'Login',
+                      style: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.w500),
                     ),
                   ),
                 ],

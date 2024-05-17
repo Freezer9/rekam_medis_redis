@@ -33,7 +33,7 @@ class _DetailRiwayatPageState extends State<DetailRiwayatPage> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.only(left: 28, right: 28),
+          padding: const EdgeInsets.only(left: 35, right: 35),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

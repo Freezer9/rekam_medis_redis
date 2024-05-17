@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rekam_medis_redis/data/faker/pasien.dart';
@@ -19,15 +20,13 @@ class RiwayatPasienPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text("Riwayat Rekam Medis"),
-        leading: BackButton(
-          onPressed: () => Navigator.pop(context),
-        ),
+        title:
+            const Text("Riwayat Rekam Medis", style: TextStyle(fontSize: 18)),
         elevation: 3,
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          padding: const EdgeInsets.only(left: 35, right: 35),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -38,7 +37,7 @@ class RiwayatPasienPage extends StatelessWidget {
                 child: _buildProfileInfo(),
               ),
               const Padding(
-                padding: EdgeInsets.only(top: 20, left: 25),
+                padding: EdgeInsets.only(top: 20),
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
@@ -47,8 +46,7 @@ class RiwayatPasienPage extends StatelessWidget {
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+              SizedBox(
                 child: Column(
                   children: filteredPatients.map((data) {
                     return GestureDetector(

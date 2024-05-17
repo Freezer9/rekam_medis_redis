@@ -1,39 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:rekam_medis_redis/presentation/pages/dashboard/dashboard_dokter_page.dart';
 
 class ProfileDokterPage extends StatelessWidget {
-  const ProfileDokterPage({super.key});
+  final Map<String, dynamic> data;
+  const ProfileDokterPage({
+    super.key,
+    required this.data,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         title: const Text(
           "Profile",
+          style: TextStyle(fontSize: 18),
         ),
         backgroundColor: const Color(0xFFA2C9FE),
         centerTitle: true,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => const DashboardDokterPage()),
-            );
-          },
-          icon: const Icon(
-            Icons.arrow_back,
-            color: Colors.black,
-          ),
-        ),
       ),
       body: Stack(
         alignment: Alignment.center,
         children: [
           Column(
             children: [
-              Container(
+              SizedBox(
                 width: double.infinity,
                 child: Image.asset(
                   "assets/images/background.png",
@@ -41,7 +31,7 @@ class ProfileDokterPage extends StatelessWidget {
                 ),
               ),
               Container(
-                width: width * 0.9,
+                margin: const EdgeInsets.only(left: 35, right: 35),
                 decoration: BoxDecoration(
                     border:
                         Border.all(width: 1.0, color: const Color(0xffC3C6CF)),
@@ -57,13 +47,11 @@ class ProfileDokterPage extends StatelessWidget {
                 padding: const EdgeInsets.all(25.0),
                 child: Column(
                   children: [
-                    buildTextField('Nama', 'assets/icons/profile.png', 'Faris'),
-                    buildTextField('NRP', 'assets/icons/nrp.png', '3122600044'),
+                    buildTextField(
+                        'Nama', 'assets/icons/profile.png', data['nama']!),
+                    buildTextField('SIP', 'assets/icons/nrp.png', data['sip']),
                     buildTextField('Tanggal Lahir', 'assets/icons/tanggal.png',
-                        'Jepang, 08 Februari 2004'),
-                    buildTextField('Program Studi', 'assets/icons/prodi.png',
-                        'D4 Teknik Mekatronika'),
-                    buildTextField('Angkatan', 'assets/icons/time.png', '2021'),
+                        data['ttl']),
                   ],
                 ),
               ),
@@ -103,24 +91,22 @@ class ProfileDokterPage extends StatelessWidget {
   Widget buildTextField(String labelText, String iconPath, String data) {
     TextEditingController controller = TextEditingController(text: data);
 
-    return Container(
-      child: SizedBox(
-        child: Padding(
-          padding: const EdgeInsets.only(bottom: 30),
-          child: TextField(
-            style: const TextStyle(
-                color: Colors.black, fontWeight: FontWeight.w500),
-            controller: controller,
-            readOnly: true,
-            decoration: InputDecoration(
-              labelText: labelText,
-              prefixIcon: Image.asset(iconPath, width: 24, height: 24),
-              enabledBorder: const UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.black),
-                borderRadius: BorderRadius.horizontal(left: Radius.zero),
-              ),
-              contentPadding: const EdgeInsets.only(left: 15),
+    return SizedBox(
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 30),
+        child: TextField(
+          style:
+              const TextStyle(color: Colors.black, fontWeight: FontWeight.w500),
+          controller: controller,
+          readOnly: true,
+          decoration: InputDecoration(
+            labelText: labelText,
+            prefixIcon: Image.asset(iconPath, width: 24, height: 24),
+            enabledBorder: const UnderlineInputBorder(
+              borderSide: BorderSide(color: Colors.black),
+              borderRadius: BorderRadius.horizontal(left: Radius.zero),
             ),
+            contentPadding: const EdgeInsets.only(left: 15),
           ),
         ),
       ),
