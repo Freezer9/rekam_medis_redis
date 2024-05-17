@@ -1,16 +1,13 @@
-// ignore_for_file: library_private_types_in_public_api
-
 import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:path/path.dart' as path;
+import 'package:rekam_medis_redis/presentation/pages/user/admin/file_input.dart';
 import 'package:rekam_medis_redis/presentation/widgets/selected_file_widget.dart';
 import 'package:rekam_medis_redis/presentation/widgets/unselected_file_widget.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:gpassword/gpassword.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 class InputData extends StatefulWidget {
   const InputData({super.key});
@@ -74,8 +71,8 @@ class _InputDataState extends State<InputData> {
         ),
       ),
       floatingActionButton: Container(
-        width: 320, // Sesuaikan dengan lebar SelectedFile
-        margin: const EdgeInsets.all(20), // Atur margin sesuai kebutuhan
+        width: 320,
+        margin: const EdgeInsets.all(20),
         child: ElevatedButton(
           onPressed: () {
             _selectedFiles.isNotEmpty ? _saveFiles() : null;
@@ -194,6 +191,7 @@ class _InputDataState extends State<InputData> {
           final auth = await _client.auth.admin.createUser(AdminUserAttributes(
             email: records[i]["email"],
             password: password,
+            emailConfirm: true, 
           ));
 
           records[i]["id"] = auth.user!.id;
@@ -205,49 +203,35 @@ class _InputDataState extends State<InputData> {
 
           print(records[i]);
         }
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+              title: const Text('Sukses'),
+              content: const Text('File berhasil diSimpan'),
+              actions: [
+                TextButton(
+                  onPressed: () async {
+                    Navigator.pop(context);
+                    setState(() {
+                      _selectedFiles.clear();
+                    });
+                    try {
+                      final csvContent = _convertToCSV(records);
+                      FileStorage.writeCounter(csvContent, 'user_data.csv');
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                            content: Text('File User_Data berhasil disimpan')),
+                      );
+                    } catch (e) {
+                      print('Gagal download file: $e');
+                    }
+                  },
+                  child: const Text('OK'),
+                ),
+              ]),
+        );
       }
-
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-            title: const Text('Success'),
-            content: const Text('File berhasil diSimpan'),
-            actions: [
-              TextButton(
-                onPressed: () async {
-                  Navigator.pop(context);
-                  setState(() {
-                    _selectedFiles.clear();
-                  });
-                  try {
-                    final userData = await _fetchUserData();
-                    final csvContent = _convertToCSV(userData);
-                    await _downloadFile(csvContent, 'user_data.csv');
-                  } catch (e) {
-                    print('Error downloading file: $e');
-                  }
-                },
-                child: const Text('OK'),
-              ),
-            ]),
-      );
     }
-  }
-
-  Future<List<Map<String, dynamic>>> _fetchUserData() async {
-    final _client = Supabase.instance.client;
-
-    final List<User> users = await _client.auth.admin.listUsers();
-    if (users == null) {
-      throw Exception('Error fetching user data');
-    }
-    List<Map<String, dynamic>> userData = users.map((user) {
-      return {
-        'email': user.email,
-      };
-    }).toList();
-
-    return userData;
   }
 
   String _convertToCSV(List<Map<String, dynamic>> data) {
@@ -261,15 +245,17 @@ class _InputDataState extends State<InputData> {
     return '$headers\n$rows';
   }
 
-  Future<void> _downloadFile(String content, String filename) async {
-    final status = await Permission.storage.request();
-    if (status.isGranted) {
-      final directory = await getExternalStorageDirectory();
-      final file = File('${directory!.path}/$filename');
-      await file.writeAsString(content);
-
-    } else {
-      throw Exception('Storage permission denied');
-    }
-  }
+  // Future<void> _downloadFile(String content, String filename) async {
+  //   final status = await Permission.storage.request();
+  //   if (status.isGranted) {
+  //     final directory = await getExternalStorageDirectory();
+  //     final file = File('${directory!.path}/$filename');
+  //     await file.writeAsString(content);
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBar(content: Text('File berhasil disimpan: ${file.path}')),
+  //     );
+  //   } else {
+  //     throw Exception('Akses penyimpanan ditolak');
+  //   }
+  // }
 }
