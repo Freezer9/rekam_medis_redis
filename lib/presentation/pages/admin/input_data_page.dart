@@ -9,14 +9,14 @@ import 'package:rekam_medis_redis/presentation/widgets/unselected_file_widget.da
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:gpassword/gpassword.dart';
 
-class InputData extends StatefulWidget {
-  const InputData({super.key});
+class InputDataUserPage extends StatefulWidget {
+  const InputDataUserPage({super.key});
 
   @override
-  _InputDataState createState() => _InputDataState();
+  _InputDataUserPageState createState() => _InputDataUserPageState();
 }
 
-class _InputDataState extends State<InputData> {
+class _InputDataUserPageState extends State<InputDataUserPage> {
   final List<File> _selectedFiles = [];
 
   @override

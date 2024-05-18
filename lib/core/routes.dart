@@ -2,6 +2,7 @@ import 'package:go_router/go_router.dart';
 import 'package:rekam_medis_redis/auth/view/login.dart';
 import 'package:rekam_medis_redis/auth/view/select_login.dart';
 import 'package:rekam_medis_redis/presentation/pages/admin/data_user_page.dart';
+import 'package:rekam_medis_redis/presentation/pages/dokter/input_data_page.dart';
 import 'package:rekam_medis_redis/presentation/pages/dokter/profile_dokter_page.dart';
 import 'package:rekam_medis_redis/presentation/pages/admin/input_data_page.dart';
 import 'package:rekam_medis_redis/presentation/pages/home_page.dart';
@@ -38,8 +39,8 @@ final _routes = GoRouter(
       ),
     ),
     GoRoute(
-      path: '/inputdata',
-      builder: (context, state) => const InputData(),
+      path: '/input-data',
+      builder: (context, state) => const InputDataUserPage(),
     ),
     GoRoute(
       path: '/detail-pasien',
@@ -57,9 +58,7 @@ final _routes = GoRouter(
     ),
     GoRoute(
       path: '/profile-user',
-      builder: (context, state) {
-        return const ProfileUserPage();
-      },
+      builder: (context, state) => const ProfileUserPage(),
     ),
     GoRoute(
       path: '/riwayat-pasien',
@@ -82,6 +81,10 @@ final _routes = GoRouter(
         final data = state.extra as Map<String, dynamic>;
         return DataUserPage(data: data);
       },
+    ),
+    GoRoute(
+      path: '/input-data-pasien',
+      builder: (context, state) => const InputDataMedisPage(),
     ),
   ],
 );
