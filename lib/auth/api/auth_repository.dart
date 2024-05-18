@@ -65,6 +65,17 @@ class AuthRepository {
   }) async {
     return await _client.auth
         .signInWithPassword(email: email, password: password);
+
+    // final checkTableMahasiswa =
+    //     await _client.from('mahasiswa').select().match({'id': data.user!.id});
+    // final checkTableDosen =
+    //     await _client.from('dosen').select().match({'id': data.user!.id});
+
+    // if (checkTableMahasiswa.isEmpty && checkTableDosen.isEmpty) {
+    //   return data;
+    // } else {
+    //   throw AuthApiException('Invalid login credentials');
+    // }
   }
 
   Future<void> signOut() => _client.auth.signOut();

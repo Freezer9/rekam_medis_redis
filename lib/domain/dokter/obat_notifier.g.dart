@@ -6,7 +6,7 @@ part of 'obat_notifier.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$obatNotifierHash() => r'2d076e3f1a3c9cdc37e211b3615d7f75fbb02d9a';
+String _$obatNotifierHash() => r'c7adb455f730a67a336afd8bb3a7df97987e0a39';
 
 /// See also [ObatNotifier].
 @ProviderFor(ObatNotifier)

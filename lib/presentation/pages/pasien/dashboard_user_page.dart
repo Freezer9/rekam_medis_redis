@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:rekam_medis_redis/auth/auth.dart';
 import 'package:rekam_medis_redis/data/faker/artikel.dart';
 import 'package:rekam_medis_redis/data/faker/pasien.dart';
-import 'package:rekam_medis_redis/presentation/pages/profile/profile_user_page.dart';
+import 'package:rekam_medis_redis/presentation/pages/pasien/profile_user_page.dart';
 import 'package:rekam_medis_redis/presentation/widgets/artikel_widget.dart';
 import 'package:rekam_medis_redis/presentation/widgets/patients_widget.dart';
 

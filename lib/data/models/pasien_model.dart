@@ -37,4 +37,30 @@ class PasienModel extends PasienEntity {
       createdAt: json['createdAt'],
     );
   }
+
+  Map<String, dynamic> toMahasiswaJson() {
+    return {
+      'id': id,
+      'nrp': nrpOrNip,
+      'email': email,
+      'nama': nama,
+      'prodi': prodiOrDepartemen,
+      'ttl': ttl,
+      'tahun': tahun,
+      'createdAt': createdAt,
+    };
+  }
+
+  Map<String, dynamic> toDosenJson() {
+    return {
+      'id': id,
+      'nip': nrpOrNip,
+      'email': email,
+      'nama': nama,
+      'departemen': prodiOrDepartemen,
+      'ttl': ttl,
+      'tahun': tahun,
+      'createdAt': createdAt,
+    };
+  }
 }
