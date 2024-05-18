@@ -50,18 +50,17 @@ class PasienCard extends StatelessWidget {
                 Text(
                   data['name']!,
                   style: const TextStyle(
-                    color: Color.fromRGBO(25, 28, 32, 1),
-                    fontFamily: 'Plus Jakarta Sans',
-                    fontSize: 15,
-                  ),
+                      color: Color.fromRGBO(25, 28, 32, 1),
+                      fontFamily: 'Plus Jakarta Sans',
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold),
                 ),
-                const SizedBox(height: 5),
                 Text(
                   data['id']!,
                   style: const TextStyle(
                     color: Color.fromRGBO(67, 71, 78, 1),
                     fontFamily: 'Plus Jakarta Sans',
-                    fontSize: 12,
+                    fontSize: 14,
                   ),
                 ),
                 Text(
@@ -69,7 +68,7 @@ class PasienCard extends StatelessWidget {
                   style: const TextStyle(
                     color: Color.fromRGBO(67, 71, 78, 1),
                     fontFamily: 'Plus Jakarta Sans',
-                    fontSize: 12,
+                    fontSize: 14,
                   ),
                 ),
               ],

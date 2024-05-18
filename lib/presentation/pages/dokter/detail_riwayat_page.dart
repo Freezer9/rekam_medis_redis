@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:rekam_medis_redis/core/themes.dart';
+import 'package:rekam_medis_redis/themes.dart';
 import 'package:rekam_medis_redis/data/faker/catatan.dart';
 
 class DetailRiwayatPage extends StatefulWidget {
@@ -33,7 +33,7 @@ class _DetailRiwayatPageState extends State<DetailRiwayatPage> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.only(left: 28, right: 28),
+          padding: const EdgeInsets.only(left: 35, right: 35),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

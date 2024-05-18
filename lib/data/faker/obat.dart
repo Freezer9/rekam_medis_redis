@@ -1,36 +1,39 @@
-final List<Map<String, String>> obat = [
-  {
-    'name': 'Paracetamol',
-    'tipe': 'tablet',
-    'penggunaan': 'tablet' 
-  },
-  {
-    'name': 'Ibuprofen',
-    'tipe': 'kapsul',
-    'penggunaan': 'kapsul' 
-  },
-  
-  {
-    'name': 'Amoxicillin Suspension',
-    'tipe': 'botol',
-    'penggunaan': 'sendok' 
-  },
-  
-  {
-    'name': 'Doxycycline',
-    'tipe': 'kapsul',
-    'penggunaan': 'kapsul' 
-  },
-  
-  {
-    'name': 'Cetirizine',
-    'tipe': 'tablet',
-    'penggunaan': 'tablet' 
-  },
-  
-  {
-    'name': 'Natrium Klorida Tetes Mata',
-    'tipe': 'botol',
-    'penggunaan': 'tetes' 
-  }
-];
+final Map<String, List<String>> obat = {
+  "name": [
+    "Paracetamol",
+    "Amoxicillin",
+    "Omeprazole",
+    "Ibuprofen",
+    "Azithromycin",
+    "Metformin",
+    "Losartan",
+    "Atorvastatin",
+    "Simvastatin",
+    "Levothyroxine",
+    "Metoprolol",
+    "Amlodipine",
+    "Hydrochlorothiazide",
+    "Lisinopril",
+    "Albuterol",
+    "Gabapentin",
+    "Furosemide",
+    "Tramadol",
+    "Sertraline",
+    "Trazodone",
+  ],
+  "tipe": [
+    "Tablet",
+    "Kapsul",
+    "Sirup",
+    "Salep",
+    "Tetes",
+    "Pil",
+  ],
+  "penggunaan": [
+    "Diminum",
+    "Dioles",
+    "Ditetes",
+    "Dimakan",
+    "Dihirup",
+  ],
+};

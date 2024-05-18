@@ -15,44 +15,48 @@ class AuthRepository {
     required String username,
     required String password,
   }) async {
-    final result = await _client.auth
-        .signInWithPassword(email: username, password: password);
+    return await _client.auth
+        .signInWithPassword(email: username, password: password)
+        .then((value) async {
+      final checkTableMahasiswa = await _client
+          .from('mahasiswa')
+          .select()
+          .match({'id': value.user!.id});
 
-    final checkTableMahasiswa =
-        await _client.from('mahasiswa').select().match({'id': result.user!.id});
-
-    if (checkTableMahasiswa.isNotEmpty) {
-      result.user?.userMetadata?.addAll(checkTableMahasiswa.first);
-      return result;
-    } else {
-      final checkTableDosen =
-          await _client.from('dosen').select().match({'id': result.user!.id});
-
-      if (checkTableDosen.isNotEmpty) {
-        result.user?.userMetadata?.addAll(checkTableDosen.first);
-        return result;
+      if (checkTableMahasiswa.isNotEmpty) {
+        value.user?.userMetadata?.addAll(checkTableMahasiswa.first);
+        return value;
       } else {
-        throw AuthApiException('User not found');
+        final checkTableDosen =
+            await _client.from('dosen').select().match({'id': value.user!.id});
+
+        if (checkTableDosen.isNotEmpty) {
+          value.user?.userMetadata?.addAll(checkTableDosen.first);
+          return value;
+        } else {
+          throw AuthApiException('Invalid login credentials');
+        }
       }
-    }
+    });
   }
 
   Future<AuthResponse> signInDokter({
     required String email,
     required String password,
   }) async {
-    final result =
-        await _client.auth.signInWithPassword(email: email, password: password);
+    return await _client.auth
+        .signInWithPassword(email: email, password: password)
+        .then((value) async {
+      final checkTableDokter =
+          await _client.from('dokter').select().match({'id': value.user!.id});
 
-    final checkTableDokter =
-        await _client.from('dokter').select().match({'id': result.user!.id});
-
-    if (checkTableDokter.isNotEmpty) {
-      result.user?.userMetadata?.addAll(checkTableDokter.first);
-      return result;
-    } else {
-      throw AuthApiException('User not found');
-    }
+      if (checkTableDokter.isNotEmpty) {
+        value.user?.userMetadata?.addAll(checkTableDokter.first);
+        return value;
+      } else {
+        throw AuthApiException('Invalid login credentials');
+      }
+    });
   }
 
   Future<AuthResponse> signInAdmin({
@@ -61,6 +65,17 @@ class AuthRepository {
   }) async {
     return await _client.auth
         .signInWithPassword(email: email, password: password);
+
+    // final checkTableMahasiswa =
+    //     await _client.from('mahasiswa').select().match({'id': data.user!.id});
+    // final checkTableDosen =
+    //     await _client.from('dosen').select().match({'id': data.user!.id});
+
+    // if (checkTableMahasiswa.isEmpty && checkTableDosen.isEmpty) {
+    //   return data;
+    // } else {
+    //   throw AuthApiException('Invalid login credentials');
+    // }
   }
 
   Future<void> signOut() => _client.auth.signOut();

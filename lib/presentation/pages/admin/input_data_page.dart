@@ -1,9 +1,9 @@
-import 'dart:async';
+// ignore_for_file: library_private_types_in_public_api
+
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:path/path.dart' as path;
-import 'package:rekam_medis_redis/presentation/pages/user/admin/file_input.dart';
 import 'package:rekam_medis_redis/presentation/widgets/selected_file_widget.dart';
 import 'package:rekam_medis_redis/presentation/widgets/unselected_file_widget.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -25,7 +25,7 @@ class _InputDataState extends State<InputData> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: const Text(
-          "Input Data",
+          "Input Data Dokter",
           textAlign: TextAlign.center,
           style: TextStyle(
               color: Colors.black, fontSize: 16, fontWeight: FontWeight.w500),
@@ -71,8 +71,8 @@ class _InputDataState extends State<InputData> {
         ),
       ),
       floatingActionButton: Container(
-        width: 320,
-        margin: const EdgeInsets.all(20),
+        width: 320, // Sesuaikan dengan lebar SelectedFile
+        margin: const EdgeInsets.all(20), // Atur margin sesuai kebutuhan
         child: ElevatedButton(
           onPressed: () {
             _selectedFiles.isNotEmpty ? _saveFiles() : null;
@@ -168,7 +168,8 @@ class _InputDataState extends State<InputData> {
       final _client = Supabase.instance.client;
       final records = <Map<String, dynamic>>[];
 
-      for (File file in _selectedFiles) {
+      // Implementasi logika penyimpanan file
+      _selectedFiles.forEach((file) async {
         final input = File(file.path).readAsLinesSync();
 
         for (int i = 1; i < input.length; i++) {
@@ -191,7 +192,6 @@ class _InputDataState extends State<InputData> {
           final auth = await _client.auth.admin.createUser(AdminUserAttributes(
             email: records[i]["email"],
             password: password,
-            emailConfirm: true, 
           ));
 
           records[i]["id"] = auth.user!.id;
@@ -203,59 +203,8 @@ class _InputDataState extends State<InputData> {
 
           print(records[i]);
         }
-        showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-              title: const Text('Sukses'),
-              content: const Text('File berhasil diSimpan'),
-              actions: [
-                TextButton(
-                  onPressed: () async {
-                    Navigator.pop(context);
-                    setState(() {
-                      _selectedFiles.clear();
-                    });
-                    try {
-                      final csvContent = _convertToCSV(records);
-                      FileStorage.writeCounter(csvContent, 'user_data.csv');
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                            content: Text('File User_Data berhasil disimpan')),
-                      );
-                    } catch (e) {
-                      print('Gagal download file: $e');
-                    }
-                  },
-                  child: const Text('OK'),
-                ),
-              ]),
-        );
-      }
+      });
     }
   }
-
-  String _convertToCSV(List<Map<String, dynamic>> data) {
-    if (data.isEmpty) return '';
-
-    final headers = data.first.keys.join(',');
-    final rows = data.map((row) {
-      return row.values.map((value) => value.toString()).join(',');
-    }).join('\n');
-
-    return '$headers\n$rows';
-  }
-
-  // Future<void> _downloadFile(String content, String filename) async {
-  //   final status = await Permission.storage.request();
-  //   if (status.isGranted) {
-  //     final directory = await getExternalStorageDirectory();
-  //     final file = File('${directory!.path}/$filename');
-  //     await file.writeAsString(content);
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       SnackBar(content: Text('File berhasil disimpan: ${file.path}')),
-  //     );
-  //   } else {
-  //     throw Exception('Akses penyimpanan ditolak');
-  //   }
-  // }
 }
+
