@@ -9,7 +9,6 @@ class SearchUserPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final data = ref.watch(searchNotifierProvider);
-    final searchController = TextEditingController();
     return Scaffold(
         appBar: AppBar(
           title: const Text('Search User'),
@@ -21,7 +20,7 @@ class SearchUserPage extends ConsumerWidget {
             children: [
               const SizedBox(height: 10),
               TextField(
-                controller: searchController,
+                controller: TextEditingController(),
                 onSubmitted: (value) async {
                   ref.read(searchNotifierProvider.notifier).searchUser(value);
                 },

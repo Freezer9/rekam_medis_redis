@@ -126,7 +126,7 @@ class DashboardAdminPage extends ConsumerWidget {
                                   ),
                                   const SizedBox(height: 10),
                                   const Text(
-                                    'Input data Pasien',
+                                    'Input Data Pasien',
                                     style: TextStyle(
                                       color: Color(0xFF38608F),
                                     ),
@@ -155,7 +155,7 @@ class DashboardAdminPage extends ConsumerWidget {
                                   ),
                                   const SizedBox(height: 10),
                                   const Text(
-                                    'Input data Dokter',
+                                    'Input Data Dokter',
                                     style: TextStyle(
                                       color: Color(0xFF38608F),
                                     ),

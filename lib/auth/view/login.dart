@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:rekam_medis_redis/auth/auth.dart';
+import 'package:rekam_medis_redis/core/utils.dart';
 import 'package:rekam_medis_redis/data/enums/role.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -134,7 +134,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         .read(authRepositoryProvider)
         .signInAdmin(email: _usernameCtrl.text, password: _passwordCtrl.text)
         .then((value) {
-      context.push('/home/${widget.role.index}');
+      context.clearAndNavigate('/home/${widget.role.index}');
     }).catchError((error) {
       if (error is AuthApiException) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -152,9 +152,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         .signInPasien(
             username: _usernameCtrl.text, password: _passwordCtrl.text)
         .then((value) {
-      context.push(
-        '/home/${widget.role.index}',
-      );
+      context.clearAndNavigate('/home/${widget.role.index}');
     }).catchError((error) {
       if (error is AuthApiException) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -171,7 +169,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         .read(authRepositoryProvider)
         .signInDokter(email: _usernameCtrl.text, password: _passwordCtrl.text)
         .then((value) {
-      context.push('/home/${widget.role.index}');
+      context.clearAndNavigate('/home/${widget.role.index}');
     }).catchError((error) {
       if (error is AuthApiException) {
         ScaffoldMessenger.of(context).showSnackBar(

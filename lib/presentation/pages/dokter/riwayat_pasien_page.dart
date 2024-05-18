@@ -63,7 +63,7 @@ class RiwayatPasienPage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          context.push('/input-obat', extra: data);
+          context.push('/input-data-pasien');
         },
         backgroundColor: const Color(0xFFD2E4FF),
         elevation: 4,

@@ -22,6 +22,7 @@ class MainApp extends ConsumerWidget {
       title: "Supabase Flutter",
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        fontFamily: 'Plus Jakarta Sans',
         primarySwatch: Colors.blue,
       ),
       routerConfig: routes,

@@ -4,7 +4,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:path/path.dart' as path;
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:gpassword/gpassword.dart';
-import 'package:rekam_medis_redis/presentation/pages/admin/file_input.dart';
+import 'package:rekam_medis_redis/domain/admin/file_input.dart';
 
 class FileHandler {
   Future<List<File>> pickFiles() async {

@@ -2,12 +2,7 @@ import 'dart:io';
 import 'package:rekam_medis_redis/presentation/widgets/selected_file_widget.dart';
 import 'package:rekam_medis_redis/presentation/widgets/unselected_file_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:rekam_medis_redis/presentation/pages/admin/file_handler.dart';
-// import 'package:rekam_medis_redis/presentation/pages/admin/file_input.dart';
-// import 'package:file_picker/file_picker.dart';
-// import 'package:path/path.dart' as path;
-// import 'package:supabase_flutter/supabase_flutter.dart';
-// import 'package:gpassword/gpassword.dart';
+import 'package:rekam_medis_redis/domain/admin/file_handler.dart';
 
 class InputData extends StatefulWidget {
   final String data;
