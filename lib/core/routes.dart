@@ -39,8 +39,11 @@ final _routes = GoRouter(
       ),
     ),
     GoRoute(
-      path: '/input-data',
-      builder: (context, state) => const InputDataUserPage(),
+      path: '/inputdata',
+      builder: (context, state) {
+        final data = state.extra as String;
+        return InputData(data: data);
+      },
     ),
     GoRoute(
       path: '/detail-pasien',
