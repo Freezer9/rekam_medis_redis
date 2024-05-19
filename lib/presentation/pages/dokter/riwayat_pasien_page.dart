@@ -22,7 +22,9 @@ class RiwayatPasienPage extends StatelessWidget {
         centerTitle: true,
         title:
             const Text("Riwayat Rekam Medis", style: TextStyle(fontSize: 18)),
-        elevation: 3,
+        backgroundColor: Colors.white,
+        shadowColor: Colors.black,
+        elevation: 1,
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -80,7 +82,7 @@ class RiwayatPasienPage extends StatelessWidget {
     return Container(
       width: 130,
       height: 130,
-      margin: const EdgeInsets.only(bottom: 20),
+      margin: const EdgeInsets.only(bottom: 20, top: 20),
       decoration: BoxDecoration(
         border: Border.all(width: 2),
         boxShadow: const [

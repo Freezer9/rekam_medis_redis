@@ -13,7 +13,6 @@ class DashboardDokterPage extends ConsumerWidget {
     final data = ref.watch(authUserProvider).asData?.value;
 
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
           Positioned.fill(

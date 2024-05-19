@@ -17,3 +17,18 @@ class ListNotifier extends StateNotifier<List<String>> {
     state = [];
   }
 }
+
+final keluhanProvider =
+    StateNotifierProvider<ListNotifier, List<String>>((ref) {
+  return ListNotifier();
+});
+
+final riwayatPenyakitProvider =
+    StateNotifierProvider<ListNotifier, List<String>>((ref) {
+  return ListNotifier();
+});
+
+final diagnosisProvider =
+    StateNotifierProvider<ListNotifier, List<String>>((ref) {
+  return ListNotifier();
+});
