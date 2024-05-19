@@ -72,8 +72,11 @@ class DashboardDokterPage extends ConsumerWidget {
                         borderRadius: BorderRadius.circular(10),
                         color: const Color.fromRGBO(230, 234, 242, 1),
                       ),
-                      child: const TextField(
-                        decoration: InputDecoration(
+                      child: TextField(
+                        onTap: () {
+                          context.push('/search-pasien');
+                        },
+                        decoration: const InputDecoration(
                           hintText: 'Ini apa ya?',
                           border: InputBorder.none,
                           contentPadding: EdgeInsets.symmetric(vertical: 12),

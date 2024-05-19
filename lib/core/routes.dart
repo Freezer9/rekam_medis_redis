@@ -5,6 +5,7 @@ import 'package:rekam_medis_redis/presentation/pages/admin/data_user_page.dart';
 import 'package:rekam_medis_redis/presentation/pages/dokter/input_data_page.dart';
 import 'package:rekam_medis_redis/presentation/pages/dokter/profile_dokter_page.dart';
 import 'package:rekam_medis_redis/presentation/pages/admin/input_data_page.dart';
+import 'package:rekam_medis_redis/presentation/pages/dokter/search_pasien_page.dart';
 import 'package:rekam_medis_redis/presentation/pages/home_page.dart';
 import 'package:rekam_medis_redis/data/enums/role.dart';
 import 'package:rekam_medis_redis/presentation/pages/admin/search_user_page.dart';
@@ -66,8 +67,8 @@ final _routes = GoRouter(
     GoRoute(
       path: '/riwayat-pasien',
       builder: (context, state) {
-        final data = state.extra as Map<String, String>;
-        return RiwayatPasienPage(data: data);
+        final data = state.extra as Map<String, dynamic>;
+        return RiwayatPasienPage(user: data);
       },
     ),
     GoRoute(
@@ -77,6 +78,10 @@ final _routes = GoRouter(
     GoRoute(
       path: '/search-user',
       builder: (context, state) => const SearchUserPage(),
+    ),
+    GoRoute(
+      path: '/search-pasien',
+      builder: (context, state) => const SearchPasienPage(),
     ),
     GoRoute(
       path: '/data-user',
