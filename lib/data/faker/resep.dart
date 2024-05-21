@@ -128,3 +128,11 @@ final List<String> waktuPenggunaan = [
   "Sebelum Makan",
   "Sesudah Makan",
 ];
+
+final List<String> caraPenggunaan = [
+  "minum",
+  "oles",
+  "tetes",
+  "makan",
+  "hirup",
+];

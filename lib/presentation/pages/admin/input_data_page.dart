@@ -4,15 +4,15 @@ import 'package:rekam_medis_redis/presentation/widgets/unselected_file_widget.da
 import 'package:flutter/material.dart';
 import 'package:rekam_medis_redis/domain/admin/file_handler.dart';
 
-class InputData extends StatefulWidget {
+class InputDataPage extends StatefulWidget {
   final String data;
-  const InputData({super.key, required this.data});
+  const InputDataPage({super.key, required this.data});
 
   @override
-  _InputDataState createState() => _InputDataState();
+  _InputDataPageState createState() => _InputDataPageState();
 }
 
-class _InputDataState extends State<InputData> {
+class _InputDataPageState extends State<InputDataPage> {
   final List<File> _selectedFiles = [];
   final FileHandler _fileHandler = FileHandler();
 

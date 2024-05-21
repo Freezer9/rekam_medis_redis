@@ -11,8 +11,9 @@ import 'package:rekam_medis_redis/data/enums/role.dart';
 import 'package:rekam_medis_redis/presentation/pages/admin/search_user_page.dart';
 import 'package:rekam_medis_redis/presentation/pages/dokter/detail_riwayat_page.dart';
 import 'package:rekam_medis_redis/presentation/pages/dokter/riwayat_pasien_page.dart';
+import 'package:rekam_medis_redis/presentation/pages/pasien/lupa_password_page.dart';
 import 'package:rekam_medis_redis/presentation/pages/pasien/profile_user_page.dart';
-import 'package:rekam_medis_redis/presentation/pages/pasien/riwayat_medis_page.dart';
+import 'package:rekam_medis_redis/presentation/pages/pasien/search_riwayat_medis_page.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'routes.g.dart';
@@ -40,10 +41,10 @@ final _routes = GoRouter(
       ),
     ),
     GoRoute(
-      path: '/inputdata',
+      path: '/input-data',
       builder: (context, state) {
         final data = state.extra as String;
-        return InputData(data: data);
+        return InputDataPage(data: data);
       },
     ),
     GoRoute(
@@ -73,7 +74,7 @@ final _routes = GoRouter(
     ),
     GoRoute(
       path: '/riwayat-rekam-medis',
-      builder: (context, state) => const RiwayatRekamMedisPage(),
+      builder: (context, state) => const SearchRiwayatMedisPage(),
     ),
     GoRoute(
       path: '/search-user',
@@ -82,6 +83,10 @@ final _routes = GoRouter(
     GoRoute(
       path: '/search-pasien',
       builder: (context, state) => const SearchPasienPage(),
+    ),
+    GoRoute(
+      path: '/lupa-password',
+      builder: (context, state) => const LupaPasswordPage(),
     ),
     GoRoute(
       path: '/data-user',

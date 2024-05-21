@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ResetPasswordPage extends StatefulWidget {
+class LupaPasswordPage extends ConsumerStatefulWidget {
+  const LupaPasswordPage({super.key});
+
   @override
-  _ResetPasswordPageState createState() => _ResetPasswordPageState();
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _LupaPasswordPageState();
 }
 
-class _ResetPasswordPageState extends State<ResetPasswordPage> {
+class _LupaPasswordPageState extends ConsumerState<LupaPasswordPage> {
   final TextEditingController newPasswordController = TextEditingController();
   final TextEditingController confirmPasswordController =
       TextEditingController();
@@ -15,10 +19,11 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
+
     return Scaffold(
       appBar: AppBar(
-        title: Text("Lupa Password"),
-        backgroundColor: Color(0xFFA2C9FE),
+        title: const Text("Lupa Password"),
+        backgroundColor: const Color(0xFFA2C9FE),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -27,20 +32,21 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
           children: [
             Column(
               children: [
-                Container(
+                SizedBox(
                   width: double.infinity,
                   child: Image.asset(
-                    "assets/background.png",
+                    "assets/images/background.png",
                     fit: BoxFit.fill,
                   ),
                 ),
                 Container(
                   width: width * 0.9,
                   decoration: BoxDecoration(
-                    border: Border.all(width: 1.0, color: Color(0xffC3C6CF)),
+                    border:
+                        Border.all(width: 1.0, color: const Color(0xffC3C6CF)),
                     borderRadius: BorderRadius.circular(10),
                     color: Colors.white,
-                    boxShadow: [
+                    boxShadow: const [
                       BoxShadow(
                         spreadRadius: 0.2,
                         blurRadius: 2,
@@ -48,10 +54,10 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                       ),
                     ],
                   ),
-                  padding: EdgeInsets.all(25.0),
+                  padding: const EdgeInsets.all(25.0),
                   child: Column(
                     children: [
-                      Text(
+                      const Text(
                         "Atur Ulang Password-mu",
                         style: TextStyle(
                           fontSize: 20,
@@ -59,7 +65,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                           color: Colors.black,
                         ),
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       buildPasswordField(
                         'Masukkan Password Baru',
                         newPasswordController,
@@ -70,7 +76,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                           });
                         },
                       ),
-                      SizedBox(
+                      const SizedBox(
                           height:
                               20), // Menambahkan padding antara dua text fields
                       buildPasswordField(
@@ -83,27 +89,41 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                           });
                         },
                       ),
-                      SizedBox(height: 40),
-                      Container(
+                      const SizedBox(height: 40),
+                      SizedBox(
                         width: 290,
                         height: 40,
                         child: ElevatedButton.icon(
                           onPressed: () {
-                            // Assume password reset logic here is successful
-                            _showSuccessDialog();
+                            if (newPasswordController.text.isEmpty ||
+                                confirmPasswordController.text.isEmpty) {
+                              return;
+                            }
+
+                            if (newPasswordController.text !=
+                                confirmPasswordController.text) {
+                              return;
+                            }
+
+                            if (newPasswordController.text ==
+                                    confirmPasswordController.text &&
+                                newPasswordController.text.isNotEmpty &&
+                                confirmPasswordController.text.isNotEmpty) {
+                              _showSuccessDialog();
+                            }
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor:
-                                Color(0xFFFCE186), // Background color
+                                const Color(0xFFFCE186), // Background color
                             foregroundColor: Colors.black, // Text color
-                            minimumSize: Size(280, 40), // Button size
+                            minimumSize: const Size(280, 40), // Button size
                             shape: RoundedRectangleBorder(
                               borderRadius:
                                   BorderRadius.circular(25), // Rounded button
                             ),
                           ),
-                          icon: Icon(Icons.lock_reset),
-                          label: Text(
+                          icon: const Icon(Icons.lock_reset),
+                          label: const Text(
                             'PERBARUI PASSWORD',
                             style: TextStyle(
                               fontSize: 13,
@@ -136,7 +156,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                         ),
                       ],
                       shape: BoxShape.circle,
-                      image: DecorationImage(
+                      image: const DecorationImage(
                         fit: BoxFit.cover,
                         image: NetworkImage(
                           'https://cdn.pixabay.com/photo/2024/01/25/03/16/capuchin-monkey-8530884_640.jpg',
@@ -152,7 +172,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                       shape: BoxShape.circle,
                     ),
                   ),
-                  Icon(Icons.lock,
+                  const Icon(Icons.lock,
                       color: Color.fromARGB(255, 89, 57, 137), size: 80),
                 ],
               ),
@@ -170,18 +190,18 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
       children: [
         Text(
           labelText,
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.w300, // Menjadi lebih tipis
             fontSize: 14,
           ),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Container(
           width: 280,
           height: 40,
           decoration: BoxDecoration(
-            color: Color(0xFFF3F3F3),
+            color: const Color(0xFFF3F3F3),
             borderRadius: BorderRadius.circular(10),
             boxShadow: [
               BoxShadow(
@@ -196,7 +216,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
             obscureText: obscureText,
             decoration: InputDecoration(
               contentPadding:
-                  EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+                  const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
               border: InputBorder.none,
               suffixIcon: IconButton(
                 icon:
@@ -206,7 +226,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                 },
               ),
             ),
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 14,
               color: Colors.black,
             ),
@@ -220,7 +240,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return Container(
+        return SizedBox(
           width: 400,
           child: Dialog(
             shape: RoundedRectangleBorder(
@@ -229,18 +249,10 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
             child: Container(
               width: 320,
               height: 180,
-              padding: EdgeInsets.all(25),
+              padding: const EdgeInsets.all(25),
               child: Column(
                 children: [
-                  Container(
-                    width: 320,
-                    height: 10,
-                    child: Image.asset(
-                      "assets/background.png",
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                  Row(
+                  const Row(
                     children: [
                       Icon(Icons.lock_person, size: 60, color: Colors.black),
                       SizedBox(width: 5),
@@ -266,8 +278,8 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 20),
-                  Container(
+                  const SizedBox(height: 20),
+                  SizedBox(
                     width: 280,
                     height: 40,
                     child: ElevatedButton.icon(
@@ -276,15 +288,15 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                         // Navigate to login page
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFFFCE186),
+                        backgroundColor: const Color(0xFFFCE186),
                         foregroundColor: Colors.black,
-                        minimumSize: Size(280, 30),
+                        minimumSize: const Size(280, 30),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(25),
                         ),
                       ),
-                      icon: Icon(Icons.login),
-                      label: Text(
+                      icon: const Icon(Icons.login),
+                      label: const Text(
                         'MASUK',
                         style: TextStyle(
                           fontSize: 12,

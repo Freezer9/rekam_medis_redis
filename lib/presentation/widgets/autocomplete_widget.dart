@@ -13,9 +13,6 @@ Widget autoCompleteTextField(List<String> data, Function(String) onSelected) {
     displayStringForOption: (option) {
       return option;
     },
-    onSelected: (selectedOption) {
-      onSelected(selectedOption);
-    },
     fieldViewBuilder:
         (context, textEditingController, focusNode, onFieldSubmitted) {
       return TextField(
@@ -32,7 +29,6 @@ Widget autoCompleteTextField(List<String> data, Function(String) onSelected) {
         onSubmitted: (value) {
           if (value.isNotEmpty) {
             onSelected(value);
-
             textEditingController.clear();
           }
         },

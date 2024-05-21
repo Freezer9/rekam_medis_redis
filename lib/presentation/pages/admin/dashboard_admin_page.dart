@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:rekam_medis_redis/auth/auth.dart';
 
 class DashboardAdminPage extends ConsumerWidget {
   const DashboardAdminPage({super.key});
@@ -109,7 +108,7 @@ class DashboardAdminPage extends ConsumerWidget {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            context.push('/inputdata', extra: 'Pasien');
+                            context.push('/input-data', extra: 'Pasien');
                           },
                           child: Card(
                             color: const Color(0xFFD2E4FF),
@@ -167,13 +166,6 @@ class DashboardAdminPage extends ConsumerWidget {
                         ),
                       ],
                     ),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      ref.read(authRepositoryProvider).signOut();
-                      Navigator.pop(context);
-                    },
-                    child: const Text('Sign Out'),
                   ),
                 ],
               ),

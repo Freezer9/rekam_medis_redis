@@ -26,6 +26,15 @@ class _InputDataPageState extends ConsumerState<InputDataMedisPage> {
           'Input Data Pasien',
           style: TextStyle(fontSize: 18),
         ),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: primarycolor),
+          onPressed: () {
+            ref.read(keluhanProvider.notifier).clearItems();
+            ref.read(riwayatPenyakitProvider.notifier).clearItems();
+            ref.read(diagnosisProvider.notifier).clearItems();
+            Navigator.pop(context);
+          },
+        ),
         centerTitle: true,
         backgroundColor: Colors.white,
         shadowColor: Colors.black,
@@ -50,8 +59,6 @@ class _InputDataPageState extends ConsumerState<InputDataMedisPage> {
   }
 
   Widget tambahResepContent() {
-    final item = ref.watch(obatNotifierProvider);
-
     return SizedBox(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -62,17 +69,16 @@ class _InputDataPageState extends ConsumerState<InputDataMedisPage> {
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
           ),
           const SizedBox(height: 10),
-          Text(item.toString()),
-          buttonTambahResep(item)
+          buttonTambahResep()
         ],
       ),
     );
   }
 
-  Widget buttonTambahResep(List<Map<String, dynamic>> item) {
+  Widget buttonTambahResep() {
     return GestureDetector(
-      onTap: () {
-        showDialog(
+      onTap: () async {
+        await showDialog(
           context: context,
           builder: (context) {
             return AlertDialog(
@@ -82,13 +88,13 @@ class _InputDataPageState extends ConsumerState<InputDataMedisPage> {
               backgroundColor: Colors.white,
               insetPadding: const EdgeInsets.only(bottom: 80, top: 40),
               contentPadding: EdgeInsets.zero,
-              content: inputFormBox(item),
+              content: inputFormBox(),
               actions: [
                 buttonSimpan(),
               ],
             );
           },
-        );
+        ).then((value) => ref.read(obatNotifierProvider.notifier).clearObat());
       },
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -105,64 +111,38 @@ class _InputDataPageState extends ConsumerState<InputDataMedisPage> {
     );
   }
 
-  Widget inputFormBox(List<Map<String, dynamic>> item) {
-    return SingleChildScrollView(
-      child: Center(
-        child: SizedBox(
-          width: MediaQuery.of(context).size.width * 0.85,
-          child: Container(
-            padding: const EdgeInsets.all(30),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  "Nama Obat",
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
-                ),
-                const SizedBox(height: 10),
-                autoCompleteTextField(obat, (selectedItem) {
-                  ref.read(obatNotifierProvider.notifier).addObat(selectedItem);
-                }),
-                Text(item.toString()),
-                const SizedBox(height: 20),
-                const Text(
-                  "Kuantitas",
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
-                ),
-                const SizedBox(height: 10),
-                Row(
+  Widget inputFormBox() {
+    return Consumer(
+      builder: (context, ref, child) {
+        final item = ref.watch(obatNotifierProvider);
+        return SingleChildScrollView(
+          child: Center(
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width * 0.85,
+              child: Container(
+                padding: const EdgeInsets.all(30),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    GestureDetector(
-                      onTap: () {
-                        if (_kuantitasWaktu > 1) {
-                          _kuantitasWaktu--;
-                        }
-                      },
-                      child: Image.asset('assets/icons/minus.png'),
+                    const Text(
+                      "Nama Obat",
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
                     ),
-                    const SizedBox(width: 20),
-                    Text(
-                      _kuantitasWaktu.toString(),
-                      textAlign: TextAlign.center,
+                    const SizedBox(height: 10),
+                    autoCompleteTextField(obat, (selectedItem) {
+                      ref
+                          .read(obatNotifierProvider.notifier)
+                          .addObat(selectedItem);
+                    }),
+                    Text(item.toString()),
+                    const SizedBox(height: 20),
+                    const Text(
+                      "Kuantitas",
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
                     ),
-                    const SizedBox(width: 20),
-                    GestureDetector(
-                      onTap: () {
-                        _kuantitasWaktu++;
-                      },
-                      child: Image.asset('assets/icons/plus.png'),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20),
-                const Text(
-                  "Cara Penggunaan",
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
-                ),
-                const SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
+                    const SizedBox(height: 10),
                     Row(
                       children: [
                         GestureDetector(
@@ -187,67 +167,119 @@ class _InputDataPageState extends ConsumerState<InputDataMedisPage> {
                         ),
                       ],
                     ),
+                    const SizedBox(height: 20),
                     const Text(
-                      "Per hari",
-                      style: TextStyle(fontSize: 14),
+                      "Cara Penggunaan",
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
                     ),
+                    const SizedBox(height: 10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                if (_kuantitasWaktu > 1) {
+                                  _kuantitasWaktu--;
+                                }
+                              },
+                              child: Image.asset('assets/icons/minus.png'),
+                            ),
+                            const SizedBox(width: 20),
+                            Text(
+                              _kuantitasWaktu.toString(),
+                              textAlign: TextAlign.center,
+                            ),
+                            const SizedBox(width: 20),
+                            GestureDetector(
+                              onTap: () {
+                                _kuantitasWaktu++;
+                              },
+                              child: Image.asset('assets/icons/plus.png'),
+                            ),
+                          ],
+                        ),
+                        const Text(
+                          "Per hari",
+                          style: TextStyle(fontSize: 14),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 10),
+                    Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            if (_kuantitasWaktu > 1) {
+                              _kuantitasWaktu--;
+                            }
+                          },
+                          child: Image.asset('assets/icons/minus.png'),
+                        ),
+                        const SizedBox(width: 20),
+                        Text(
+                          _kuantitasWaktu.toString(),
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(width: 20),
+                        GestureDetector(
+                          onTap: () {
+                            _kuantitasWaktu++;
+                          },
+                          child: Image.asset('assets/icons/plus.png'),
+                        ),
+                        const SizedBox(width: 20),
+                        DropdownButton(
+                          items: caraPenggunaan
+                              .map((String value) => DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(value),
+                                  ))
+                              .toList(),
+                          onChanged: (String? value) {
+                            print(value);
+                          },
+                        ),
+                        const SizedBox(width: 20),
+                        Text("Sekali", style: TextStyle(fontSize: 14)),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    const Text(
+                      "Waktu Penggunaan",
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+                    ),
+                    DropdownMenu(
+                      inputDecorationTheme: const InputDecorationTheme(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                        ),
+                        contentPadding:
+                            EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                      ),
+                      dropdownMenuEntries: waktuPenggunaan
+                          .map<DropdownMenuEntry<String>>((String value) {
+                        return DropdownMenuEntry<String>(
+                            value: value, label: value);
+                      }).toList(),
+                    ),
+                    const SizedBox(height: 20),
+                    const Text(
+                      "Catatan",
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+                    ),
+                    customTextField(),
                   ],
                 ),
-                const SizedBox(height: 10),
-                Row(
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        if (_kuantitasWaktu > 1) {
-                          _kuantitasWaktu--;
-                        }
-                      },
-                      child: Image.asset('assets/icons/minus.png'),
-                    ),
-                    const SizedBox(width: 20),
-                    Text(
-                      _kuantitasWaktu.toString(),
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(width: 20),
-                    GestureDetector(
-                      onTap: () {
-                        _kuantitasWaktu++;
-                      },
-                      child: Image.asset('assets/icons/plus.png'),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20),
-                const Text(
-                  "Waktu Penggunaan",
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
-                ),
-                DropdownMenu(
-                  inputDecorationTheme: const InputDecorationTheme(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                    ),
-                    contentPadding:
-                        EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-                  ),
-                  dropdownMenuEntries: waktuPenggunaan
-                      .map<DropdownMenuEntry<String>>((String value) {
-                    return DropdownMenuEntry<String>(
-                        value: value, label: value);
-                  }).toList(),
-                ),
-                const SizedBox(height: 20),
-                const Text(
-                  "Catatan",
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
-                ),
-                customTextField(),
-              ],
+              ),
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 

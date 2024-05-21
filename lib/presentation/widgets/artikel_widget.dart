@@ -24,19 +24,18 @@ class ArtikelCard extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(10),
+          border: Border.all(width: 1.0, color: const Color(0xFFD2E4FF)),
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
-              spreadRadius: 2,
-              blurRadius: 5,
-              offset: const Offset(0, 3),
+              color: Colors.black.withOpacity(0.25),
+              spreadRadius: 0,
+              blurRadius: 4,
             ),
           ],
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Gambar
             Container(
               height: 200,
               decoration: BoxDecoration(
@@ -47,8 +46,7 @@ class ArtikelCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
               ),
             ),
-            const SizedBox(height: 10),
-            // Judul
+            const SizedBox(height: 5),
             Text(
               title,
               style: const TextStyle(
@@ -56,12 +54,11 @@ class ArtikelCard extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: 5),
             Text(
               description,
               style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.normal,
+                fontSize: 14,
+                fontWeight: FontWeight.w300,
               ),
             ),
           ],
