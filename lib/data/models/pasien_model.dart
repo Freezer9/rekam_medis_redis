@@ -1,27 +1,34 @@
-import 'package:rekam_medis_redis/data/entities/pasien_entity.dart';
+class PasienModel {
+  final String id;
+  final String nrpOrNip;
+  final String email;
+  final String nama;
+  final String prodiOrDepartemen;
+  final String ttl;
+  final String tahun;
+  final String createdAt;
 
-class PasienModel extends PasienEntity {
   PasienModel({
-    required super.id,
-    required super.nrpOrNip,
-    required super.email,
-    required super.nama,
-    required super.prodiOrDepartemen,
-    required super.ttl,
-    required super.tahun,
-    required super.createdAt,
+    required this.id,
+    required this.nrpOrNip,
+    required this.email,
+    required this.nama,
+    required this.prodiOrDepartemen,
+    required this.ttl,
+    required this.tahun,
+    required this.createdAt,
   });
 
   factory PasienModel.fromMahasiswaJson(Map<String, dynamic> json) {
     return PasienModel(
       id: json['id'],
-      nrpOrNip: json['nrp'],
-      email: json['email'],
       nama: json['nama'],
       prodiOrDepartemen: json['prodi'],
       ttl: json['ttl'],
-      tahun: json['tahun'],
-      createdAt: json['createdAt'],
+      email: json['email'],
+      nrpOrNip: json['nrp'],
+      tahun: json['tahun'].toString(),
+      createdAt: json['createdAt'].toString(),
     );
   }
 
@@ -33,8 +40,8 @@ class PasienModel extends PasienEntity {
       nama: json['nama'],
       prodiOrDepartemen: json['departemen'],
       ttl: json['ttl'],
-      tahun: json['tahun'],
-      createdAt: json['createdAt'],
+      tahun: json['tahun'].toString(),
+      createdAt: json['createdAt'].toString(),
     );
   }
 

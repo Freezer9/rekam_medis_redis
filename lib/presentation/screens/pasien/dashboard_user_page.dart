@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rekam_medis_redis/auth/auth.dart';
-import 'package:rekam_medis_redis/data/faker/artikel.dart';
-import 'package:rekam_medis_redis/data/faker/pasien.dart';
+import 'package:rekam_medis_redis/data/enums/artikel.dart';
+import 'package:rekam_medis_redis/data/enums/pasien.dart';
 import 'package:rekam_medis_redis/presentation/widgets/artikel_widget.dart';
-import 'package:rekam_medis_redis/presentation/widgets/patients_widget.dart';
 
 class DashboardUserPage extends ConsumerWidget {
   const DashboardUserPage({super.key});
@@ -123,7 +122,8 @@ class DashboardUserPage extends ConsumerWidget {
                       itemBuilder: (BuildContext context, int index) {
                         if (patientsData[index]["nama"] ==
                             data?.userMetadata?['nama']) {
-                          return PasienCard(data: patientsData[index]);
+                          return Text('data');
+                          // return PasienCard(data: patientsData[index]);
                         } else {
                           return Container(
                             padding: const EdgeInsets.all(40),

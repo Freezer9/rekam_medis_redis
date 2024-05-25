@@ -1,25 +1,23 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:rekam_medis_redis/data/models/obat_model.dart';
+import 'package:rekam_medis_redis/data/models/record_model.dart';
+import 'package:rekam_medis_redis/domain/dokter/resep_pasien_provider.dart';
 import 'package:rekam_medis_redis/themes.dart';
-import 'package:rekam_medis_redis/data/faker/catatan.dart';
+import 'package:rekam_medis_redis/data/enums/catatan.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class DetailRiwayatPage extends StatefulWidget {
-  final Map<String, String> data;
+class DetailRiwayatPage extends ConsumerWidget {
+  final RecordModel record;
 
-  const DetailRiwayatPage({
+  DetailRiwayatPage({
     super.key,
-    required this.data,
+    required this.record,
   });
 
-  @override
-  _DetailRiwayatPageState createState() => _DetailRiwayatPageState();
-}
-
-class _DetailRiwayatPageState extends State<DetailRiwayatPage> {
   final catatan = catatanDokter[0];
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -38,13 +36,13 @@ class _DetailRiwayatPageState extends State<DetailRiwayatPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               catatanContainer(
-                  'assets/icons/keluhan.png', "Keluhan", catatan['keluhan']),
+                  'assets/icons/keluhan.png', "Keluhan", record.keluhan!),
               const Divider(),
               catatanContainer('assets/icons/riwayat.png', 'Riwayat Penyakit',
-                  catatan['riwayat']),
+                  record.riwayatPenyakit!),
               const Divider(),
-              catatanContainer('assets/icons/diagnosis.png', 'Diagnosis',
-                  catatan['diagnosis']),
+              catatanContainer(
+                  'assets/icons/diagnosis.png', 'Diagnosis', record.diagnosis!),
               const Divider(),
               Container(
                 margin: const EdgeInsets.only(top: 20, bottom: 20),
@@ -53,11 +51,18 @@ class _DetailRiwayatPageState extends State<DetailRiwayatPage> {
                   children: [
                     catatanTitle('assets/icons/resep.png', "Resep"),
                     const SizedBox(height: 12.5),
-                    Column(
-                      children: catatan['resep']
-                          .map<Widget>((e) => resepBox(e))
-                          .toList(),
-                    ),
+                    ref.watch(getResepPasienProvider(record.id!)).when(
+                          data: (data) {
+                            return Column(
+                              children:
+                                  data.map<Widget>((e) => resepBox(e)).toList(),
+                            );
+                          },
+                          loading: () => const Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                          error: (error, _) => Text('Error: $error'),
+                        ),
                   ],
                 ),
               ),
@@ -82,19 +87,19 @@ class _DetailRiwayatPageState extends State<DetailRiwayatPage> {
     );
   }
 
-  Widget resepBox(Map<String, String> resep) {
+  Widget resepBox(ObatModel resep) {
     return Container(
       margin: const EdgeInsets.only(bottom: 18),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(resep['obat']!,
+          Text('${resep.kuantitas} ${resep.namaObat}',
               style:
                   const TextStyle(fontSize: 14, fontWeight: FontWeight.w500)),
           const SizedBox(height: 4),
           chipWrapperResep(resep),
           const SizedBox(height: 8),
-          Text('Catatan: ${resep['catatan']!}'),
+          Text('Catatan: ${resep.catatan}'),
           const SizedBox(height: 8),
           const Divider(),
         ],
@@ -102,14 +107,15 @@ class _DetailRiwayatPageState extends State<DetailRiwayatPage> {
     );
   }
 
-  Wrap chipWrapperResep(Map<String, String> resep) {
+  Wrap chipWrapperResep(ObatModel resep) {
     return Wrap(
       spacing: 8,
       runSpacing: 8,
       children: [
-        chipWidget(resep['when']!, color: const Color(0xFFFCE186)),
-        chipWidget(resep['dose']!),
-        chipWidget(resep['much']!, color: const Color(0xFFDFD5EC)),
+        chipWidget(resep.penggunaan[0], color: const Color(0xFFFCE186)),
+        chipWidget(resep.penggunaan[1] + 'x sehari'),
+        chipWidget(resep.penggunaan[2] + ' ' + resep.penggunaan[3] + ' sekali',
+            color: const Color(0xFFDFD5EC)),
       ],
     );
   }

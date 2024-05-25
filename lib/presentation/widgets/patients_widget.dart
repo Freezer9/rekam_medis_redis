@@ -1,10 +1,14 @@
+// ignore_for_file: must_be_immutable
 import 'package:flutter/material.dart';
+import 'package:rekam_medis_redis/data/models/pasien_model.dart';
 
 class PasienCard extends StatelessWidget {
-  final Map<String, String> data;
+  final PasienModel data;
+  String? date;
 
-  const PasienCard({
+  PasienCard({
     super.key,
+    this.date,
     required this.data,
   });
 
@@ -48,26 +52,27 @@ class PasienCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  data['nama']!,
+                  data.nama,
                   style: const TextStyle(
                       color: Color.fromRGBO(25, 28, 32, 1),
                       fontSize: 16,
                       fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  data['nrp']!,
+                  data.nrpOrNip,
                   style: const TextStyle(
                     color: Color.fromRGBO(67, 71, 78, 1),
                     fontSize: 14,
                   ),
                 ),
-                Text(
-                  data['date']!,
-                  style: const TextStyle(
-                    color: Color.fromRGBO(67, 71, 78, 1),
-                    fontSize: 14,
+                if (date != null)
+                  Text(
+                    date ?? 'Belum ada tanggal',
+                    style: const TextStyle(
+                      color: Color.fromRGBO(67, 71, 78, 1),
+                      fontSize: 14,
+                    ),
                   ),
-                ),
               ],
             ),
           ),

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import 'package:rekam_medis_redis/data/faker/pasien.dart';
-import 'package:rekam_medis_redis/presentation/widgets/patients_widget.dart';
+import 'package:rekam_medis_redis/data/enums/pasien.dart';
 
 class SearchRiwayatMedisPage extends StatefulWidget {
   const SearchRiwayatMedisPage({super.key});
@@ -160,11 +159,13 @@ class _SearchRiwayatMedisPageState extends State<SearchRiwayatMedisPage> {
                           itemCount: data.length,
                           itemBuilder: (BuildContext context, int index) {
                             return GestureDetector(
-                                onTap: () {
-                                  context.push('/detail-pasien',
-                                      extra: data[index]);
-                                },
-                                child: PasienCard(data: data[index]));
+                              onTap: () {
+                                context.push('/detail-pasien',
+                                    extra: data[index]);
+                              },
+                              child: Text('data'),
+                              // child: PasienCard(data: data[index]),
+                            );
                           },
                         ),
                       ),

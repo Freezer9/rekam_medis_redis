@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/custom_app_bar/backround_image.dart';
-import 'package:flutter_application_1/custom_app_bar/custom_app_bar.dart';
-import 'package:flutter_application_1/custom_app_bar/custom_app_bar_with_back.dart';
-import 'package:flutter_application_1/forget_pw/password_file.dart';
-import 'package:flutter_application_1/forget_pw/success_dialog.dart';
-import 'password_validation.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rekam_medis_redis/domain/pasien/password_validation.dart';
+import 'package:rekam_medis_redis/presentation/widgets/password_field.dart';
+import 'package:rekam_medis_redis/presentation/widgets/success_dialog.dart';
 
-class ResetPasswordPage extends StatefulWidget {
+class LupaPasswordPage extends ConsumerStatefulWidget {
+  const LupaPasswordPage({super.key});
+
   @override
-  _ResetPasswordPageState createState() => _ResetPasswordPageState();
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _LupaPasswordPageState();
 }
 
-class _ResetPasswordPageState extends State<ResetPasswordPage> {
+class _LupaPasswordPageState extends ConsumerState<LupaPasswordPage> {
   final TextEditingController newPasswordController = TextEditingController();
   final TextEditingController confirmPasswordController =
       TextEditingController();
@@ -22,12 +23,12 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
+
     return Scaffold(
-      appBar: CustomAppBarBack(
-        title: "Lupa Password",
-        leadingOnPressed: () {
-          Navigator.pop(context);
-        },
+      appBar: AppBar(
+        title: const Text("Lupa Password"),
+        backgroundColor: const Color(0xFFA2C9FE),
+        centerTitle: true,
       ),
       body: SingleChildScrollView(
         child: Stack(
@@ -35,25 +36,32 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
           children: [
             Column(
               children: [
-                BackgroundImage(),
+                SizedBox(
+                  width: double.infinity,
+                  child: Image.asset(
+                    "assets/images/background.png",
+                    fit: BoxFit.fill,
+                  ),
+                ),
                 Container(
                   width: width * 0.9,
                   decoration: BoxDecoration(
-                    border: Border.all(width: 1.0, color: Color(0xffC3C6CF)),
+                    border:
+                        Border.all(width: 1.0, color: const Color(0xffC3C6CF)),
                     borderRadius: BorderRadius.circular(10),
                     color: Colors.white,
-                    boxShadow: [
+                    boxShadow: const [
                       BoxShadow(
-                        spreadRadius: 0.1,
-                        blurRadius: 1,
+                        spreadRadius: 0.2,
+                        blurRadius: 2,
                         color: Color(0xFF38608F),
                       ),
                     ],
                   ),
-                  padding: EdgeInsets.all(25.0),
+                  padding: const EdgeInsets.all(25.0),
                   child: Column(
                     children: [
-                      Text(
+                      const Text(
                         "Atur Ulang Password-mu",
                         style: TextStyle(
                           fontSize: 20,
@@ -61,7 +69,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                           color: Colors.black,
                         ),
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       PasswordField(
                         labelText: 'Masukkan Password Baru',
                         controller: newPasswordController,
@@ -72,7 +80,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                           });
                         },
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       PasswordField(
                         labelText: 'Masukkan Ulang Password Baru',
                         controller: confirmPasswordController,
@@ -84,24 +92,22 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                         },
                         errorMessage: _errorMessage,
                       ),
-                      SizedBox(height: 40),
-                      Container(
+                      const SizedBox(height: 40),
+                      SizedBox(
                         width: 290,
                         height: 40,
                         child: ElevatedButton.icon(
                           onPressed: _validateAndSubmit,
                           style: ElevatedButton.styleFrom(
-                            backgroundColor:
-                                Color(0xFFFCE186), // Background color
-                            foregroundColor: Colors.black, // Text color
-                            minimumSize: Size(280, 40), // Button size
+                            backgroundColor: const Color(0xFFFCE186),
+                            foregroundColor: Colors.black,
+                            minimumSize: const Size(280, 40),
                             shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.circular(25), // Rounded button
+                              borderRadius: BorderRadius.circular(25),
                             ),
                           ),
-                          icon: Icon(Icons.lock_reset),
-                          label: Text(
+                          icon: const Icon(Icons.lock_reset),
+                          label: const Text(
                             'PERBARUI PASSWORD',
                             style: TextStyle(
                               fontSize: 13,
@@ -134,7 +140,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                         ),
                       ],
                       shape: BoxShape.circle,
-                      image: DecorationImage(
+                      image: const DecorationImage(
                         fit: BoxFit.cover,
                         image: NetworkImage(
                           'https://cdn.pixabay.com/photo/2024/01/25/03/16/capuchin-monkey-8530884_640.jpg',
@@ -150,7 +156,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                       shape: BoxShape.circle,
                     ),
                   ),
-                  Icon(Icons.lock,
+                  const Icon(Icons.lock,
                       color: Color.fromARGB(255, 89, 57, 137), size: 80),
                 ],
               ),
@@ -158,6 +164,15 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
           ],
         ),
       ),
+    );
+  }
+
+  void _showSuccessDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return const SuccessDialog();
+      },
     );
   }
 
@@ -170,7 +185,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
     });
 
     if (_errorMessage == null) {
-      SuccessDialog();
+      _showSuccessDialog();
     }
   }
 }

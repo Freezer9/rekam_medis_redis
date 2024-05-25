@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
 class SuccessDialog extends StatelessWidget {
+  const SuccessDialog({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: 400,
       child: Dialog(
         shape: RoundedRectangleBorder(
@@ -11,19 +13,11 @@ class SuccessDialog extends StatelessWidget {
         ),
         child: Container(
           width: 320,
-          height: 180,
-          padding: EdgeInsets.all(25),
+          height: 170,
+          padding: const EdgeInsets.all(25),
           child: Column(
             children: [
-              Container(
-                width: 320,
-                height: 10,
-                child: Image.asset(
-                  "assets/background.png",
-                  fit: BoxFit.fill,
-                ),
-              ),
-              Row(
+              const Row(
                 children: [
                   Icon(Icons.lock_person, size: 60, color: Colors.black),
                   SizedBox(width: 5),
@@ -49,25 +43,22 @@ class SuccessDialog extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: 20),
-              Container(
+              const SizedBox(height: 20),
+              SizedBox(
                 width: 280,
                 height: 40,
                 child: ElevatedButton.icon(
-                  onPressed: () {
-                    Navigator.pop(context);
-                    // Navigate to login page
-                  },
+                  onPressed: () {},
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFFFCE186),
+                    backgroundColor: const Color(0xFFFCE186),
                     foregroundColor: Colors.black,
-                    minimumSize: Size(280, 30),
+                    minimumSize: const Size(280, 30),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(25),
                     ),
                   ),
-                  icon: Icon(Icons.login),
-                  label: Text(
+                  icon: const Icon(Icons.login),
+                  label: const Text(
                     'MASUK',
                     style: TextStyle(
                       fontSize: 12,

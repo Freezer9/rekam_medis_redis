@@ -133,7 +133,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     ref
         .read(authRepositoryProvider)
         .signInAdmin(email: _usernameCtrl.text, password: _passwordCtrl.text)
-        .then((value) {
+        .then((_) {
       context.clearAndNavigate('/home/${widget.role.index}');
     }).catchError((error) {
       if (error is AuthApiException) {
@@ -151,7 +151,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         .read(authRepositoryProvider)
         .signInPasien(
             username: _usernameCtrl.text, password: _passwordCtrl.text)
-        .then((value) {
+        .then((_) {
       context.clearAndNavigate('/home/${widget.role.index}');
     }).catchError((error) {
       if (error is AuthApiException) {
@@ -168,7 +168,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     ref
         .read(authRepositoryProvider)
         .signInDokter(email: _usernameCtrl.text, password: _passwordCtrl.text)
-        .then((value) {
+        .then((_) {
       context.clearAndNavigate('/home/${widget.role.index}');
     }).catchError((error) {
       if (error is AuthApiException) {
