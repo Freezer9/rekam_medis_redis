@@ -7,6 +7,7 @@ import 'package:rekam_medis_redis/data/models/dokter_model.dart';
 import 'package:rekam_medis_redis/data/models/pasien_model.dart';
 import 'package:rekam_medis_redis/domain/dokter/list_notifier.dart';
 import 'package:rekam_medis_redis/domain/dokter/obat_notifier.dart';
+import 'package:rekam_medis_redis/domain/dokter/pasien_notifier.dart';
 import 'package:rekam_medis_redis/domain/dokter/record_notifier.dart';
 import 'package:rekam_medis_redis/presentation/widgets/autocomplete_widget.dart';
 import 'package:rekam_medis_redis/presentation/widgets/button_widget.dart';
@@ -31,10 +32,7 @@ class _InputDataPageState extends ConsumerState<InputDataMedisPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Input Data Pasien',
-          style: TextStyle(fontSize: 18),
-        ),
+        title: const Text('Input Data Pasien'),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: primarycolor),
           onPressed: () {
@@ -98,6 +96,7 @@ class _InputDataPageState extends ConsumerState<InputDataMedisPage> {
                           backgroundColor: Colors.green,
                         ),
                       );
+                      ref.invalidate(getAllPasienProvider(loginUser.id));
                       ref.read(keluhanProvider.notifier).clearItems();
                       ref.read(riwayatPenyakitProvider.notifier).clearItems();
                       ref.read(diagnosisProvider.notifier).clearItems();

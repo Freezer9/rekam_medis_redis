@@ -20,14 +20,7 @@ class DetailRiwayatPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Catatan Dokter',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-        ),
-        centerTitle: true,
-        shadowColor: Colors.black,
-        backgroundColor: Colors.white,
-        elevation: 1,
+        title: const Text('Catatan Dokter'),
       ),
       body: SingleChildScrollView(
         child: Padding(

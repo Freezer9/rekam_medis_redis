@@ -12,26 +12,30 @@ class SearchPasienPage extends ConsumerWidget {
     final data = ref.watch(searchNotifierProvider);
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Search User'),
-          centerTitle: true,
+          title: const Text('Search Pasien'),
         ),
-        body: Padding(
+        body: Container(
+          margin: const EdgeInsets.only(top: 20),
           padding: const EdgeInsets.all(10),
           child: Column(
             children: [
-              const SizedBox(height: 10),
-              TextField(
-                controller: TextEditingController(),
-                onSubmitted: (value) async {
-                  ref.read(searchNotifierProvider.notifier).searchUser(value);
-                },
-                decoration: const InputDecoration(
-                  hintText: 'Search User',
-                  border: OutlineInputBorder(),
-                  suffixIcon: Icon(Icons.search),
+              Padding(
+                padding: const EdgeInsets.only(left: 25, right: 25),
+                child: TextField(
+                  controller: TextEditingController(),
+                  onSubmitted: (value) async {
+                    ref.read(searchNotifierProvider.notifier).searchUser(value);
+                  },
+                  decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.all(10),
+                    hintText: 'Mahasiswa / dosen',
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10)),
+                    suffixIcon: const Icon(Icons.search),
+                  ),
                 ),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 20),
               Expanded(
                 child: ListView.builder(
                   itemCount: data.length,
@@ -43,9 +47,19 @@ class SearchPasienPage extends ConsumerWidget {
                               context.push('/riwayat-pasien',
                                   extra: pasienData);
                             },
-                            child: ListTile(
-                              title: Text(pasienData.nama,
-                                  style: const TextStyle(fontSize: 16)),
+                            child: Container(
+                              margin: const EdgeInsets.only(
+                                  left: 25, right: 25, bottom: 10),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                border:
+                                    Border.all(color: Colors.grey, width: 1),
+                              ),
+                              child: ListTile(
+                                leading: const Icon(Icons.person),
+                                title: Text(pasienData.nama,
+                                    style: const TextStyle(fontSize: 16)),
+                              ),
                             ),
                           )
                         : const Center(

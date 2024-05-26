@@ -18,12 +18,7 @@ class RiwayatPasienPage extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
-        title:
-            const Text("Riwayat Rekam Medis", style: TextStyle(fontSize: 18)),
-        backgroundColor: Colors.white,
-        shadowColor: Colors.black,
-        elevation: 1,
+        title: const Text("Riwayat Rekam Medis"),
       ),
       body: SafeArea(
         child: SingleChildScrollView(

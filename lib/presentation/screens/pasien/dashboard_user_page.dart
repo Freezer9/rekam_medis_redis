@@ -3,15 +3,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rekam_medis_redis/auth/auth.dart';
 import 'package:rekam_medis_redis/data/enums/artikel.dart';
-import 'package:rekam_medis_redis/data/enums/pasien.dart';
+import 'package:rekam_medis_redis/domain/pasien/riwayat_provider.dart';
 import 'package:rekam_medis_redis/presentation/widgets/artikel_widget.dart';
+import 'package:rekam_medis_redis/presentation/widgets/pasien_record_card.dart';
 
 class DashboardUserPage extends ConsumerWidget {
   const DashboardUserPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final data = ref.watch(authUserProvider).asData?.value;
+    final user = ref.watch(authUserProvider).asData?.value;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -45,7 +46,7 @@ class DashboardUserPage extends ConsumerWidget {
                             ),
                           ),
                           Text(
-                            data?.userMetadata?['nama'],
+                            user?.userMetadata?['nama'],
                             style: const TextStyle(
                                 fontSize: 16, fontWeight: FontWeight.bold),
                           ),
@@ -116,21 +117,28 @@ class DashboardUserPage extends ConsumerWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     margin: const EdgeInsets.only(top: 5, bottom: 5),
                     color: Colors.transparent,
-                    child: ListView.builder(
-                      padding: EdgeInsets.zero,
-                      itemCount: 1,
-                      itemBuilder: (BuildContext context, int index) {
-                        if (patientsData[index]["nama"] ==
-                            data?.userMetadata?['nama']) {
-                          return Text('data');
-                          // return PasienCard(data: patientsData[index]);
-                        } else {
-                          return Container(
-                            padding: const EdgeInsets.all(40),
-                            alignment: Alignment.center,
-                            child: const Text('Tidak ada data'),
-                          );
-                        }
+                    child: ref.watch(getPasienRecordProvider(user!.id)).when(
+                      data: (data) {
+                        return ListView.builder(
+                          padding: EdgeInsets.zero,
+                          itemCount: 1,
+                          itemBuilder: (BuildContext context, int index) {
+                            final pasienData = data.last;
+                            return GestureDetector(
+                                onTap: () => context.push('/detail-pasien',
+                                    extra: pasienData),
+                                child: PasienRecordCard(
+                                    data: pasienData, user: user));
+                          },
+                        );
+                      },
+                      error: (error, stackTrace) {
+                        return Text(error.toString());
+                      },
+                      loading: () {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
                       },
                     ),
                   ),

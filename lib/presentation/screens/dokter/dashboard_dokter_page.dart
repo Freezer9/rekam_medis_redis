@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rekam_medis_redis/auth/auth.dart';
@@ -71,27 +72,32 @@ class _DashboardDokterPageState extends ConsumerState<DashboardDokterPage> {
                       ],
                     ),
                     const SizedBox(height: 20),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      margin: const EdgeInsets.only(top: 20),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: const Color.fromRGBO(230, 234, 242, 1),
-                      ),
-                      child: TextField(
-                        onTap: () {
-                          context.push('/search-pasien');
-                        },
-                        decoration: const InputDecoration(
-                          hintText: 'Ini apa ya?',
-                          border: InputBorder.none,
-                          contentPadding: EdgeInsets.symmetric(vertical: 12),
-                          suffixIcon: Icon(
-                            Icons.search,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
+                    GestureDetector(
+                      onTap: () => context.push('/search-pasien'),
+                      child: Container(
+                          padding: const EdgeInsets.all(10),
+                          margin: const EdgeInsets.only(top: 20),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(color: Colors.grey, width: 1),
+                              color: Colors.white),
+                          child: Container(
+                            margin: const EdgeInsets.only(left: 10, right: 10),
+                            child: const Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Cari Pasien Anda",
+                                  style: TextStyle(
+                                      color: Colors.grey, fontSize: 15),
+                                ),
+                                Icon(
+                                  Icons.search,
+                                  color: Colors.grey,
+                                ),
+                              ],
+                            ),
+                          )),
                     ),
                   ],
                 ),
@@ -128,7 +134,7 @@ class _DashboardDokterPageState extends ConsumerState<DashboardDokterPage> {
                           itemBuilder: (BuildContext context, int index) {
                             final patientData = data[index];
                             return GestureDetector(
-                              onTap: () {
+                              onTap: () async {
                                 context.push('/riwayat-pasien',
                                     extra: patientData);
                               },

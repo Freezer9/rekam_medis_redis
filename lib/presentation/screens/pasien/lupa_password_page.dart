@@ -28,7 +28,6 @@ class _LupaPasswordPageState extends ConsumerState<LupaPasswordPage> {
       appBar: AppBar(
         title: const Text("Lupa Password"),
         backgroundColor: const Color(0xFFA2C9FE),
-        centerTitle: true,
       ),
       body: SingleChildScrollView(
         child: Stack(
