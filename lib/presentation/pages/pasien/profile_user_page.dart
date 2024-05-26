@@ -28,7 +28,7 @@ class ProfileUserPage extends ConsumerWidget {
               Container(
                 width: double.infinity,
                 child: Image.asset(
-                  "assets/background.png",
+                  "assets/icons/background.png",
                   fit: BoxFit.fill,
                 ),
               ),
@@ -48,21 +48,21 @@ class ProfileUserPage extends ConsumerWidget {
                 padding: EdgeInsets.all(25.0),
                 child: Column(
                   children: [
-                    buildTextField('Nama', 'assets/profile.png',
+                    buildTextField('Nama', 'assets/icons/profile.png',
                         data?.userMetadata?['nama']),
                     buildTextField(
                         'NRP',
-                        'assets/nrp.png',
+                        'assets/icons/nrp.png',
                         data?.userMetadata?['nrp'] ??
                             data?.userMetadata?['nip']),
-                    buildTextField('Tempat, Tanggal Lahir', 'assets/icon.png',
-                        data?.userMetadata?['ttl']),
+                    buildTextField('Tempat, Tanggal Lahir',
+                        'assets/icons/tanggal.png', data?.userMetadata?['ttl']),
                     buildTextField(
                         'Program Studi',
-                        'assets/prodi.png',
+                        'assets/icons/prodi.png',
                         data?.userMetadata?['prodi'] ??
                             data?.userMetadata?['departemen']),
-                    buildTextField('Angkatan', 'assets/time.png',
+                    buildTextField('Angkatan', 'assets/icons/time.png',
                         data?.userMetadata!['tahun'].toString() ?? ''),
                   ],
                 ),

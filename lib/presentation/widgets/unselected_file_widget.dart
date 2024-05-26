@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:dotted_border/dotted_border.dart';
+import 'package:rekam_medis_redis/themes.dart';
 
 class UnselectedFileWidget extends StatelessWidget {
   final VoidCallback onPressed;
@@ -15,7 +16,7 @@ class UnselectedFileWidget extends StatelessWidget {
         width: 320,
         height: 110,
         child: DottedBorder(
-          color: const Color(0xFF38608F).withOpacity(0.5),
+          color: AppTheme.primaryColor.withOpacity(0.5),
           dashPattern: const [10, 10],
           strokeWidth: 2,
           radius: const Radius.circular(10),
@@ -26,13 +27,13 @@ class UnselectedFileWidget extends StatelessWidget {
               children: [
                 Icon(
                   Icons.add,
-                  color: const Color(0xFF38608F).withOpacity(0.5),
+                  color: AppTheme.primaryColor.withOpacity(0.5),
                 ),
                 Text(
                   "Click to Select File",
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                      color: const Color(0xFF38608F).withOpacity(0.5),
+                      color: AppTheme.primaryColor.withOpacity(0.5),
                       fontWeight: FontWeight.w500),
                 ),
               ],

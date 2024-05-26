@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:rekam_medis_redis/auth/auth.dart';
 import 'package:rekam_medis_redis/data/faker/artikel.dart';
 import 'package:rekam_medis_redis/data/faker/pasien.dart';
-import 'package:rekam_medis_redis/presentation/pages/profile/profile_user_page.dart';
+import 'package:rekam_medis_redis/presentation/pages/pasien/profile_user_page.dart';
 import 'package:rekam_medis_redis/presentation/widgets/artikel_widget.dart';
 import 'package:rekam_medis_redis/presentation/widgets/patients_widget.dart';
 
@@ -21,7 +22,7 @@ class DashboardUserPage extends ConsumerWidget {
           Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage("assets/bg.png"),
+                image: AssetImage("assets/images/bg.png"),
                 fit: BoxFit.fill,
               ),
             ),
@@ -67,7 +68,7 @@ class DashboardUserPage extends ConsumerWidget {
                           );
                         },
                         child: Image.asset(
-                          "assets/Image1.png",
+                          "assets/icons/avatar.png",
                           width: 80,
                           height: 80,
                           fit: BoxFit.cover,
@@ -106,10 +107,7 @@ class DashboardUserPage extends ConsumerWidget {
                       padding: const EdgeInsets.only(right: 20),
                       child: GestureDetector(
                         onTap: () {
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(builder: (context) => ()),
-                          // );
+                          context.push('/riwayat-rekam-medis');
                         },
                         child: const Text(
                           'More...',
@@ -134,11 +132,7 @@ class DashboardUserPage extends ConsumerWidget {
                       padding: EdgeInsets.zero,
                       itemCount: 1,
                       itemBuilder: (BuildContext context, int index) {
-                        return WidgetUtils.buildPasienCard(
-                          patientsData[index]['name']!,
-                          patientsData[index]['id']!,
-                          patientsData[index]['date']!,
-                        );
+                        return PasienCard(data: patientsData[index]);
                       },
                     ),
                   ),

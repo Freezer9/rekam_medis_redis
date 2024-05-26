@@ -1,16 +1,14 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rekam_medis_redis/auth/auth.dart';
-import 'package:rekam_medis_redis/presentation/pages/user/admin/data_user_page.dart';
 
 class DashboardAdminPage extends ConsumerWidget {
   const DashboardAdminPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // final data = ref.watch(authUserProvider).asData?.value;
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Stack(
@@ -20,7 +18,7 @@ class DashboardAdminPage extends ConsumerWidget {
               padding: const EdgeInsets.all(20.0),
               decoration: const BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage("assets/bg.png"),
+                  image: AssetImage("assets/images/bg.png"),
                   fit: BoxFit.fill,
                 ),
               ),
@@ -30,18 +28,18 @@ class DashboardAdminPage extends ConsumerWidget {
                   const SizedBox(height: 70),
                   Row(
                     children: [
-                      Column(
+                      const Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             'Hello Sepuh 🙏',
-                            style: const TextStyle(
+                            style: TextStyle(
                               color: Colors.black,
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          const Text(
+                          Text(
                             'How Was ur day?',
                             style: TextStyle(
                               color: Colors.black,
@@ -52,20 +50,11 @@ class DashboardAdminPage extends ConsumerWidget {
                         ],
                       ),
                       const Spacer(),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const ProfileAdminPage()),
-                          );
-                        },
-                        child: Image.network(
-                          'https://uxwing.com/wp-content/themes/uxwing/download/peoples-avatars/man-user-circle-icon.png',
-                          width: 80,
-                          height: 80,
-                          fit: BoxFit.cover,
-                        ),
+                      Image.network(
+                        'https://uxwing.com/wp-content/themes/uxwing/download/peoples-avatars/man-user-circle-icon.png',
+                        width: 80,
+                        height: 80,
+                        fit: BoxFit.cover,
                       ),
                     ],
                   ),
@@ -76,8 +65,11 @@ class DashboardAdminPage extends ConsumerWidget {
                       borderRadius: BorderRadius.circular(10),
                       color: const Color.fromRGBO(230, 234, 242, 1),
                     ),
-                    child: const TextField(
-                      decoration: InputDecoration(
+                    child: TextField(
+                      onTap: () {
+                        context.push('/search-user');
+                      },
+                      decoration: const InputDecoration(
                         hintText: 'Ini apa ya?',
                         border: InputBorder.none,
                         contentPadding: EdgeInsets.symmetric(vertical: 12),
@@ -110,14 +102,14 @@ class DashboardAdminPage extends ConsumerWidget {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  Container(
+                  SizedBox(
                     height: 150,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         GestureDetector(
                           onTap: () {
-                            context.push('/inputdata');
+                            context.push('/inputdata', extra: 'Pasien');
                           },
                           child: Card(
                             color: const Color(0xFFD2E4FF),
@@ -128,13 +120,13 @@ class DashboardAdminPage extends ConsumerWidget {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Image.asset(
-                                    'assets/circle_acc.png',
+                                    'assets/icons/circle_acc.png',
                                     width: 30,
                                     height: 30,
                                   ),
                                   const SizedBox(height: 10),
                                   const Text(
-                                    'Input data Pasien',
+                                    'Input Data Pasien',
                                     style: TextStyle(
                                       color: Color(0xFF38608F),
                                     ),
@@ -146,7 +138,7 @@ class DashboardAdminPage extends ConsumerWidget {
                         ),
                         GestureDetector(
                           onTap: () {
-                            context.push('/inputdata');
+                            context.push('/inputdata', extra: 'Dokter');
                           },
                           child: Card(
                             color: const Color(0xFFD2E4FF),
@@ -157,13 +149,13 @@ class DashboardAdminPage extends ConsumerWidget {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Image.asset(
-                                    'assets/circle_acc.png',
+                                    'assets/icons/circle_acc.png',
                                     width: 30,
                                     height: 30,
                                   ),
                                   const SizedBox(height: 10),
                                   const Text(
-                                    'Input data Dokter',
+                                    'Input Data Dokter',
                                     style: TextStyle(
                                       color: Color(0xFF38608F),
                                     ),

@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:rekam_medis_redis/data/faker/pasien.dart';
-import 'package:rekam_medis_redis/presentation/pages/profile/profile_user_page.dart';
 import 'package:rekam_medis_redis/presentation/widgets/patients_widget.dart';
 
-class RiwayatRekamMedisPasien extends StatefulWidget {
-  const RiwayatRekamMedisPasien({Key? key}) : super(key: key);
+class RiwayatRekamMedisPage extends StatefulWidget {
+  const RiwayatRekamMedisPage({super.key});
 
   @override
-  _RiwayatRekamMedisPasienState createState() => _RiwayatRekamMedisPasienState();
+  _RiwayatRekamMedisPageState createState() => _RiwayatRekamMedisPageState();
 }
 
-class _RiwayatRekamMedisPasienState extends State<RiwayatRekamMedisPasien> {
+class _RiwayatRekamMedisPageState extends State<RiwayatRekamMedisPage> {
   final ValueNotifier<DateTime?> selectedDate = ValueNotifier<DateTime?>(null);
-  final ValueNotifier<List<Map<String, String>>> filteredData = ValueNotifier<List<Map<String, String>>>(patientsData);
+  final ValueNotifier<List<Map<String, String>>> filteredData =
+      ValueNotifier<List<Map<String, String>>>(patientsData);
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -29,7 +29,8 @@ class _RiwayatRekamMedisPasienState extends State<RiwayatRekamMedisPasien> {
 
   void _filterDataByDate() {
     if (selectedDate.value != null) {
-      String formattedDate = DateFormat('dd/MM/yyyy').format(selectedDate.value!);
+      String formattedDate =
+          DateFormat('dd/MM/yyyy').format(selectedDate.value!);
       filteredData.value = patientsData.where((patient) {
         return patient['date'] == formattedDate;
       }).toList();
@@ -49,7 +50,7 @@ class _RiwayatRekamMedisPasienState extends State<RiwayatRekamMedisPasien> {
               padding: const EdgeInsets.all(20),
               decoration: const BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage("assets/bg.png"),
+                  image: AssetImage("assets/images/bg.png"),
                   fit: BoxFit.fill,
                 ),
               ),
@@ -82,14 +83,19 @@ class _RiwayatRekamMedisPasienState extends State<RiwayatRekamMedisPasien> {
                                       ],
                                     ),
                                     child: TextFormField(
-                                      decoration: InputDecoration(
+                                      decoration: const InputDecoration(
                                         hintText: 'DD/MM/YYYY',
-                                        suffixIcon: Icon(Icons.calendar_today, color: Color(0xff38608F)),
+                                        suffixIcon: Icon(Icons.calendar_today,
+                                            color: Color(0xff38608F)),
                                         border: InputBorder.none,
-                                        contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+                                        contentPadding: EdgeInsets.symmetric(
+                                            horizontal: 10, vertical: 15),
                                       ),
                                       controller: TextEditingController(
-                                        text: value == null ? '' : DateFormat('dd/MM/yyyy').format(value),
+                                        text: value == null
+                                            ? ''
+                                            : DateFormat('dd/MM/yyyy')
+                                                .format(value),
                                       ),
                                     ),
                                   );
@@ -101,11 +107,12 @@ class _RiwayatRekamMedisPasienState extends State<RiwayatRekamMedisPasien> {
                         const SizedBox(width: 10),
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Color(0xffFCE186),
+                            backgroundColor: const Color(0xffFCE186),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(40),
                             ),
-                            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 15),
                           ),
                           onPressed: _filterDataByDate,
                           child: const Text(
@@ -142,11 +149,7 @@ class _RiwayatRekamMedisPasienState extends State<RiwayatRekamMedisPasien> {
                           padding: EdgeInsets.zero,
                           itemCount: data.length,
                           itemBuilder: (BuildContext context, int index) {
-                            return WidgetUtils.buildPasienCard(
-                              data[index]['date']!,
-                              data[index]['doc']!,
-                              data[index]['diagnos']!,
-                            );
+                            return PasienCard(data: data[index]);
                           },
                         ),
                       ),

@@ -2,17 +2,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-class ProfileAdminPage extends StatelessWidget {
-  const ProfileAdminPage({super.key});
+class DataUserPage extends StatelessWidget {
+  final Map<String, dynamic> data;
+  const DataUserPage({super.key, required this.data});
 
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          "Profile",
-        ),
+        title: const Text("Data User"),
         backgroundColor: Color(0xFFA2C9FE),
         centerTitle: true,
       ),
@@ -24,7 +23,7 @@ class ProfileAdminPage extends StatelessWidget {
               Container(
                 width: double.infinity,
                 child: Image.asset(
-                  "assets/background.png",
+                  "assets/images/background.png",
                   fit: BoxFit.fill,
                 ),
               ),
@@ -44,13 +43,18 @@ class ProfileAdminPage extends StatelessWidget {
                 padding: EdgeInsets.all(25.0),
                 child: Column(
                   children: [
-                    buildTextField('Nama', 'assets/profile.png', 'Faris'),
-                    buildTextField('NRP', 'assets/nrp.png', '3122600044'),
-                    buildTextField('Tanggal Lahir', 'assets/icon.png',
-                        'Jepang, 08 Februari 2004'),
-                    buildTextField('Program Studi', 'assets/prodi.png',
-                        'D4 Teknik Mekatronika'),
-                    buildTextField('Angkatan', 'assets/time.png', '2021'),
+                    buildTextField(
+                        'Nama', 'assets/icons/profile.png', data['nama']),
+                    buildTextField(data['nrp'] != null ? 'NRP' : 'NIP',
+                        'assets/icons/nrp.png', data['nrp'] ?? data['nip']),
+                    buildTextField('Tanggal Lahir', 'assets/icons/tanggal.png',
+                        data['ttl']),
+                    buildTextField(
+                        data['prodi'] != null ? 'Program Studi' : 'Departemen',
+                        'assets/icons/prodi.png',
+                        data['prodi'] ?? data['departemen']),
+                    buildTextField('Angkatan', 'assets/icons/time.png',
+                        data['tahun'].toString()),
                   ],
                 ),
               ),

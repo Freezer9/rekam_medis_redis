@@ -1,28 +1,34 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:rekam_medis_redis/data/faker/pasien.dart';
 import 'package:rekam_medis_redis/presentation/widgets/patients_widget.dart';
 
-class RiwayatReDis extends StatelessWidget {
-  const RiwayatReDis({Key? key}) : super(key: key);
+class RiwayatPasienPage extends StatelessWidget {
+  final Map<String, dynamic> user;
+  const RiwayatPasienPage({
+    super.key,
+    required this.user,
+  });
 
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final filteredPatients =
-        patientsData.where((data) => data['name'] == 'John Manulang').toList();
+        patientsData.where((data) => data['nama'] == user['nama']).toList();
 
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text("Riwayat Rekam Medis"),
-        leading: BackButton(
-          onPressed: () => Navigator.pop(context),
-        ),
-        elevation: 3,
+        title:
+            const Text("Riwayat Rekam Medis", style: TextStyle(fontSize: 18)),
+        backgroundColor: Colors.white,
+        shadowColor: Colors.black,
+        elevation: 1,
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          padding: const EdgeInsets.only(left: 35, right: 35),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -33,7 +39,7 @@ class RiwayatReDis extends StatelessWidget {
                 child: _buildProfileInfo(),
               ),
               const Padding(
-                padding: EdgeInsets.only(top: 20, left: 25),
+                padding: EdgeInsets.only(top: 20),
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
@@ -42,12 +48,14 @@ class RiwayatReDis extends StatelessWidget {
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+              SizedBox(
                 child: Column(
                   children: filteredPatients.map((data) {
-                    return WidgetUtils.buildPasienCard(
-                        data['doc']!, data['doctitle']!, data['date']!);
+                    return GestureDetector(
+                        onTap: () {
+                          context.push('/detail-pasien', extra: data);
+                        },
+                        child: PasienCard(data: data));
                   }).toList(),
                 ),
               ),
@@ -56,7 +64,9 @@ class RiwayatReDis extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          context.push('/input-data-pasien');
+        },
         backgroundColor: const Color(0xFFD2E4FF),
         elevation: 4,
         child: const Icon(
@@ -72,7 +82,7 @@ class RiwayatReDis extends StatelessWidget {
     return Container(
       width: 130,
       height: 130,
-      margin: const EdgeInsets.only(bottom: 20),
+      margin: const EdgeInsets.only(bottom: 20, top: 20),
       decoration: BoxDecoration(
         border: Border.all(width: 2),
         boxShadow: const [
@@ -99,24 +109,25 @@ class RiwayatReDis extends StatelessWidget {
         border: Border.all(width: 1.0, color: const Color(0xffC3C6CF)),
         borderRadius: BorderRadius.circular(10),
         color: Colors.white,
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
             spreadRadius: 0.2,
             blurRadius: 2,
-            color: const Color(0xFF38608F),
+            color: Color(0xFF38608F),
           ),
         ],
       ),
       padding: const EdgeInsets.all(20.0),
       child: Column(
         children: [
-          _buildTextField('Nama', 'assets/profile.png', 'Faris'),
-          _buildTextField('NRP', 'assets/nrp.png', '3122600044'),
+          _buildTextField('Nama', 'assets/icons/profile.png', user['nama']!),
+          _buildTextField('NRP', 'assets/icons/nrp.png', user['nrp']!),
           _buildTextField(
-              'Tanggal Lahir', 'assets/icon.png', 'Jepang, 08 Februari 2004'),
+              'Tanggal Lahir', 'assets/icons/tanggal.png', user['ttl']),
           _buildTextField(
-              'Program Studi', 'assets/prodi.png', 'D4 Teknik Mekatronika'),
-          _buildTextField('Angkatan', 'assets/time.png', '2021'),
+              'Program Studi', 'assets/icons/prodi.png', user['prodi']),
+          _buildTextField(
+              'Angkatan', 'assets/icons/time.png', user['tahun'].toString()),
         ],
       ),
     );
