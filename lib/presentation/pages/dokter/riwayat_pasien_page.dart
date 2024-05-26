@@ -5,24 +5,26 @@ import 'package:rekam_medis_redis/data/faker/pasien.dart';
 import 'package:rekam_medis_redis/presentation/widgets/patients_widget.dart';
 
 class RiwayatPasienPage extends StatelessWidget {
-  final Map<String, String> data;
+  final Map<String, dynamic> user;
   const RiwayatPasienPage({
     super.key,
-    required this.data,
+    required this.user,
   });
 
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final filteredPatients =
-        patientsData.where((data) => data['name'] == 'John Manulang').toList();
+        patientsData.where((data) => data['nama'] == user['nama']).toList();
 
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title:
             const Text("Riwayat Rekam Medis", style: TextStyle(fontSize: 18)),
-        elevation: 3,
+        backgroundColor: Colors.white,
+        shadowColor: Colors.black,
+        elevation: 1,
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -80,7 +82,7 @@ class RiwayatPasienPage extends StatelessWidget {
     return Container(
       width: 130,
       height: 130,
-      margin: const EdgeInsets.only(bottom: 20),
+      margin: const EdgeInsets.only(bottom: 20, top: 20),
       decoration: BoxDecoration(
         border: Border.all(width: 2),
         boxShadow: const [
@@ -118,13 +120,14 @@ class RiwayatPasienPage extends StatelessWidget {
       padding: const EdgeInsets.all(20.0),
       child: Column(
         children: [
-          _buildTextField('Nama', 'assets/icons/profile.png', data['name']!),
-          _buildTextField('NRP', 'assets/icons/nrp.png', data['id']!),
-          _buildTextField('Tanggal Lahir', 'assets/icons/tanggal.png',
-              'Jepang, 08 Februari 2004'),
-          _buildTextField('Program Studi', 'assets/icons/prodi.png',
-              'D4 Teknik Mekatronika'),
-          _buildTextField('Angkatan', 'assets/icons/time.png', '2021'),
+          _buildTextField('Nama', 'assets/icons/profile.png', user['nama']!),
+          _buildTextField('NRP', 'assets/icons/nrp.png', user['nrp']!),
+          _buildTextField(
+              'Tanggal Lahir', 'assets/icons/tanggal.png', user['ttl']),
+          _buildTextField(
+              'Program Studi', 'assets/icons/prodi.png', user['prodi']),
+          _buildTextField(
+              'Angkatan', 'assets/icons/time.png', user['tahun'].toString()),
         ],
       ),
     );

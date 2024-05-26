@@ -1,42 +1,42 @@
-final Map<String, List<String>> obat = {
-  "name": [
-    "Paracetamol",
-    "Amoxicillin",
-    "Omeprazole",
-    "Ibuprofen",
-    "Azithromycin",
-    "Metformin",
-    "Losartan",
-    "Atorvastatin",
-    "Simvastatin",
-    "Levothyroxine",
-    "Metoprolol",
-    "Amlodipine",
-    "Hydrochlorothiazide",
-    "Lisinopril",
-    "Albuterol",
-    "Gabapentin",
-    "Furosemide",
-    "Tramadol",
-    "Sertraline",
-    "Trazodone",
-  ],
-  "tipe": [
-    "Tablet",
-    "Kapsul",
-    "Sirup",
-    "Salep",
-    "Tetes",
-    "Pil",
-  ],
-  "penggunaan": [
-    "Diminum",
-    "Dioles",
-    "Ditetes",
-    "Dimakan",
-    "Dihirup",
-  ],
-};
+final List<String> obat = [
+  "Paracetamol",
+  "Amoxicillin",
+  "Omeprazole",
+  "Ibuprofen",
+  "Azithromycin",
+  "Metformin",
+  "Losartan",
+  "Atorvastatin",
+  "Simvastatin",
+  "Levothyroxine",
+  "Metoprolol",
+  "Amlodipine",
+  "Hydrochlorothiazide",
+  "Lisinopril",
+  "Albuterol",
+  "Gabapentin",
+  "Furosemide",
+  "Tramadol",
+  "Sertraline",
+  "Trazodone",
+];
+
+final List<String> tipeObat = [
+  "Tablet",
+  "Kapsul",
+  "Sirup",
+  "Salep",
+  "Tetes",
+  "Pil",
+];
+
+final List<String> penggunaanObat = [
+  "Diminum",
+  "Dioles",
+  "Ditetes",
+  "Dimakan",
+  "Dihirup",
+];
 
 final List<String> keluhan = [
   "Demam",
@@ -122,4 +122,17 @@ final List<String> diagnosis = [
   "Stroke",
   "Ginjal",
   "Hepatitis",
+];
+
+final List<String> waktuPenggunaan = [
+  "Sebelum Makan",
+  "Sesudah Makan",
+];
+
+final List<String> caraPenggunaan = [
+  "minum",
+  "oles",
+  "tetes",
+  "makan",
+  "hirup",
 ];

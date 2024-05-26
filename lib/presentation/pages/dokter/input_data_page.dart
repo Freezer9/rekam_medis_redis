@@ -1,20 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rekam_medis_redis/data/faker/resep.dart';
-import 'package:rekam_medis_redis/presentation/pages/dokter/keluhan_notifier.dart';
-
-final keluhanProvider =
-    StateNotifierProvider<ListNotifier, List<String>>((ref) {
-  return ListNotifier();
-});
-final riwayatPenyakitProvider =
-    StateNotifierProvider<ListNotifier, List<String>>((ref) {
-  return ListNotifier();
-});
-final diagnosisProvider =
-    StateNotifierProvider<ListNotifier, List<String>>((ref) {
-  return ListNotifier();
-});
+import 'package:rekam_medis_redis/domain/dokter/keluhan_notifier.dart';
+import 'package:rekam_medis_redis/domain/dokter/obat_notifier.dart';
+import 'package:rekam_medis_redis/presentation/widgets/autocomplete_widget.dart';
+import 'package:rekam_medis_redis/presentation/widgets/button_widget.dart';
+import 'package:rekam_medis_redis/presentation/widgets/textfield_widget.dart';
+import 'package:rekam_medis_redis/themes.dart';
 
 class InputDataMedisPage extends ConsumerStatefulWidget {
   const InputDataMedisPage({super.key});
@@ -23,17 +15,8 @@ class InputDataMedisPage extends ConsumerStatefulWidget {
   ConsumerState<ConsumerStatefulWidget> createState() => _InputDataPageState();
 }
 
-
 class _InputDataPageState extends ConsumerState<InputDataMedisPage> {
-  // void initState() {
-  //   super.initState();
-  //   // Clear all lists when the page is loaded
-  //   Future.microtask(() {
-  //     ref.read(keluhanProvider.notifier).clearItems();
-  //     ref.read(riwayatPenyakitProvider.notifier).clearItems();
-  //     ref.read(diagnosisProvider.notifier).clearItems();
-  //   });
-  // }
+  int _kuantitasWaktu = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +25,15 @@ class _InputDataPageState extends ConsumerState<InputDataMedisPage> {
         title: const Text(
           'Input Data Pasien',
           style: TextStyle(fontSize: 18),
+        ),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: primarycolor),
+          onPressed: () {
+            ref.read(keluhanProvider.notifier).clearItems();
+            ref.read(riwayatPenyakitProvider.notifier).clearItems();
+            ref.read(diagnosisProvider.notifier).clearItems();
+            Navigator.pop(context);
+          },
         ),
         centerTitle: true,
         backgroundColor: Colors.white,
@@ -58,6 +50,7 @@ class _InputDataPageState extends ConsumerState<InputDataMedisPage> {
               listBoxContent(
                   "Riwayat Penyakit", riwayatPenyakit, riwayatPenyakitProvider),
               listBoxContent("Diagnosis", diagnosis, diagnosisProvider),
+              tambahResepContent(),
             ],
           ),
         ),
@@ -65,81 +58,275 @@ class _InputDataPageState extends ConsumerState<InputDataMedisPage> {
     );
   }
 
-  Widget listBoxContent(String title, List<String> data,
-      StateNotifierProvider<ListNotifier, List<String>> provider) {
-    return Consumer(builder: (context, ref, child) {
-      final itemList = ref.watch(provider);
-      return SizedBox(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 20),
-            Text(
-              title,
-              style: const TextStyle(fontSize: 18),
-            ),
-            const SizedBox(height: 10),
-            autoCompleteTextField(data, (selectedItem) {
-              ref.read(provider.notifier).addItem(selectedItem);
-            }),
-            const SizedBox(height: 10),
-            Wrap(
-              spacing: 8.0,
-              children: itemList
-                  .map((item) => Chip(
-                        label: Text(item,
-                            style: const TextStyle(color: Color(0xFF001C37))),
-                        backgroundColor: Color(0xFFD2E4FF),
-                        onDeleted: () {
-                          ref.read(provider.notifier).removeItem(item);
-                        },
-                      ))
-                  .toList(),
-            ),
-          ],
-        ),
-      );
-    });
+  Widget tambahResepContent() {
+    return SizedBox(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 20),
+          const Text(
+            "Resep Obat",
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+          ),
+          const SizedBox(height: 10),
+          buttonTambahResep()
+        ],
+      ),
+    );
   }
 
-  Widget autoCompleteTextField(List<String> data, Function(String) onSelected) {
-    return Autocomplete<String>(
-      optionsBuilder: (TextEditingValue textEditingValue) {
-        return data.where((option) {
-          return option
-              .toLowerCase()
-              .contains(textEditingValue.text.toLowerCase());
-        });
-      },
-      displayStringForOption: (option) {
-        return option;
-      },
-      onSelected: (selectedOption) {
-        onSelected(selectedOption);
-      },
-      fieldViewBuilder:
-          (context, textEditingController, focusNode, onFieldSubmitted) {
-        return TextField(
-          controller: textEditingController,
-          focusNode: focusNode,
-          decoration: InputDecoration(
-            border: OutlineInputBorder(
-              borderSide:
-                  const BorderSide(color: Color(0xFF38608F), width: 2.0),
-              borderRadius: BorderRadius.circular(5.0),
-            ),
-            contentPadding:
-                const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
-          ),
-          onSubmitted: (value) {
-            if (value.isNotEmpty) {
-              onSelected(value);
-              textEditingController.clear();
-            }
+  Widget buttonTambahResep() {
+    return GestureDetector(
+      onTap: () async {
+        await showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              backgroundColor: Colors.white,
+              insetPadding: const EdgeInsets.only(bottom: 80, top: 40),
+              contentPadding: EdgeInsets.zero,
+              content: inputFormBox(),
+              actions: [
+                buttonSimpan(),
+              ],
+            );
           },
-          onChanged: (value) {},
+        ).then((value) => ref.read(obatNotifierProvider.notifier).clearObat());
+      },
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Image.asset('assets/icons/+.png'),
+          const SizedBox(width: 5),
+          const Text(
+            "Tambah Resep",
+            style: TextStyle(
+                fontSize: 16, fontWeight: FontWeight.w400, color: primarycolor),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget inputFormBox() {
+    return Consumer(
+      builder: (context, ref, child) {
+        final item = ref.watch(obatNotifierProvider);
+        return SingleChildScrollView(
+          child: Center(
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width * 0.85,
+              child: Container(
+                padding: const EdgeInsets.all(30),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      "Nama Obat",
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+                    ),
+                    const SizedBox(height: 10),
+                    autoCompleteTextField(obat, (selectedItem) {
+                      ref
+                          .read(obatNotifierProvider.notifier)
+                          .addObat(selectedItem);
+                    }),
+                    Text(item.toString()),
+                    const SizedBox(height: 20),
+                    const Text(
+                      "Kuantitas",
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+                    ),
+                    const SizedBox(height: 10),
+                    Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            if (_kuantitasWaktu > 1) {
+                              _kuantitasWaktu--;
+                            }
+                          },
+                          child: Image.asset('assets/icons/minus.png'),
+                        ),
+                        const SizedBox(width: 20),
+                        Text(
+                          _kuantitasWaktu.toString(),
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(width: 20),
+                        GestureDetector(
+                          onTap: () {
+                            _kuantitasWaktu++;
+                          },
+                          child: Image.asset('assets/icons/plus.png'),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    const Text(
+                      "Cara Penggunaan",
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+                    ),
+                    const SizedBox(height: 10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                if (_kuantitasWaktu > 1) {
+                                  _kuantitasWaktu--;
+                                }
+                              },
+                              child: Image.asset('assets/icons/minus.png'),
+                            ),
+                            const SizedBox(width: 20),
+                            Text(
+                              _kuantitasWaktu.toString(),
+                              textAlign: TextAlign.center,
+                            ),
+                            const SizedBox(width: 20),
+                            GestureDetector(
+                              onTap: () {
+                                _kuantitasWaktu++;
+                              },
+                              child: Image.asset('assets/icons/plus.png'),
+                            ),
+                          ],
+                        ),
+                        const Text(
+                          "Per hari",
+                          style: TextStyle(fontSize: 14),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 10),
+                    Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            if (_kuantitasWaktu > 1) {
+                              _kuantitasWaktu--;
+                            }
+                          },
+                          child: Image.asset('assets/icons/minus.png'),
+                        ),
+                        const SizedBox(width: 20),
+                        Text(
+                          _kuantitasWaktu.toString(),
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(width: 20),
+                        GestureDetector(
+                          onTap: () {
+                            _kuantitasWaktu++;
+                          },
+                          child: Image.asset('assets/icons/plus.png'),
+                        ),
+                        const SizedBox(width: 20),
+                        DropdownButton(
+                          items: caraPenggunaan
+                              .map((String value) => DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(value),
+                                  ))
+                              .toList(),
+                          onChanged: (String? value) {
+                            print(value);
+                          },
+                        ),
+                        const SizedBox(width: 20),
+                        Text("Sekali", style: TextStyle(fontSize: 14)),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    const Text(
+                      "Waktu Penggunaan",
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+                    ),
+                    DropdownMenu(
+                      inputDecorationTheme: const InputDecorationTheme(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                        ),
+                        contentPadding:
+                            EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                      ),
+                      dropdownMenuEntries: waktuPenggunaan
+                          .map<DropdownMenuEntry<String>>((String value) {
+                        return DropdownMenuEntry<String>(
+                            value: value, label: value);
+                      }).toList(),
+                    ),
+                    const SizedBox(height: 20),
+                    const Text(
+                      "Catatan",
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+                    ),
+                    customTextField(),
+                  ],
+                ),
+              ),
+            ),
+          ),
         );
       },
+    );
+  }
+
+  Widget listBoxContent(String title, List<String> data,
+      StateNotifierProvider<ListNotifier, List<String>> provider) {
+    final itemList = ref.watch(provider);
+
+    return SizedBox(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 20),
+          Text(
+            title,
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+          ),
+          const SizedBox(height: 10),
+          autoCompleteTextField(data, (selectedItem) {
+            ref.read(provider.notifier).addItem(selectedItem);
+          }),
+          const SizedBox(height: 10),
+          Wrap(
+            spacing: 8.0,
+            children: itemList
+                .map((item) => Chip(
+                      label: Text(item,
+                          style: const TextStyle(
+                              color: Color(0xFF001C37),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500)),
+                      backgroundColor: const Color(0xFFD2E4FF),
+                      padding: const EdgeInsets.all(5),
+                      shape: RoundedRectangleBorder(
+                        side: const BorderSide(
+                          color: Colors.transparent,
+                        ),
+                        borderRadius: BorderRadius.circular(12.0),
+                      ),
+                      deleteIcon: Image.asset('assets/icons/x.png'),
+                      onDeleted: () {
+                        ref.read(provider.notifier).removeItem(item);
+                      },
+                    ))
+                .toList(),
+          ),
+        ],
+      ),
     );
   }
 }

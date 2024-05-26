@@ -48,14 +48,14 @@ class PasienCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  data['name']!,
+                  data['nama']!,
                   style: const TextStyle(
                       color: Color.fromRGBO(25, 28, 32, 1),
                       fontSize: 16,
                       fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  data['id']!,
+                  data['nrp']!,
                   style: const TextStyle(
                     color: Color.fromRGBO(67, 71, 78, 1),
                     fontSize: 14,

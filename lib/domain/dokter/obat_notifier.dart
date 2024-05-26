@@ -1,23 +1,25 @@
-import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-part 'obat_notifier.g.dart';
+class ObatNotifier extends StateNotifier<List<Map<String, String>>> {
+  ObatNotifier() : super([]);
 
-@riverpod
-class ObatNotifier extends _$ObatNotifier {
-  @override
-  List<Map<String, dynamic>> build() => [];
-
-  void addObat() {
-    state = [...state, {}];
+  void addObat(String obat) {
+    state = [
+      ...state,
+      {'nama_obat': obat}
+    ];
   }
 
-  void deleteObat(int index) {
-    state.removeAt(index);
-    state = [...state];
+  void removeObat(String obat) {
+    state = state.where((element) => element != obat).toList();
   }
 
-  void updateObat(int index, Map<String, dynamic> obat) {
-    state[index].addAll(obat);
-    state = [...state];
+  void clearObat() {
+    state = [];
   }
 }
+
+final obatNotifierProvider =
+    StateNotifierProvider<ObatNotifier, List<Map<String, String>>>((ref) {
+  return ObatNotifier();
+});
