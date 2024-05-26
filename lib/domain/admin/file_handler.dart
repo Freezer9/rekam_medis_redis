@@ -97,9 +97,8 @@ class FileHandler {
 
             await _client.from('mahasiswa').insert(records[i]);
 
+            records[i].removeWhere((key, value) => key == 'id');
             records[i]["password"] = password;
-
-            print(records[i]);
           }
         } else {
           for (int i = 1; i < input.length; i++) {

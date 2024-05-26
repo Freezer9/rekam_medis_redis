@@ -1,15 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rekam_medis_redis/auth/auth.dart';
-import 'package:rekam_medis_redis/data/faker/pasien.dart';
+import 'package:rekam_medis_redis/domain/dokter/pasien_notifier.dart';
 import 'package:rekam_medis_redis/presentation/widgets/patients_widget.dart';
 
-class DashboardDokterPage extends ConsumerWidget {
+class DashboardDokterPage extends ConsumerStatefulWidget {
   const DashboardDokterPage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _DashboardDokterPageState();
+}
+
+class _DashboardDokterPageState extends ConsumerState<DashboardDokterPage> {
+  @override
+  Widget build(BuildContext context) {
     final data = ref.watch(authUserProvider).asData?.value;
 
     return Scaffold(
@@ -65,27 +72,32 @@ class DashboardDokterPage extends ConsumerWidget {
                       ],
                     ),
                     const SizedBox(height: 20),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      margin: const EdgeInsets.only(top: 20),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: const Color.fromRGBO(230, 234, 242, 1),
-                      ),
-                      child: TextField(
-                        onTap: () {
-                          context.push('/search-pasien');
-                        },
-                        decoration: const InputDecoration(
-                          hintText: 'Ini apa ya?',
-                          border: InputBorder.none,
-                          contentPadding: EdgeInsets.symmetric(vertical: 12),
-                          suffixIcon: Icon(
-                            Icons.search,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
+                    GestureDetector(
+                      onTap: () => context.push('/search-pasien'),
+                      child: Container(
+                          padding: const EdgeInsets.all(10),
+                          margin: const EdgeInsets.only(top: 20),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(color: Colors.grey, width: 1),
+                              color: Colors.white),
+                          child: Container(
+                            margin: const EdgeInsets.only(left: 10, right: 10),
+                            child: const Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Cari Pasien Anda",
+                                  style: TextStyle(
+                                      color: Colors.grey, fontSize: 15),
+                                ),
+                                Icon(
+                                  Icons.search,
+                                  color: Colors.grey,
+                                ),
+                              ],
+                            ),
+                          )),
                     ),
                   ],
                 ),
@@ -106,16 +118,40 @@ class DashboardDokterPage extends ConsumerWidget {
                     margin: const EdgeInsets.only(top: 20),
                     padding: const EdgeInsets.only(left: 35, right: 35),
                     color: Colors.transparent,
-                    child: ListView.builder(
-                      padding: EdgeInsets.zero,
-                      itemCount: patientsData.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return GestureDetector(
-                            onTap: () {
-                              context.push('/riwayat-pasien',
-                                  extra: patientsData[index]);
-                            },
-                            child: PasienCard(data: patientsData[index]));
+                    child: ref
+                        .watch(getAllPasienProvider(data?.userMetadata?['id']))
+                        .when(
+                      data: (data) {
+                        if (data.isEmpty) {
+                          return const Center(
+                            child: Text('Tidak ada data pasien'),
+                          );
+                        }
+
+                        return ListView.builder(
+                          padding: EdgeInsets.zero,
+                          itemCount: data.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            final patientData = data[index];
+                            return GestureDetector(
+                              onTap: () async {
+                                context.push('/riwayat-pasien',
+                                    extra: patientData);
+                              },
+                              child: PasienCard(data: patientData),
+                            );
+                          },
+                        );
+                      },
+                      error: (error, stackTrace) {
+                        return Center(
+                          child: Text('Error: $error'),
+                        );
+                      },
+                      loading: () {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
                       },
                     ),
                   ),

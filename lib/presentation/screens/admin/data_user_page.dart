@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:rekam_medis_redis/data/models/pasien_model.dart';
 
 class DataUserPage extends StatelessWidget {
-  final Map<String, dynamic> data;
+  final PasienModel data;
   const DataUserPage({super.key, required this.data});
 
   @override
@@ -44,17 +45,15 @@ class DataUserPage extends StatelessWidget {
                 child: Column(
                   children: [
                     buildTextField(
-                        'Nama', 'assets/icons/profile.png', data['nama']),
-                    buildTextField(data['nrp'] != null ? 'NRP' : 'NIP',
-                        'assets/icons/nrp.png', data['nrp'] ?? data['nip']),
-                    buildTextField('Tanggal Lahir', 'assets/icons/tanggal.png',
-                        data['ttl']),
+                        'Nama', 'assets/icons/profile.png', data.nama),
                     buildTextField(
-                        data['prodi'] != null ? 'Program Studi' : 'Departemen',
-                        'assets/icons/prodi.png',
-                        data['prodi'] ?? data['departemen']),
-                    buildTextField('Angkatan', 'assets/icons/time.png',
-                        data['tahun'].toString()),
+                        'NRP/NIP', 'assets/icons/nrp.png', data.nrpOrNip),
+                    buildTextField(
+                        'Tanggal Lahir', 'assets/icons/tanggal.png', data.ttl),
+                    buildTextField('Prodi/Departemen', 'assets/icons/prodi.png',
+                        data.prodiOrDepartemen),
+                    buildTextField(
+                        'Angkatan', 'assets/icons/time.png', data.tahun),
                   ],
                 ),
               ),

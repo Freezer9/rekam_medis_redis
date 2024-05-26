@@ -1,47 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import 'package:rekam_medis_redis/data/faker/pasien.dart';
-import 'package:rekam_medis_redis/presentation/widgets/patients_widget.dart';
+import 'package:rekam_medis_redis/auth/auth.dart';
+import 'package:rekam_medis_redis/domain/pasien/riwayat_provider.dart';
+import 'package:rekam_medis_redis/presentation/widgets/pasien_record_card.dart';
 
-class SearchRiwayatMedisPage extends StatefulWidget {
+class SearchRiwayatMedisPage extends ConsumerWidget {
   const SearchRiwayatMedisPage({super.key});
 
   @override
-  _SearchRiwayatMedisPageState createState() => _SearchRiwayatMedisPageState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final user = ref.watch(authUserProvider).asData?.value;
 
-class _SearchRiwayatMedisPageState extends State<SearchRiwayatMedisPage> {
-  final ValueNotifier<DateTime?> selectedDate = ValueNotifier<DateTime?>(null);
-  final ValueNotifier<List<Map<String, String>>> filteredData =
-      ValueNotifier<List<Map<String, String>>>(patientsData);
-
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2100),
-    );
-    if (picked != null) {
-      selectedDate.value = picked;
-    }
-  }
-
-  void _filterDataByDate() {
-    if (selectedDate.value != null) {
-      String formattedDate =
-          DateFormat('dd/MM/yyyy').format(selectedDate.value!);
-      filteredData.value = patientsData.where((patient) {
-        return patient['date'] == formattedDate;
-      }).toList();
-    } else {
-      filteredData.value = patientsData;
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -74,10 +45,10 @@ class _SearchRiwayatMedisPageState extends State<SearchRiwayatMedisPage> {
                       children: [
                         Expanded(
                           child: GestureDetector(
-                            onTap: () => _selectDate(context),
+                            // onTap: () => _selectDate(context),
                             child: AbsorbPointer(
                               child: ValueListenableBuilder<DateTime?>(
-                                valueListenable: selectedDate,
+                                valueListenable: ValueNotifier<DateTime?>(null),
                                 builder: (context, value, child) {
                                   return Container(
                                     decoration: BoxDecoration(
@@ -124,7 +95,9 @@ class _SearchRiwayatMedisPageState extends State<SearchRiwayatMedisPage> {
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 20, vertical: 15),
                           ),
-                          onPressed: _filterDataByDate,
+                          onPressed: () {
+                            print('Cari');
+                          },
                           child: const Text(
                             'Cari',
                             style: TextStyle(
@@ -145,7 +118,7 @@ class _SearchRiwayatMedisPageState extends State<SearchRiwayatMedisPage> {
             left: 0,
             right: 0,
             child: ValueListenableBuilder<List<Map<String, String>>>(
-              valueListenable: filteredData,
+              valueListenable: ValueNotifier<List<Map<String, String>>>([]),
               builder: (context, data, child) {
                 return Column(
                   children: [
@@ -155,16 +128,38 @@ class _SearchRiwayatMedisPageState extends State<SearchRiwayatMedisPage> {
                         padding: const EdgeInsets.symmetric(horizontal: 20),
                         margin: const EdgeInsets.only(top: 20),
                         color: Colors.transparent,
-                        child: ListView.builder(
-                          padding: EdgeInsets.zero,
-                          itemCount: data.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return GestureDetector(
-                                onTap: () {
-                                  context.push('/detail-pasien',
-                                      extra: data[index]);
-                                },
-                                child: PasienCard(data: data[index]));
+                        child:
+                            ref.watch(getPasienRecordProvider(user!.id)).when(
+                          data: (data) {
+                            return ListView.builder(
+                              padding: EdgeInsets.zero,
+                              itemCount: data.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                final record = data[index];
+                                return GestureDetector(
+                                  onTap: () {
+                                    context.push('/detail-pasien',
+                                        extra: data[index]);
+                                  },
+                                  child: PasienRecordCard(
+                                      data: record, user: user),
+                                  // child: PasienCard(data: data[index]),
+                                );
+                              },
+                            );
+                          },
+                          error: (error, stackTrace) {
+                            return Center(
+                              child: Text(
+                                'Error: $error',
+                                style: const TextStyle(fontSize: 20),
+                              ),
+                            );
+                          },
+                          loading: () {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
                           },
                         ),
                       ),

@@ -22,6 +22,14 @@ class MainApp extends ConsumerWidget {
       title: "Supabase Flutter",
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        appBarTheme: const AppBarTheme(
+          centerTitle: true,
+          titleTextStyle: TextStyle(
+              fontSize: 20, fontWeight: FontWeight.w400, color: Colors.black),
+          shadowColor: Colors.black,
+          backgroundColor: Colors.white,
+          elevation: 1,
+        ),
         fontFamily: 'Plus Jakarta Sans',
         primarySwatch: Colors.blue,
       ),

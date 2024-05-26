@@ -1,14 +1,17 @@
 // ignore_for_file: must_be_immutable
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:rekam_medis_redis/data/models/pasien_model.dart';
+import 'package:rekam_medis_redis/data/models/record_model.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-class PasienCard extends StatelessWidget {
-  final PasienModel data;
-  String? date;
+class PasienRecordCard extends StatelessWidget {
+  final RecordModel data;
+  final User user;
 
-  PasienCard({
+  const PasienRecordCard({
     super.key,
-    this.date,
+    required this.user,
     required this.data,
   });
 
@@ -52,27 +55,26 @@ class PasienCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  data.nama,
+                  user.userMetadata!['nrp']!,
                   style: const TextStyle(
                       color: Color.fromRGBO(25, 28, 32, 1),
                       fontSize: 16,
                       fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  data.nrpOrNip,
+                  user.userMetadata!['nama']!,
                   style: const TextStyle(
                     color: Color.fromRGBO(67, 71, 78, 1),
                     fontSize: 14,
                   ),
                 ),
-                if (date != null)
-                  Text(
-                    date ?? 'Belum ada tanggal',
-                    style: const TextStyle(
-                      color: Color.fromRGBO(67, 71, 78, 1),
-                      fontSize: 14,
-                    ),
+                Text(
+                  data.createdAt!,
+                  style: const TextStyle(
+                    color: Color.fromRGBO(67, 71, 78, 1),
+                    fontSize: 14,
                   ),
+                ),
               ],
             ),
           ),

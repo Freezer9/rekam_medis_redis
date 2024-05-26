@@ -15,12 +15,8 @@ class ProfileUserPage extends ConsumerWidget {
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          "Profile",
-          style: TextStyle(fontSize: 20),
-        ),
+        title: const Text("Profile"),
         backgroundColor: const Color(0xFFA2C9FE),
-        centerTitle: true,
       ),
       body: SingleChildScrollView(
         child: Stack(
