@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart' as path;
+import 'package:rekam_medis_redis/themes.dart';
 
 class SelectedFile extends StatelessWidget {
   final File selectedFile;
@@ -20,7 +21,7 @@ class SelectedFile extends StatelessWidget {
       width: 320,
       height: 110,
       decoration: BoxDecoration(
-        color: const Color(0xFF5195D6),
+        color: AppTheme.buttonColor,
         borderRadius: BorderRadius.circular(10),
         boxShadow: [
           BoxShadow(
@@ -52,7 +53,7 @@ class SelectedFile extends StatelessWidget {
           IconButton(
             icon: const Icon(
               Icons.close,
-              color: Color(0xFFBA1A1A),
+              color:AppTheme.deleteButtonColor,
             ),
             onPressed: onDelete,
           )

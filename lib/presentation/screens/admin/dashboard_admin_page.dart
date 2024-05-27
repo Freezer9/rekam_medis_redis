@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:rekam_medis_redis/auth/auth.dart';
+import 'package:rekam_medis_redis/themes.dart';
 
 class DashboardAdminPage extends ConsumerWidget {
   const DashboardAdminPage({super.key});
@@ -63,7 +63,7 @@ class DashboardAdminPage extends ConsumerWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
-                      color: const Color.fromRGBO(230, 234, 242, 1),
+                      color: AppTheme.containerColor,
                     ),
                     child: TextField(
                       onTap: () {
@@ -96,7 +96,7 @@ class DashboardAdminPage extends ConsumerWidget {
                   const Text(
                     'Input data...',
                     style: TextStyle(
-                      color: Color.fromARGB(255, 210, 228, 255),
+                      color: AppTheme.containerColor,
                       fontSize: 18,
                       fontWeight: FontWeight.normal,
                     ),
@@ -109,10 +109,10 @@ class DashboardAdminPage extends ConsumerWidget {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            context.push('/inputdata', extra: 'Pasien');
+                            context.push('/input-data', extra: 'Pasien');
                           },
                           child: Card(
-                            color: const Color(0xFFD2E4FF),
+                            color: AppTheme.containerColor,
                             child: Container(
                               width: MediaQuery.of(context).size.width * 0.42,
                               padding: const EdgeInsets.all(10),
@@ -128,7 +128,7 @@ class DashboardAdminPage extends ConsumerWidget {
                                   const Text(
                                     'Input Data Pasien',
                                     style: TextStyle(
-                                      color: Color(0xFF38608F),
+                                      color:AppTheme.primaryColor,
                                     ),
                                   ),
                                 ],
@@ -141,7 +141,7 @@ class DashboardAdminPage extends ConsumerWidget {
                             context.push('/inputdata', extra: 'Dokter');
                           },
                           child: Card(
-                            color: const Color(0xFFD2E4FF),
+                            color: AppTheme.appBarColor,
                             child: Container(
                               width: MediaQuery.of(context).size.width * 0.42,
                               padding: const EdgeInsets.all(10),
@@ -157,7 +157,7 @@ class DashboardAdminPage extends ConsumerWidget {
                                   const Text(
                                     'Input Data Dokter',
                                     style: TextStyle(
-                                      color: Color(0xFF38608F),
+                                      color:AppTheme.primaryColor,
                                     ),
                                   ),
                                 ],
@@ -167,13 +167,6 @@ class DashboardAdminPage extends ConsumerWidget {
                         ),
                       ],
                     ),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      ref.read(authRepositoryProvider).signOut();
-                      Navigator.pop(context);
-                    },
-                    child: const Text('Sign Out'),
                   ),
                 ],
               ),

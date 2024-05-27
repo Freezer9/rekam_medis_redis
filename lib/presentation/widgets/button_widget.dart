@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:rekam_medis_redis/themes.dart';
 
-Widget buttonSimpan() {
+Widget buttonSimpan({
+  Function()? onPressed,
+  Color btnColor = AppTheme.buttonColor,
+  Color textColor = Colors.black,
+}) {
   return ElevatedButton(
     style: ElevatedButton.styleFrom(
       shadowColor: Colors.black,
@@ -11,11 +15,11 @@ Widget buttonSimpan() {
         borderRadius: BorderRadius.circular(10.0),
       ),
     ),
-    onPressed: () {},
-    child: const Text(
+    onPressed: onPressed,
+    child: Text(
       "SIMPAN",
       style: TextStyle(
-        color: Colors.black,
+        color: textColor,
         fontSize: 14,
         fontWeight: FontWeight.w500,
       ),

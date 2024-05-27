@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import 'package:rekam_medis_redis/data/faker/pasien.dart';
-import 'package:rekam_medis_redis/presentation/widgets/patients_widget.dart';
+import 'package:rekam_medis_redis/data/enums/pasien.dart';
+import 'package:rekam_medis_redis/themes.dart';
 
-class RiwayatRekamMedisPage extends StatefulWidget {
-  const RiwayatRekamMedisPage({super.key});
+class SearchRiwayatMedisPage extends StatefulWidget {
+  const SearchRiwayatMedisPage({super.key});
 
   @override
-  _RiwayatRekamMedisPageState createState() => _RiwayatRekamMedisPageState();
+  _SearchRiwayatMedisPageState createState() => _SearchRiwayatMedisPageState();
 }
 
-class _RiwayatRekamMedisPageState extends State<RiwayatRekamMedisPage> {
+class _SearchRiwayatMedisPageState extends State<SearchRiwayatMedisPage> {
   final ValueNotifier<DateTime?> selectedDate = ValueNotifier<DateTime?>(null);
   final ValueNotifier<List<Map<String, String>>> filteredData =
       ValueNotifier<List<Map<String, String>>>(patientsData);
@@ -42,22 +43,31 @@ class _RiwayatRekamMedisPageState extends State<RiwayatRekamMedisPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'Riwayat',
+          style: TextStyle(fontSize: 20),
+        ),
+        centerTitle: true,
+        backgroundColor: AppTheme.appBarColor,
+      ),
       resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
+          Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("assets/images/bg.png"),
+                fit: BoxFit.fill,
+              ),
+            ),
+          ),
           Positioned.fill(
             child: Container(
               padding: const EdgeInsets.all(20),
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage("assets/images/bg.png"),
-                  fit: BoxFit.fill,
-                ),
-              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(height: 80),
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: Row(
@@ -86,7 +96,7 @@ class _RiwayatRekamMedisPageState extends State<RiwayatRekamMedisPage> {
                                       decoration: const InputDecoration(
                                         hintText: 'DD/MM/YYYY',
                                         suffixIcon: Icon(Icons.calendar_today,
-                                            color: Color(0xff38608F)),
+                                            color: AppTheme.primaryColor),
                                         border: InputBorder.none,
                                         contentPadding: EdgeInsets.symmetric(
                                             horizontal: 10, vertical: 15),
@@ -107,7 +117,7 @@ class _RiwayatRekamMedisPageState extends State<RiwayatRekamMedisPage> {
                         const SizedBox(width: 10),
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xffFCE186),
+                            backgroundColor: AppTheme.secondaryContainerColor,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(40),
                             ),
@@ -130,7 +140,7 @@ class _RiwayatRekamMedisPageState extends State<RiwayatRekamMedisPage> {
             ),
           ),
           Positioned(
-            top: MediaQuery.of(context).size.height * 0.2,
+            top: MediaQuery.of(context).size.height * 0.1,
             bottom: 0,
             left: 0,
             right: 0,
@@ -149,7 +159,14 @@ class _RiwayatRekamMedisPageState extends State<RiwayatRekamMedisPage> {
                           padding: EdgeInsets.zero,
                           itemCount: data.length,
                           itemBuilder: (BuildContext context, int index) {
-                            return PasienCard(data: data[index]);
+                            return GestureDetector(
+                              onTap: () {
+                                context.push('/detail-pasien',
+                                    extra: data[index]);
+                              },
+                              child: Text('data'),
+                              // child: PasienCard(data: data[index]),
+                            );
                           },
                         ),
                       ),

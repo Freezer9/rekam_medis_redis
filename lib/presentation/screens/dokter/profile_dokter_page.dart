@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rekam_medis_redis/themes.dart';
 
 class ProfileDokterPage extends StatelessWidget {
   final Map<String, dynamic> data;
@@ -15,7 +16,7 @@ class ProfileDokterPage extends StatelessWidget {
           "Profile",
           style: TextStyle(fontSize: 18),
         ),
-        backgroundColor: const Color(0xFFA2C9FE),
+        backgroundColor: AppTheme.appBarColor,
         centerTitle: true,
       ),
       body: Stack(
@@ -34,14 +35,14 @@ class ProfileDokterPage extends StatelessWidget {
                 margin: const EdgeInsets.only(left: 35, right: 35),
                 decoration: BoxDecoration(
                     border:
-                        Border.all(width: 1.0, color: const Color(0xffC3C6CF)),
+                        Border.all(width: 1.0, color: AppTheme.borderColor),
                     borderRadius: BorderRadius.circular(10),
                     color: Colors.white,
                     boxShadow: const [
                       BoxShadow(
                         spreadRadius: 0.2,
                         blurRadius: 2,
-                        color: Color(0xFF38608F),
+                        color: AppTheme.primaryColor,
                       ),
                     ]),
                 padding: const EdgeInsets.all(25.0),

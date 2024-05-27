@@ -1,22 +1,76 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:rekam_medis_redis/data/models/obat_model.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-part 'obat_notifier.g.dart';
+class ObatNotifier extends StateNotifier<List<ObatModel>> {
+  ObatNotifier() : super([]);
 
-@riverpod
-class ObatNotifier extends _$ObatNotifier {
-  @override
-  List<Map<String, dynamic>> build() => [];
-
-  void addObat(String namaObat) {
+  void addObat({
+    String? obat,
+    String? kuantitas,
+    List? penggunaan,
+    String? catatan,
+  }) {
+    final newObat = ObatModel(
+      namaObat: obat!,
+      kuantitas: kuantitas!,
+      penggunaan: penggunaan!,
+      catatan: catatan!,
+    );
     state = [
       ...state,
-      {"nama_obat": namaObat}
+      newObat,
     ];
   }
 
-  void deleteObat(int index) {
-    state.removeAt(index);
-    state = [...state];
+  Future<void> simpanObatDatabase(String id) async {
+    final client = Supabase.instance.client;
+    final now = DateTime.now();
+
+    for (var obat in state) {
+      await client.from('resep').insert({
+        'record_id': id,
+        'nama_obat': obat.namaObat,
+        'kuantitas': obat.kuantitas,
+        'penggunaan': obat.penggunaan,
+        'catatan': obat.catatan,
+        'created_at': DateTime(now.year, now.month, now.day).toIso8601String(),
+      });
+    }
+  }
+
+  void removeObat(int index) {
+    state = List<ObatModel>.from(state)..removeAt(index);
+  }
+
+  ObatModel getObat(int index) {
+    return state[index];
+  }
+
+  void editObat({
+    int? index,
+    String? obat,
+    String? kuantitas,
+    List? penggunaan,
+    String? catatan,
+  }) {
+    final newObat = ObatModel(
+      namaObat: obat!,
+      kuantitas: kuantitas!,
+      penggunaan: penggunaan!,
+      catatan: catatan!,
+    );
+    state = List<ObatModel>.from(state)
+      ..removeAt(index!)
+      ..insert(index, newObat);
+  }
+
+  void clearObat() {
+    state = [];
   }
 }
+
+final obatNotifierProvider =
+    StateNotifierProvider<ObatNotifier, List<ObatModel>>((ref) {
+  return ObatNotifier();
+});

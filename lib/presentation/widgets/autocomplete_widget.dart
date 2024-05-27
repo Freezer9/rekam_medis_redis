@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:rekam_medis_redis/themes.dart';
 
-Widget autoCompleteTextField(List<String> data, Function(String) onSelected) {
+Widget autoCompleteTextField({
+  List<String>? data,
+  Function(String)? onSelected,
+  bool? clearOnSubmit,
+  String? initialValue,
+}) {
   return Autocomplete<String>(
+    initialValue:
+        initialValue == null ? null : TextEditingValue(text: initialValue),
     optionsBuilder: (TextEditingValue textEditingValue) {
-      return data.where((option) {
+      return data!.where((option) {
         return option
             .toLowerCase()
             .contains(textEditingValue.text.toLowerCase());
@@ -12,9 +19,6 @@ Widget autoCompleteTextField(List<String> data, Function(String) onSelected) {
     },
     displayStringForOption: (option) {
       return option;
-    },
-    onSelected: (selectedOption) {
-      onSelected(selectedOption);
     },
     fieldViewBuilder:
         (context, textEditingController, focusNode, onFieldSubmitted) {
@@ -31,9 +35,8 @@ Widget autoCompleteTextField(List<String> data, Function(String) onSelected) {
         ),
         onSubmitted: (value) {
           if (value.isNotEmpty) {
-            onSelected(value);
-
-            textEditingController.clear();
+            onSelected!(value);
+            if (clearOnSubmit!) textEditingController.clear();
           }
         },
       );

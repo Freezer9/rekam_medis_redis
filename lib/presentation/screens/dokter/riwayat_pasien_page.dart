@@ -1,21 +1,21 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:rekam_medis_redis/data/faker/pasien.dart';
+import 'package:rekam_medis_redis/data/models/pasien_model.dart';
+import 'package:rekam_medis_redis/domain/dokter/history_pasien_provider.dart';
 import 'package:rekam_medis_redis/presentation/widgets/patients_widget.dart';
+import 'package:rekam_medis_redis/themes.dart';
 
-class RiwayatPasienPage extends StatelessWidget {
-  final Map<String, dynamic> user;
+class RiwayatPasienPage extends ConsumerWidget {
+  final PasienModel user;
   const RiwayatPasienPage({
     super.key,
     required this.user,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final width = MediaQuery.of(context).size.width;
-    final filteredPatients =
-        patientsData.where((data) => data['nama'] == user['nama']).toList();
 
     return Scaffold(
       appBar: AppBar(
@@ -49,14 +49,42 @@ class RiwayatPasienPage extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                child: Column(
-                  children: filteredPatients.map((data) {
-                    return GestureDetector(
-                        onTap: () {
-                          context.push('/detail-pasien', extra: data);
-                        },
-                        child: PasienCard(data: data));
-                  }).toList(),
+                child: ref.watch(getHistoryPasienProvider(user.id)).when(
+                  data: (data) {
+                    if (data.isEmpty) {
+                      return Container(
+                        margin: const EdgeInsets.only(top: 20, bottom: 20),
+                        child: const Text('Tidak ada histori pasien'),
+                      );
+                    }
+
+                    return ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      padding: EdgeInsets.zero,
+                      itemCount: data.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        final patientData = data[index];
+                        return GestureDetector(
+                          onTap: () {
+                            context.push('/detail-pasien', extra: patientData);
+                          },
+                          child: PasienCard(
+                              data: user, date: patientData.createdAt),
+                        );
+                      },
+                    );
+                  },
+                  error: (error, stackTrace) {
+                    return Center(
+                      child: Text('Error: $error'),
+                    );
+                  },
+                  loading: () {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  },
                 ),
               ),
             ],
@@ -65,9 +93,9 @@ class RiwayatPasienPage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          context.push('/input-data-pasien');
+          context.push('/input-data-pasien', extra: user);
         },
-        backgroundColor: const Color(0xFFD2E4FF),
+        backgroundColor: AppTheme.containerColor,
         elevation: 4,
         child: const Icon(
           Icons.add,
@@ -106,28 +134,27 @@ class RiwayatPasienPage extends StatelessWidget {
   Widget _buildProfileInfo() {
     return Container(
       decoration: BoxDecoration(
-        border: Border.all(width: 1.0, color: const Color(0xffC3C6CF)),
+        border: Border.all(width: 1.0, color: AppTheme.borderColor),
         borderRadius: BorderRadius.circular(10),
         color: Colors.white,
         boxShadow: const [
           BoxShadow(
             spreadRadius: 0.2,
             blurRadius: 2,
-            color: Color(0xFF38608F),
+            color: AppTheme.primaryColor,
           ),
         ],
       ),
       padding: const EdgeInsets.all(20.0),
       child: Column(
         children: [
-          _buildTextField('Nama', 'assets/icons/profile.png', user['nama']!),
-          _buildTextField('NRP', 'assets/icons/nrp.png', user['nrp']!),
+          _buildTextField('Nama', 'assets/icons/profile.png', user.nama),
+          _buildTextField('NRP', 'assets/icons/nrp.png', user.nrpOrNip),
           _buildTextField(
-              'Tanggal Lahir', 'assets/icons/tanggal.png', user['ttl']),
-          _buildTextField(
-              'Program Studi', 'assets/icons/prodi.png', user['prodi']),
-          _buildTextField(
-              'Angkatan', 'assets/icons/time.png', user['tahun'].toString()),
+              'Tanggal Lahir', 'assets/icons/tanggal.png', user.ttl),
+          _buildTextField('Program Studi', 'assets/icons/prodi.png',
+              user.prodiOrDepartemen),
+          _buildTextField('Angkatan', 'assets/icons/time.png', user.tahun),
         ],
       ),
     );

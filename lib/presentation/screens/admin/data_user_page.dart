@@ -1,23 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rekam_medis_redis/auth/auth.dart';
+import 'package:rekam_medis_redis/data/models/pasien_model.dart';
+import 'package:rekam_medis_redis/themes.dart';
 
-class ProfileUserPage extends ConsumerWidget {
-  const ProfileUserPage({super.key});
+class DataUserPage extends StatelessWidget {
+  final PasienModel data;
+  const DataUserPage({super.key, required this.data});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final data = ref.watch(authUserProvider).asData?.value;
-
+  Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          "Profile",
-        ),
-        backgroundColor: Color(0xFFA2C9FE),
+        title: const Text("Data User"),
+        backgroundColor: AppTheme.appBarColor,
         centerTitle: true,
       ),
       body: Stack(
@@ -28,42 +25,36 @@ class ProfileUserPage extends ConsumerWidget {
               Container(
                 width: double.infinity,
                 child: Image.asset(
-                  "assets/icons/background.png",
+                  "assets/images/background.png",
                   fit: BoxFit.fill,
                 ),
               ),
               Container(
                 width: width * 0.9,
                 decoration: BoxDecoration(
-                    border: Border.all(width: 1.0, color: Color(0xffC3C6CF)),
+                    border: Border.all(width: 1.0, color: AppTheme.borderColor),
                     borderRadius: BorderRadius.circular(10),
                     color: Colors.white,
                     boxShadow: [
                       BoxShadow(
                         spreadRadius: 0.2,
                         blurRadius: 2,
-                        color: Color(0xFF38608F),
+                        color: AppTheme.primaryColor,
                       ),
                     ]),
                 padding: EdgeInsets.all(25.0),
                 child: Column(
                   children: [
-                    buildTextField('Nama', 'assets/icons/profile.png',
-                        data?.userMetadata?['nama']),
                     buildTextField(
-                        'NRP',
-                        'assets/icons/nrp.png',
-                        data?.userMetadata?['nrp'] ??
-                            data?.userMetadata?['nip']),
-                    buildTextField('Tempat, Tanggal Lahir',
-                        'assets/icons/tanggal.png', data?.userMetadata?['ttl']),
+                        'Nama', 'assets/icons/profile.png', data.nama),
                     buildTextField(
-                        'Program Studi',
-                        'assets/icons/prodi.png',
-                        data?.userMetadata?['prodi'] ??
-                            data?.userMetadata?['departemen']),
-                    buildTextField('Angkatan', 'assets/icons/time.png',
-                        data?.userMetadata!['tahun'].toString() ?? ''),
+                        'NRP/NIP', 'assets/icons/nrp.png', data.nrpOrNip),
+                    buildTextField(
+                        'Tanggal Lahir', 'assets/icons/tanggal.png', data.ttl),
+                    buildTextField('Prodi/Departemen', 'assets/icons/prodi.png',
+                        data.prodiOrDepartemen),
+                    buildTextField(
+                        'Angkatan', 'assets/icons/time.png', data.tahun),
                   ],
                 ),
               ),
