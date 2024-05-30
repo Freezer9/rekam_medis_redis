@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rekam_medis_redis/data/models/pasien_model.dart';
 import 'package:rekam_medis_redis/domain/dokter/history_pasien_provider.dart';
-import 'package:rekam_medis_redis/presentation/widgets/patients_widget.dart';
+import 'package:rekam_medis_redis/presentation/widgets/pasien_card.dart';
 
 class RiwayatPasienPage extends ConsumerWidget {
   final PasienModel user;
@@ -117,9 +117,7 @@ class RiwayatPasienPage extends ConsumerWidget {
         shape: BoxShape.circle,
         image: const DecorationImage(
           fit: BoxFit.cover,
-          image: NetworkImage(
-            'https://cdn.pixabay.com/photo/2024/01/25/03/16/capuchin-monkey-8530884_640.jpg',
-          ),
+          image: AssetImage("assets/icons/avatar.png"),
         ),
       ),
     );
@@ -143,11 +141,11 @@ class RiwayatPasienPage extends ConsumerWidget {
       child: Column(
         children: [
           _buildTextField('Nama', 'assets/icons/profile.png', user.nama),
-          _buildTextField('NRP', 'assets/icons/nrp.png', user.nrpOrNip),
+          _buildTextField('NRP / NIP', 'assets/icons/nrp.png', user.nrpOrNip),
           _buildTextField(
               'Tanggal Lahir', 'assets/icons/tanggal.png', user.ttl),
-          _buildTextField('Program Studi', 'assets/icons/prodi.png',
-              user.prodiOrDepartemen),
+          _buildTextField('Program Studi / Departemen',
+              'assets/icons/prodi.png', user.prodiOrDepartemen),
           _buildTextField('Angkatan', 'assets/icons/time.png', user.tahun),
         ],
       ),

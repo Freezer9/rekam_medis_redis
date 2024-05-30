@@ -15,13 +15,18 @@ class SearchNotifier extends _$SearchNotifier {
     if (value.isEmpty) return [];
 
     final client = Supabase.instance.client;
-    final response =
-        await client.from('mahasiswa').select().ilike('nama', '%$value%');
-
     final List<PasienModel> users = [];
 
-    for (var data in response) {
+    final mahasiswa =
+        await client.from('mahasiswa').select().ilike('nama', '%$value%');
+    final dosen = await client.from('dosen').select().ilike('nama', '%$value%');
+
+    for (var data in mahasiswa) {
       users.add(PasienModel.fromMahasiswaJson(data));
+    }
+
+    for (var data in dosen) {
+      users.add(PasienModel.fromDosenJson(data));
     }
 
     return users;

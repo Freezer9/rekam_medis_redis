@@ -6,7 +6,7 @@ part of 'riwayat_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$getPasienRecordHash() => r'e0e8cb122afeda14e1a04786e78877f2b1b54318';
+String _$getPasienRecordHash() => r'44ad0b07eac142055392297baf65eda45b1a8577';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -34,7 +34,8 @@ class _SystemHash {
 const getPasienRecordProvider = GetPasienRecordFamily();
 
 /// See also [getPasienRecord].
-class GetPasienRecordFamily extends Family<AsyncValue<List<RecordModel>>> {
+class GetPasienRecordFamily
+    extends Family<AsyncValue<List<Map<String, dynamic>>>> {
   /// See also [getPasienRecord].
   const GetPasienRecordFamily();
 
@@ -73,7 +74,7 @@ class GetPasienRecordFamily extends Family<AsyncValue<List<RecordModel>>> {
 
 /// See also [getPasienRecord].
 class GetPasienRecordProvider
-    extends AutoDisposeFutureProvider<List<RecordModel>> {
+    extends AutoDisposeFutureProvider<List<Map<String, dynamic>>> {
   /// See also [getPasienRecord].
   GetPasienRecordProvider(
     String id,
@@ -108,7 +109,8 @@ class GetPasienRecordProvider
 
   @override
   Override overrideWith(
-    FutureOr<List<RecordModel>> Function(GetPasienRecordRef provider) create,
+    FutureOr<List<Map<String, dynamic>>> Function(GetPasienRecordRef provider)
+        create,
   ) {
     return ProviderOverride(
       origin: this,
@@ -125,7 +127,7 @@ class GetPasienRecordProvider
   }
 
   @override
-  AutoDisposeFutureProviderElement<List<RecordModel>> createElement() {
+  AutoDisposeFutureProviderElement<List<Map<String, dynamic>>> createElement() {
     return _GetPasienRecordProviderElement(this);
   }
 
@@ -143,13 +145,14 @@ class GetPasienRecordProvider
   }
 }
 
-mixin GetPasienRecordRef on AutoDisposeFutureProviderRef<List<RecordModel>> {
+mixin GetPasienRecordRef
+    on AutoDisposeFutureProviderRef<List<Map<String, dynamic>>> {
   /// The parameter `id` of this provider.
   String get id;
 }
 
 class _GetPasienRecordProviderElement
-    extends AutoDisposeFutureProviderElement<List<RecordModel>>
+    extends AutoDisposeFutureProviderElement<List<Map<String, dynamic>>>
     with GetPasienRecordRef {
   _GetPasienRecordProviderElement(super.provider);
 

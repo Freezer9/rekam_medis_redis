@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rekam_medis_redis/auth/auth.dart';
+import 'package:rekam_medis_redis/core/utils.dart';
 
 class ProfileUserPage extends ConsumerWidget {
   const ProfileUserPage({super.key});
@@ -95,24 +96,27 @@ class ProfileUserPage extends ConsumerWidget {
                     ),
                   ),
                 ),
-                Container(
-                  alignment: Alignment.center,
-                  margin: const EdgeInsets.only(bottom: 20),
-                  width: width * 0.85,
-                  padding: const EdgeInsets.symmetric(vertical: 8),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(25),
-                    color: Colors.red,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image.asset('assets/icons/logout.png',
-                          color: Colors.white),
-                      const SizedBox(width: 5),
-                      const Text("Keluar",
-                          style: TextStyle(color: Colors.white)),
-                    ],
+                GestureDetector(
+                  onTap: () => context.clearAndNavigate('/'),
+                  child: Container(
+                    alignment: Alignment.center,
+                    margin: const EdgeInsets.only(bottom: 20),
+                    width: width * 0.85,
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(25),
+                      color: Colors.red,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset('assets/icons/logout.png',
+                            color: Colors.white),
+                        const SizedBox(width: 5),
+                        const Text("Keluar",
+                            style: TextStyle(color: Colors.white)),
+                      ],
+                    ),
                   ),
                 ),
               ],
@@ -136,9 +140,7 @@ class ProfileUserPage extends ConsumerWidget {
                   shape: BoxShape.circle,
                   image: const DecorationImage(
                     fit: BoxFit.cover,
-                    image: NetworkImage(
-                      'https://cdn.pixabay.com/photo/2024/01/25/03/16/capuchin-monkey-8530884_640.jpg',
-                    ),
+                    image: AssetImage("assets/icons/avatar.png"),
                   ),
                 ),
               ),

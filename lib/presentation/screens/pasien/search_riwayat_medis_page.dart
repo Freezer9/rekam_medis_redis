@@ -142,7 +142,9 @@ class SearchRiwayatMedisPage extends ConsumerWidget {
                                         extra: data[index]);
                                   },
                                   child: PasienRecordCard(
-                                      data: record, user: user),
+                                      dokter: record["dokter"],
+                                      data: record["record"],
+                                      user: user),
                                   // child: PasienCard(data: data[index]),
                                 );
                               },

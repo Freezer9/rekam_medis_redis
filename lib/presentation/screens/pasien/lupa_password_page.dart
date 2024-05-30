@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rekam_medis_redis/auth/auth.dart';
 import 'package:rekam_medis_redis/domain/pasien/password_validation.dart';
 import 'package:rekam_medis_redis/presentation/widgets/password_field.dart';
 import 'package:rekam_medis_redis/presentation/widgets/success_dialog.dart';
@@ -184,6 +185,7 @@ class _LupaPasswordPageState extends ConsumerState<LupaPasswordPage> {
     });
 
     if (_errorMessage == null) {
+      ref.read(authRepositoryProvider).changePassword(newPassword);
       _showSuccessDialog();
     }
   }

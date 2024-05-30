@@ -7,7 +7,6 @@ part 'pasien_notifier.g.dart';
 @riverpod
 Future<List<PasienModel>> getAllPasien(GetAllPasienRef ref, String id) async {
   final client = Supabase.instance.client;
-
   final List<PasienModel> state = [];
 
   final recordDokter = await client.from('record').select().eq('dokter_id', id);
@@ -15,17 +14,11 @@ Future<List<PasienModel>> getAllPasien(GetAllPasienRef ref, String id) async {
   for (var record in recordDokter) {
     final mahasiswa =
         await client.from('mahasiswa').select().eq('id', record['pasien_id']);
-
     final dosen =
         await client.from('dosen').select().eq('id', record['pasien_id']);
 
-    for (var data in mahasiswa) {
-      state.add(PasienModel.fromMahasiswaJson(data));
-    }
-
-    for (var data in dosen) {
-      state.add(PasienModel.fromDosenJson(data));
-    }
+    state.addAll(mahasiswa.map((data) => PasienModel.fromMahasiswaJson(data)));
+    state.addAll(dosen.map((data) => PasienModel.fromDosenJson(data)));
   }
 
   return state;

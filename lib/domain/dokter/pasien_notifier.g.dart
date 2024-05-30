@@ -6,7 +6,7 @@ part of 'pasien_notifier.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$getAllPasienHash() => r'e4ba5a14f74cadc74e53a9375a09ba84df1fc8d0';
+String _$getAllPasienHash() => r'f00978ae4dbb4f3901684e8d43f5941f314d2bbc';
 
 /// Copied from Dart SDK
 class _SystemHash {

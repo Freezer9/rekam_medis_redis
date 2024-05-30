@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rekam_medis_redis/auth/auth.dart';
 import 'package:rekam_medis_redis/core/utils.dart';
 import 'package:rekam_medis_redis/data/enums/role.dart';
+import 'package:rekam_medis_redis/presentation/widgets/error_snackbar.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
@@ -137,11 +138,8 @@ class _LoginPageState extends ConsumerState<LoginPage> {
       context.clearAndNavigate('/home/${widget.role.index}');
     }).catchError((error) {
       if (error is AuthApiException) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(error.message),
-          ),
-        );
+        ScaffoldMessenger.of(context)
+            .showSnackBar(buildErrorSnackBar(error.message));
       }
     });
   }
@@ -155,11 +153,8 @@ class _LoginPageState extends ConsumerState<LoginPage> {
       context.clearAndNavigate('/home/${widget.role.index}');
     }).catchError((error) {
       if (error is AuthApiException) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(error.message),
-          ),
-        );
+        ScaffoldMessenger.of(context)
+            .showSnackBar(buildErrorSnackBar(error.message));
       }
     });
   }
@@ -172,11 +167,8 @@ class _LoginPageState extends ConsumerState<LoginPage> {
       context.clearAndNavigate('/home/${widget.role.index}');
     }).catchError((error) {
       if (error is AuthApiException) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(error.message),
-          ),
-        );
+        ScaffoldMessenger.of(context)
+            .showSnackBar(buildErrorSnackBar(error.message));
       }
     });
   }

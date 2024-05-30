@@ -47,9 +47,7 @@ class PasswordField extends StatelessWidget {
             controller: controller,
             obscureText: obscureText,
             decoration: InputDecoration(
-              hintText: obscureText
-                  ? 'Masukkan password'
-                  : 'Masukkan password', // Placeholder text
+              hintText: obscureText ? 'Masukkan password' : 'Masukkan password',
               contentPadding:
                   const EdgeInsets.symmetric(vertical: 12, horizontal: 15),
               border: InputBorder.none,
