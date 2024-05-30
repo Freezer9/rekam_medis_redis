@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rekam_medis_redis/core/utils.dart';
 
-class SuccessDialog extends StatelessWidget {
+class SuccessDialog extends ConsumerWidget {
   const SuccessDialog({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return SizedBox(
       width: 400,
       child: Dialog(
@@ -48,7 +50,9 @@ class SuccessDialog extends StatelessWidget {
                 width: 280,
                 height: 40,
                 child: ElevatedButton.icon(
-                  onPressed: () {},
+                  onPressed: () {
+                    context.clearAndNavigate('/');
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFFFCE186),
                     foregroundColor: Colors.black,

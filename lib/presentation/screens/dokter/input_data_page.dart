@@ -11,6 +11,7 @@ import 'package:rekam_medis_redis/domain/dokter/pasien_notifier.dart';
 import 'package:rekam_medis_redis/domain/dokter/record_notifier.dart';
 import 'package:rekam_medis_redis/presentation/widgets/autocomplete_widget.dart';
 import 'package:rekam_medis_redis/presentation/widgets/button_widget.dart';
+import 'package:rekam_medis_redis/presentation/widgets/error_snackbar.dart';
 import 'package:rekam_medis_redis/presentation/widgets/input_dialog.dart';
 import 'package:rekam_medis_redis/presentation/widgets/obat_card.dart';
 import 'package:rekam_medis_redis/themes.dart';
@@ -67,11 +68,7 @@ class _InputDataPageState extends ConsumerState<InputDataMedisPage> {
                       ref.read(diagnosisProvider).isEmpty ||
                       ref.read(obatNotifierProvider).isEmpty) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Data tidak boleh kosong'),
-                        backgroundColor: Colors.red,
-                      ),
-                    );
+                        buildErrorSnackBar("Data tidak boleh kosong"));
                     return;
                   } else {
                     ref.read(recordProvider.notifier).addRecord(
@@ -91,11 +88,7 @@ class _InputDataPageState extends ConsumerState<InputDataMedisPage> {
                         .simpanObatDatabase(id[0]['id'].toString())
                         .then((value) {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Data berhasil disimpan'),
-                          backgroundColor: Colors.green,
-                        ),
-                      );
+                          buildSuccessSnackBar("Data berhasil disimpan"));
                       ref.invalidate(getAllPasienProvider(loginUser.id));
                       ref.read(keluhanProvider.notifier).clearItems();
                       ref.read(riwayatPenyakitProvider.notifier).clearItems();

@@ -13,7 +13,7 @@ class DataUserPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Data User"),
-        backgroundColor: Color(0xFFA2C9FE),
+        backgroundColor: const Color(0xFFA2C9FE),
         centerTitle: true,
       ),
       body: Stack(
@@ -31,7 +31,8 @@ class DataUserPage extends StatelessWidget {
               Container(
                 width: width * 0.9,
                 decoration: BoxDecoration(
-                    border: Border.all(width: 1.0, color: Color(0xffC3C6CF)),
+                    border:
+                        Border.all(width: 1.0, color: const Color(0xffC3C6CF)),
                     borderRadius: BorderRadius.circular(10),
                     color: Colors.white,
                     boxShadow: [
@@ -78,9 +79,7 @@ class DataUserPage extends StatelessWidget {
                 shape: BoxShape.circle,
                 image: DecorationImage(
                   fit: BoxFit.cover,
-                  image: NetworkImage(
-                    'https://cdn.pixabay.com/photo/2024/01/25/03/16/capuchin-monkey-8530884_640.jpg',
-                  ),
+                  image: AssetImage("assets/icons/avatar.png"),
                 ),
               ),
             ),

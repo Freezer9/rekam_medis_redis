@@ -78,5 +78,15 @@ class AuthRepository {
     }
   }
 
+  // Change password
+  Future<void> changePassword(String newPassword) async {
+    final user = _client.auth.currentUser;
+
+    if (user != null) {
+      await _client.auth.admin.updateUserById(user.id,
+          attributes: AdminUserAttributes(password: newPassword));
+    }
+  }
+
   Future<void> signOut() => _client.auth.signOut();
 }

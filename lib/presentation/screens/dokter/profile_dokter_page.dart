@@ -72,9 +72,7 @@ class ProfileDokterPage extends StatelessWidget {
                 shape: BoxShape.circle,
                 image: const DecorationImage(
                   fit: BoxFit.cover,
-                  image: NetworkImage(
-                    'https://cdn.pixabay.com/photo/2024/01/25/03/16/capuchin-monkey-8530884_640.jpg',
-                  ),
+                  image: AssetImage("assets/icons/avatar.png"),
                 ),
               ),
             ),

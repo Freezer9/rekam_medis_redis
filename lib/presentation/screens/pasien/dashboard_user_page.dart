@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rekam_medis_redis/auth/auth.dart';
-import 'package:rekam_medis_redis/data/enums/artikel.dart';
 import 'package:rekam_medis_redis/domain/pasien/riwayat_provider.dart';
-import 'package:rekam_medis_redis/presentation/widgets/artikel_widget.dart';
 import 'package:rekam_medis_redis/presentation/widgets/pasien_record_card.dart';
 
 class DashboardUserPage extends ConsumerWidget {
@@ -120,15 +118,18 @@ class DashboardUserPage extends ConsumerWidget {
                     child: ref.watch(getPasienRecordProvider(user!.id)).when(
                       data: (data) {
                         return ListView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
                           padding: EdgeInsets.zero,
                           itemCount: 1,
                           itemBuilder: (BuildContext context, int index) {
                             final pasienData = data.last;
                             return GestureDetector(
                                 onTap: () => context.push('/detail-pasien',
-                                    extra: pasienData),
+                                    extra: pasienData["record"]),
                                 child: PasienRecordCard(
-                                    data: pasienData, user: user));
+                                    dokter: pasienData["dokter"],
+                                    data: pasienData["record"],
+                                    user: user));
                           },
                         );
                       },
@@ -144,49 +145,6 @@ class DashboardUserPage extends ConsumerWidget {
                   ),
                 ),
               ],
-            ),
-          ),
-          Positioned(
-            top: MediaQuery.of(context).size.height * 0.44,
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: Container(
-              padding: const EdgeInsets.only(left: 20, right: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(
-                    child: Text(
-                      'Artikel',
-                      style: TextStyle(
-                        color: Color(0xff38608F),
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: Container(
-                      margin: const EdgeInsets.only(bottom: 5),
-                      color: Colors.transparent,
-                      child: ListView.builder(
-                        padding: EdgeInsets.zero,
-                        itemCount: artikel.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return ArtikelCard(
-                            title: artikel[index]['judul']!,
-                            description: artikel[index]['deskripsi']!,
-                            image: artikel[index]['image']!,
-                            link: artikel[index]['link']!,
-                          );
-                        },
-                      ),
-                    ),
-                  ),
-                ],
-              ),
             ),
           ),
         ],

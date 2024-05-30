@@ -1,5 +1,6 @@
 // ignore_for_file: must_be_immutable
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:rekam_medis_redis/data/models/pasien_model.dart';
 
 class PasienCard extends StatelessWidget {
@@ -8,8 +9,8 @@ class PasienCard extends StatelessWidget {
 
   PasienCard({
     super.key,
-    this.date,
     required this.data,
+    this.date,
   });
 
   @override
@@ -65,14 +66,17 @@ class PasienCard extends StatelessWidget {
                     fontSize: 14,
                   ),
                 ),
-                if (date != null)
-                  Text(
-                    date ?? 'Belum ada tanggal',
-                    style: const TextStyle(
-                      color: Color.fromRGBO(67, 71, 78, 1),
-                      fontSize: 14,
-                    ),
+                Text(
+                  date != null
+                      ? DateFormat.yMMMMEEEEd('id_ID')
+                          .format(DateTime.parse(date!))
+                          .toString()
+                      : "Belum ada tanggal",
+                  style: const TextStyle(
+                    color: Color.fromRGBO(67, 71, 78, 1),
+                    fontSize: 14,
                   ),
+                ),
               ],
             ),
           ),

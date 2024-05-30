@@ -2,16 +2,20 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:rekam_medis_redis/data/models/dokter_model.dart';
 import 'package:rekam_medis_redis/data/models/record_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class PasienRecordCard extends StatelessWidget {
   final RecordModel data;
+  final DokterModel? dokter;
   final User user;
 
   const PasienRecordCard({
     super.key,
     required this.user,
+    this.dokter,
     required this.data,
   });
 
@@ -55,21 +59,16 @@ class PasienRecordCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  user.userMetadata!['nrp']!,
+                  dokter!.nama,
                   style: const TextStyle(
                       color: Color.fromRGBO(25, 28, 32, 1),
                       fontSize: 16,
                       fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  user.userMetadata!['nama']!,
-                  style: const TextStyle(
-                    color: Color.fromRGBO(67, 71, 78, 1),
-                    fontSize: 14,
-                  ),
-                ),
-                Text(
-                  data.createdAt!,
+                  DateFormat.yMMMMEEEEd("id_ID")
+                      .format(DateTime.parse(data.createdAt!))
+                      .toString(),
                   style: const TextStyle(
                     color: Color.fromRGBO(67, 71, 78, 1),
                     fontSize: 14,
