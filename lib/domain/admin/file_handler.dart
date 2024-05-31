@@ -122,7 +122,6 @@ class FileHandler {
               emailConfirm: false,
             ));
             records[i]['id'] = auth.user!.id;
-            records[i]['id'] = auth.user!.id;
             records[i]['created_at'] = DateTime.now().toIso8601String();
 
             if (type == true) {

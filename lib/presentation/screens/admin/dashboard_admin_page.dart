@@ -1,13 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:rekam_medis_redis/core/utils.dart';
 
 class DashboardAdminPage extends ConsumerWidget {
   const DashboardAdminPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final width = MediaQuery.of(context).size.width;
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Stack(
@@ -58,23 +62,24 @@ class DashboardAdminPage extends ConsumerWidget {
                     ],
                   ),
                   const SizedBox(height: 20),
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: const Color.fromRGBO(230, 234, 242, 1),
-                    ),
-                    child: TextField(
-                      onTap: () {
-                        context.push('/search-user');
-                      },
-                      decoration: const InputDecoration(
-                        hintText: 'Ini apa ya?',
-                        border: InputBorder.none,
-                        contentPadding: EdgeInsets.symmetric(vertical: 12),
-                        suffixIcon: Icon(
-                          Icons.search,
-                          color: Colors.black,
+                  GestureDetector(
+                    onTap: () => context.push('/search-user'),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: const Color.fromRGBO(230, 234, 242, 1),
+                      ),
+                      child: TextField(
+                       enabled: false,
+                        decoration: const InputDecoration(
+                          hintText: 'search user',
+                          border: InputBorder.none,
+                          contentPadding: EdgeInsets.symmetric(vertical: 12),
+                          suffixIcon: Icon(
+                            Icons.search,
+                            color: Colors.black,
+                          ),
                         ),
                       ),
                     ),
@@ -167,6 +172,30 @@ class DashboardAdminPage extends ConsumerWidget {
                       ],
                     ),
                   ),
+                  const SizedBox(height: 20),
+              GestureDetector(
+                  onTap: () => context.clearAndNavigate('/'),
+                  child: Container(
+                    alignment: Alignment.center,
+                    margin: const EdgeInsets.only(bottom: 20),
+                    width: width * 0.85,
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(25),
+                      color: Colors.red,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset('assets/icons/logout.png',
+                            color: Colors.white),
+                        const SizedBox(width: 5),
+                        const Text("Keluar",
+                            style: TextStyle(color: Colors.white)),
+                      ],
+                    ),
+                  ),
+                ),
                 ],
               ),
             ),
