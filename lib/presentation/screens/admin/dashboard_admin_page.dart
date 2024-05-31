@@ -137,7 +137,7 @@ class DashboardAdminPage extends ConsumerWidget {
                         ),
                         GestureDetector(
                           onTap: () {
-                            context.push('/inputdata', extra: 'Dokter');
+                            context.push('/input-data', extra: 'Dokter');
                           },
                           child: Card(
                             color: const Color(0xFFD2E4FF),
