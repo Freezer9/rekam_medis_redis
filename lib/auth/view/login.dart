@@ -2,9 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:rekam_medis_redis/auth/auth.dart';
-import 'package:rekam_medis_redis/data/models/user_model.dart';
+import 'package:rekam_medis_redis/core/utils.dart';
+import 'package:rekam_medis_redis/data/enums/role.dart';
+import 'package:rekam_medis_redis/presentation/widgets/error_snackbar.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
@@ -34,10 +35,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 20,
-              vertical: 30,
-            ),
+            padding: const EdgeInsets.only(left: 35, right: 35, top: 50),
             child: Form(
               key: _formKey,
               autovalidateMode: _autovalidateMode,
@@ -62,34 +60,32 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                       _passwordCtrl, 'Password', 'Please enter your password',
                       obscureText: true),
                   const SizedBox(height: 20),
-                  SizedBox(
-                    child: TextButton(
-                      style: TextButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        backgroundColor: const Color(0xFF5195D6),
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 12,
-                          horizontal: 80,
-                        ),
+                  TextButton(
+                    style: TextButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
                       ),
-                      onPressed: _isSubmitting
-                          ? null
-                          : () {
-                              if (_formKey.currentState!.validate()) {
-                                _signIn(widget.role);
-                              } else {
-                                setState(() {
-                                  _autovalidateMode = AutovalidateMode.always;
-                                });
-                              }
-                            },
-                      child: const Text(
-                        'Login',
-                        style: TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.w500),
+                      backgroundColor: const Color(0xFF5195D6),
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 12,
+                        horizontal: 80,
                       ),
+                    ),
+                    onPressed: _isSubmitting
+                        ? null
+                        : () {
+                            if (_formKey.currentState!.validate()) {
+                              _signIn(widget.role);
+                            } else {
+                              setState(() {
+                                _autovalidateMode = AutovalidateMode.always;
+                              });
+                            }
+                          },
+                    child: const Text(
+                      'Login',
+                      style: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.w500),
                     ),
                   ),
                 ],
@@ -138,15 +134,12 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     ref
         .read(authRepositoryProvider)
         .signInAdmin(email: _usernameCtrl.text, password: _passwordCtrl.text)
-        .then((value) {
-      context.push('/home/${widget.role.index}');
+        .then((_) {
+      context.clearAndNavigate('/home/${widget.role.index}');
     }).catchError((error) {
       if (error is AuthApiException) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(error.message),
-          ),
-        );
+        ScaffoldMessenger.of(context)
+            .showSnackBar(buildErrorSnackBar(error.message));
       }
     });
   }
@@ -156,17 +149,12 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         .read(authRepositoryProvider)
         .signInPasien(
             username: _usernameCtrl.text, password: _passwordCtrl.text)
-        .then((value) {
-      context.push(
-        '/home/${widget.role.index}',
-      );
+        .then((_) {
+      context.clearAndNavigate('/home/${widget.role.index}');
     }).catchError((error) {
       if (error is AuthApiException) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(error.message),
-          ),
-        );
+        ScaffoldMessenger.of(context)
+            .showSnackBar(buildErrorSnackBar(error.message));
       }
     });
   }
@@ -175,15 +163,12 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     ref
         .read(authRepositoryProvider)
         .signInDokter(email: _usernameCtrl.text, password: _passwordCtrl.text)
-        .then((value) {
-      context.push('/home/${widget.role.index}');
+        .then((_) {
+      context.clearAndNavigate('/home/${widget.role.index}');
     }).catchError((error) {
       if (error is AuthApiException) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(error.message),
-          ),
-        );
+        ScaffoldMessenger.of(context)
+            .showSnackBar(buildErrorSnackBar(error.message));
       }
     });
   }
