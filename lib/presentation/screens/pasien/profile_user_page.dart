@@ -97,7 +97,10 @@ class ProfileUserPage extends ConsumerWidget {
                   ),
                 ),
                 GestureDetector(
-                  onTap: () => context.clearAndNavigate('/'),
+                  onTap: () {
+                    ref.read(authRepositoryProvider).signOut();
+                    context.clearAndNavigate('/');
+                  },
                   child: Container(
                     alignment: Alignment.center,
                     margin: const EdgeInsets.only(bottom: 20),

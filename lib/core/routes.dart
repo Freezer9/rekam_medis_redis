@@ -17,6 +17,7 @@ import 'package:rekam_medis_redis/presentation/screens/pasien/lupa_password_page
 import 'package:rekam_medis_redis/presentation/screens/pasien/profile_user_page.dart';
 import 'package:rekam_medis_redis/presentation/screens/pasien/search_riwayat_medis_page.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 part 'routes.g.dart';
 
@@ -29,6 +30,16 @@ final _routes = GoRouter(
     GoRoute(
       path: '/',
       builder: (context, state) => const SelectLogin(),
+      redirect: (context, state) {
+        final client = Supabase.instance.client;
+
+        if (client.auth.currentUser != null) {
+          final role = client.auth.currentUser!.appMetadata['role'] as String;
+          return '/home/${Role.values.byName(role).index}';
+        } else {
+          return null;
+        }
+      },
     ),
     GoRoute(
       path: '/login/:role',
@@ -59,8 +70,7 @@ final _routes = GoRouter(
     GoRoute(
       path: '/profile-dokter',
       builder: (context, state) {
-        final data = state.extra as Map<String, dynamic>;
-        return ProfileDokterPage(data: data);
+        return const ProfileDokterPage();
       },
     ),
     GoRoute(
@@ -76,7 +86,7 @@ final _routes = GoRouter(
     ),
     GoRoute(
       path: '/riwayat-rekam-medis',
-      builder: (context, state) => const SearchRiwayatMedisPage(),
+      builder: (context, state) => SearchRiwayatMedisPage(),
     ),
     GoRoute(
       path: '/search-user',
@@ -93,7 +103,7 @@ final _routes = GoRouter(
     GoRoute(
       path: '/data-user',
       builder: (context, state) {
-        final data = state.extra as PasienModel;
+        final data = state.extra as dynamic;
         return DataUserPage(data: data);
       },
     ),

@@ -11,7 +11,7 @@ import 'package:rekam_medis_redis/domain/dokter/pasien_notifier.dart';
 import 'package:rekam_medis_redis/domain/dokter/record_notifier.dart';
 import 'package:rekam_medis_redis/presentation/widgets/autocomplete_widget.dart';
 import 'package:rekam_medis_redis/presentation/widgets/button_widget.dart';
-import 'package:rekam_medis_redis/presentation/widgets/error_snackbar.dart';
+import 'package:rekam_medis_redis/presentation/widgets/snackbar.dart';
 import 'package:rekam_medis_redis/presentation/widgets/input_dialog.dart';
 import 'package:rekam_medis_redis/presentation/widgets/obat_card.dart';
 import 'package:rekam_medis_redis/themes.dart';

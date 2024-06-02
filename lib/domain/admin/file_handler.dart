@@ -115,17 +115,22 @@ class FileHandler {
               users.any((user) => user.email == records[i]['email']);
 
           if (!userExist) {
-            final auth =
-                await _client.auth.admin.createUser(AdminUserAttributes(
-              email: records[i]['email'],
-              password: password,
-              emailConfirm: false,
-            ));
+            final auth = await _client.auth.admin.createUser(
+                AdminUserAttributes(
+                    email: records[i]['email'],
+                    password: password,
+                    emailConfirm: false,
+                    appMetadata: {
+                  "role": type == true ? "pasien" : "dokter",
+                }));
+
             records[i]['id'] = auth.user!.id;
             records[i]['created_at'] = DateTime.now().toIso8601String();
 
             if (type == true) {
-              await _client.from('mahasiswa').insert(records[i]);
+              records[i].keys.contains('nip')
+                  ? await _client.from('dosen').insert(records[i])
+                  : await _client.from('mahasiswa').insert(records[i]);
             } else {
               await _client.from('dokter').insert(records[i]);
             }

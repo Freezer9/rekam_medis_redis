@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rekam_medis_redis/auth/auth.dart';
 import 'package:rekam_medis_redis/core/utils.dart';
 
-class ProfileDokterPage extends StatelessWidget {
-  final Map<String, dynamic> data;
+class ProfileDokterPage extends ConsumerWidget {
   const ProfileDokterPage({
     super.key,
-    required this.data,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final data = ref.watch(authUserProvider).asData?.value;
     final width = MediaQuery.of(context).size.width;
 
     return Scaffold(
@@ -46,38 +47,39 @@ class ProfileDokterPage extends StatelessWidget {
                 padding: const EdgeInsets.all(25.0),
                 child: Column(
                   children: [
-                    buildTextField(
-                        'Nama', 'assets/icons/profile.png', data['nama']!),
-                    buildTextField('SIP', 'assets/icons/nrp.png', data['sip']),
+                    buildTextField('Nama', 'assets/icons/profile.png',
+                        data!.userMetadata!["nama"]!),
+                    buildTextField('SIP', 'assets/icons/nrp.png',
+                        data.userMetadata!['sip']!),
                     buildTextField('Tanggal Lahir', 'assets/icons/tanggal.png',
-                        data['ttl']),
+                        data.userMetadata!['ttl']!),
                   ],
                 ),
               ),
               const SizedBox(height: 20),
               GestureDetector(
-                  onTap: () => context.clearAndNavigate('/'),
-                  child: Container(
-                    alignment: Alignment.center,
-                    margin: const EdgeInsets.only(bottom: 20),
-                    width: width * 0.85,
-                    padding: const EdgeInsets.symmetric(vertical: 8),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(25),
-                      color: Colors.red,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset('assets/icons/logout.png',
-                            color: Colors.white),
-                        const SizedBox(width: 5),
-                        const Text("Keluar",
-                            style: TextStyle(color: Colors.white)),
-                      ],
-                    ),
+                onTap: () => context.clearAndNavigate('/'),
+                child: Container(
+                  alignment: Alignment.center,
+                  margin: const EdgeInsets.only(bottom: 20),
+                  width: width * 0.85,
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(25),
+                    color: Colors.red,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset('assets/icons/logout.png',
+                          color: Colors.white),
+                      const SizedBox(width: 5),
+                      const Text("Keluar",
+                          style: TextStyle(color: Colors.white)),
+                    ],
                   ),
                 ),
+              ),
             ],
           ),
           Positioned(

@@ -24,14 +24,16 @@ class AuthRepository {
           .match({'id': value.user!.id});
 
       if (checkTableMahasiswa.isNotEmpty) {
-        value.user?.userMetadata?.addAll(checkTableMahasiswa.first);
+        await _client.auth
+            .updateUser(UserAttributes(data: checkTableMahasiswa.first));
         return value;
       } else {
         final checkTableDosen =
             await _client.from('dosen').select().match({'id': value.user!.id});
 
         if (checkTableDosen.isNotEmpty) {
-          value.user?.userMetadata?.addAll(checkTableDosen.first);
+          await _client.auth
+              .updateUser(UserAttributes(data: checkTableDosen.first));
           return value;
         } else {
           throw AuthApiException('Invalid login credentials');
@@ -51,7 +53,8 @@ class AuthRepository {
           await _client.from('dokter').select().match({'id': value.user!.id});
 
       if (checkTableDokter.isNotEmpty) {
-        value.user?.userMetadata?.addAll(checkTableDokter.first);
+        await _client.auth
+            .updateUser(UserAttributes(data: checkTableDokter.first));
         return value;
       } else {
         throw AuthApiException('Invalid login credentials');
@@ -66,12 +69,7 @@ class AuthRepository {
     final data =
         await _client.auth.signInWithPassword(email: email, password: password);
 
-    final checkTableMahasiswa =
-        await _client.from('mahasiswa').select().match({'id': data.user!.id});
-    final checkTableDosen =
-        await _client.from('dosen').select().match({'id': data.user!.id});
-
-    if (checkTableMahasiswa.isEmpty && checkTableDosen.isEmpty) {
+    if (data.user!.appMetadata["role"] == 'admin') {
       return data;
     } else {
       throw AuthApiException('Invalid login credentials');

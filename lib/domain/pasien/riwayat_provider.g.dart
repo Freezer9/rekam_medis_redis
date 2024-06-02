@@ -6,7 +6,7 @@ part of 'riwayat_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$getPasienRecordHash() => r'44ad0b07eac142055392297baf65eda45b1a8577';
+String _$getPasienRecordHash() => r'629db20e6c381eb52e6bb4d04e3001cf79bac731';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -40,11 +40,13 @@ class GetPasienRecordFamily
   const GetPasienRecordFamily();
 
   /// See also [getPasienRecord].
-  GetPasienRecordProvider call(
-    String id,
-  ) {
+  GetPasienRecordProvider call({
+    String? id,
+    DateTime? date,
+  }) {
     return GetPasienRecordProvider(
-      id,
+      id: id,
+      date: date,
     );
   }
 
@@ -53,7 +55,8 @@ class GetPasienRecordFamily
     covariant GetPasienRecordProvider provider,
   ) {
     return call(
-      provider.id,
+      id: provider.id,
+      date: provider.date,
     );
   }
 
@@ -76,12 +79,14 @@ class GetPasienRecordFamily
 class GetPasienRecordProvider
     extends AutoDisposeFutureProvider<List<Map<String, dynamic>>> {
   /// See also [getPasienRecord].
-  GetPasienRecordProvider(
-    String id,
-  ) : this._internal(
+  GetPasienRecordProvider({
+    String? id,
+    DateTime? date,
+  }) : this._internal(
           (ref) => getPasienRecord(
             ref as GetPasienRecordRef,
-            id,
+            id: id,
+            date: date,
           ),
           from: getPasienRecordProvider,
           name: r'getPasienRecordProvider',
@@ -93,6 +98,7 @@ class GetPasienRecordProvider
           allTransitiveDependencies:
               GetPasienRecordFamily._allTransitiveDependencies,
           id: id,
+          date: date,
         );
 
   GetPasienRecordProvider._internal(
@@ -103,9 +109,11 @@ class GetPasienRecordProvider
     required super.debugGetCreateSourceHash,
     required super.from,
     required this.id,
+    required this.date,
   }) : super.internal();
 
-  final String id;
+  final String? id;
+  final DateTime? date;
 
   @override
   Override overrideWith(
@@ -122,6 +130,7 @@ class GetPasienRecordProvider
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
         id: id,
+        date: date,
       ),
     );
   }
@@ -133,13 +142,16 @@ class GetPasienRecordProvider
 
   @override
   bool operator ==(Object other) {
-    return other is GetPasienRecordProvider && other.id == id;
+    return other is GetPasienRecordProvider &&
+        other.id == id &&
+        other.date == date;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
     hash = _SystemHash.combine(hash, id.hashCode);
+    hash = _SystemHash.combine(hash, date.hashCode);
 
     return _SystemHash.finish(hash);
   }
@@ -148,7 +160,10 @@ class GetPasienRecordProvider
 mixin GetPasienRecordRef
     on AutoDisposeFutureProviderRef<List<Map<String, dynamic>>> {
   /// The parameter `id` of this provider.
-  String get id;
+  String? get id;
+
+  /// The parameter `date` of this provider.
+  DateTime? get date;
 }
 
 class _GetPasienRecordProviderElement
@@ -157,7 +172,9 @@ class _GetPasienRecordProviderElement
   _GetPasienRecordProviderElement(super.provider);
 
   @override
-  String get id => (origin as GetPasienRecordProvider).id;
+  String? get id => (origin as GetPasienRecordProvider).id;
+  @override
+  DateTime? get date => (origin as GetPasienRecordProvider).date;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

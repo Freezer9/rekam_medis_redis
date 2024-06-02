@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rekam_medis_redis/auth/auth.dart';
 import 'package:rekam_medis_redis/core/utils.dart';
 import 'package:rekam_medis_redis/data/enums/role.dart';
-import 'package:rekam_medis_redis/presentation/widgets/error_snackbar.dart';
+import 'package:rekam_medis_redis/presentation/widgets/snackbar.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class LoginPage extends ConsumerStatefulWidget {

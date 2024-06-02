@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -6,11 +8,21 @@ import 'package:rekam_medis_redis/auth/auth.dart';
 import 'package:rekam_medis_redis/domain/pasien/riwayat_provider.dart';
 import 'package:rekam_medis_redis/presentation/widgets/pasien_record_card.dart';
 
-class SearchRiwayatMedisPage extends ConsumerWidget {
-  const SearchRiwayatMedisPage({super.key});
+class SearchRiwayatMedisPage extends ConsumerStatefulWidget {
+  SearchRiwayatMedisPage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<SearchRiwayatMedisPage> createState() =>
+      _SearchRiwayatMedisPageState();
+}
+
+class _SearchRiwayatMedisPageState
+    extends ConsumerState<SearchRiwayatMedisPage> {
+  final TextEditingController _textEditingController = TextEditingController();
+  DateTime? _selectedDate;
+
+  @override
+  Widget build(BuildContext context) {
     final user = ref.watch(authUserProvider).asData?.value;
 
     return Scaffold(
@@ -40,70 +52,53 @@ class SearchRiwayatMedisPage extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    margin: const EdgeInsets.only(top: 10, bottom: 10),
                     child: Row(
                       children: [
                         Expanded(
-                          child: GestureDetector(
-                            // onTap: () => _selectDate(context),
-                            child: AbsorbPointer(
-                              child: ValueListenableBuilder<DateTime?>(
-                                valueListenable: ValueNotifier<DateTime?>(null),
-                                builder: (context, value, child) {
-                                  return Container(
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(20),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.grey.withOpacity(0.3),
-                                          spreadRadius: 2,
-                                          blurRadius: 5,
-                                          offset: const Offset(0, 3),
-                                        ),
-                                      ],
-                                    ),
-                                    child: TextFormField(
-                                      decoration: const InputDecoration(
-                                        hintText: 'DD/MM/YYYY',
-                                        suffixIcon: Icon(Icons.calendar_today,
-                                            color: Color(0xff38608F)),
-                                        border: InputBorder.none,
-                                        contentPadding: EdgeInsets.symmetric(
-                                            horizontal: 10, vertical: 15),
-                                      ),
-                                      controller: TextEditingController(
-                                        text: value == null
-                                            ? ''
-                                            : DateFormat('dd/MM/yyyy')
-                                                .format(value),
-                                      ),
-                                    ),
-                                  );
-                                },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(20),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.3),
+                                  spreadRadius: 2,
+                                  blurRadius: 5,
+                                  offset: const Offset(0, 3),
+                                ),
+                              ],
+                            ),
+                            child: TextField(
+                              focusNode: AlwaysDisabledFocusNode(),
+                              controller: _textEditingController,
+                              onTap: () {
+                                _selectDate(context);
+                              },
+                              decoration: const InputDecoration(
+                                hintText: 'DD/MM/YYYY',
+                                suffixIcon: Icon(Icons.calendar_today,
+                                    color: Color(0xff38608F)),
+                                border: InputBorder.none,
+                                contentPadding: EdgeInsets.symmetric(
+                                    horizontal: 25, vertical: 11),
                               ),
                             ),
                           ),
                         ),
                         const SizedBox(width: 10),
                         ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xffFCE186),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(40),
-                            ),
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 15),
-                          ),
                           onPressed: () {
-                            print('Cari');
+                            setState(() {});
                           },
-                          child: const Text(
-                            'Cari',
-                            style: TextStyle(
-                              color: Colors.black,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xFFFCE186),
+                            textStyle: const TextStyle(color: Colors.black),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(25),
                             ),
                           ),
+                          child: const Text('Cari'),
                         ),
                       ],
                     ),
@@ -128,8 +123,10 @@ class SearchRiwayatMedisPage extends ConsumerWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 20),
                         margin: const EdgeInsets.only(top: 20),
                         color: Colors.transparent,
-                        child:
-                            ref.watch(getPasienRecordProvider(user!.id)).when(
+                        child: ref
+                            .watch(getPasienRecordProvider(
+                                id: user!.id, date: _selectedDate))
+                            .when(
                           data: (data) {
                             return ListView.builder(
                               padding: EdgeInsets.zero,
@@ -139,13 +136,12 @@ class SearchRiwayatMedisPage extends ConsumerWidget {
                                 return GestureDetector(
                                   onTap: () {
                                     context.push('/detail-pasien',
-                                        extra: data[index]);
+                                        extra: record["record"]);
                                   },
                                   child: PasienRecordCard(
                                       dokter: record["dokter"],
                                       data: record["record"],
                                       user: user),
-                                  // child: PasienCard(data: data[index]),
                                 );
                               },
                             );
@@ -175,4 +171,29 @@ class SearchRiwayatMedisPage extends ConsumerWidget {
       ),
     );
   }
+
+  _selectDate(BuildContext context) async {
+    DateTime? newSelectedDate = await showDatePicker(
+      context: context,
+      initialDate: _selectedDate ?? DateTime.now(),
+      firstDate: DateTime(2023),
+      lastDate: DateTime.now(),
+    );
+
+    if (newSelectedDate != null) {
+      _selectedDate = newSelectedDate;
+      _textEditingController
+        ..text = DateFormat.yMd().format(_selectedDate!)
+        ..selection = TextSelection.fromPosition(
+          TextPosition(
+              offset: _textEditingController.text.length,
+              affinity: TextAffinity.upstream),
+        );
+    }
+  }
+}
+
+class AlwaysDisabledFocusNode extends FocusNode {
+  @override
+  bool get hasFocus => false;
 }
