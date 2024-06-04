@@ -115,7 +115,7 @@ class FileHandler {
               users.any((user) => user.email == records[i]['email']);
 
           if (!userExist) {
-            final auth = await _client.auth.admin.createUser(
+            final adminUserCreation = await _client.auth.admin.createUser(
                 AdminUserAttributes(
                     email: records[i]['email'],
                     password: password,
@@ -124,7 +124,7 @@ class FileHandler {
                   "role": type == true ? "pasien" : "dokter",
                 }));
 
-            records[i]['id'] = auth.user!.id;
+            records[i]['id'] = adminUserCreation.user!.id;
             records[i]['created_at'] = DateTime.now().toIso8601String();
 
             if (type == true) {

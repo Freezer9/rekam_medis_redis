@@ -1,8 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:rekam_medis_redis/data/models/dokter_model.dart';
 import 'package:rekam_medis_redis/data/models/pasien_model.dart';
+import 'package:rekam_medis_redis/presentation/widgets/profile_text.dart';
 
 class DataUserPage extends StatelessWidget {
   final dynamic data;
@@ -22,7 +21,7 @@ class DataUserPage extends StatelessWidget {
         children: [
           Column(
             children: [
-              Container(
+              SizedBox(
                 width: double.infinity,
                 child: Image.asset(
                   "assets/images/background.png",
@@ -36,14 +35,14 @@ class DataUserPage extends StatelessWidget {
                         Border.all(width: 1.0, color: const Color(0xffC3C6CF)),
                     borderRadius: BorderRadius.circular(10),
                     color: Colors.white,
-                    boxShadow: [
+                    boxShadow: const [
                       BoxShadow(
                         spreadRadius: 0.2,
                         blurRadius: 2,
                         color: Color(0xFF38608F),
                       ),
                     ]),
-                padding: EdgeInsets.all(25.0),
+                padding: const EdgeInsets.all(25.0),
                 child: Column(
                   children: [
                     buildTextField(
@@ -83,7 +82,7 @@ class DataUserPage extends StatelessWidget {
                   ),
                 ],
                 shape: BoxShape.circle,
-                image: DecorationImage(
+                image: const DecorationImage(
                   fit: BoxFit.cover,
                   image: AssetImage("assets/icons/avatar.png"),
                 ),
@@ -91,32 +90,6 @@ class DataUserPage extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget buildTextField(String labelText, String iconPath, String data) {
-    TextEditingController controller = TextEditingController(text: data);
-
-    return Container(
-      child: SizedBox(
-        child: Padding(
-          padding: EdgeInsets.only(bottom: 30),
-          child: TextField(
-            style: TextStyle(color: Colors.black, fontWeight: FontWeight.w500),
-            controller: controller,
-            readOnly: true,
-            decoration: InputDecoration(
-              labelText: labelText,
-              prefixIcon: Image.asset(iconPath, width: 24, height: 24),
-              enabledBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.black),
-                borderRadius: BorderRadius.horizontal(left: Radius.zero),
-              ),
-              contentPadding: EdgeInsets.only(left: 15),
-            ),
-          ),
-        ),
       ),
     );
   }

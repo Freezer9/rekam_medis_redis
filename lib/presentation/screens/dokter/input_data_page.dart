@@ -14,7 +14,7 @@ import 'package:rekam_medis_redis/presentation/widgets/button_widget.dart';
 import 'package:rekam_medis_redis/presentation/widgets/snackbar.dart';
 import 'package:rekam_medis_redis/presentation/widgets/input_dialog.dart';
 import 'package:rekam_medis_redis/presentation/widgets/obat_card.dart';
-import 'package:rekam_medis_redis/themes.dart';
+import 'package:rekam_medis_redis/constant/themes.dart';
 
 class InputDataMedisPage extends ConsumerStatefulWidget {
   final PasienModel pasien;
@@ -191,25 +191,27 @@ class _InputDataPageState extends ConsumerState<InputDataMedisPage> {
           Wrap(
             spacing: 8.0,
             children: itemList
-                .map((item) => Chip(
-                      label: Text(item,
-                          style: const TextStyle(
-                              color: Color(0xFF001C37),
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500)),
-                      backgroundColor: const Color(0xFFD2E4FF),
-                      padding: const EdgeInsets.all(5),
-                      shape: RoundedRectangleBorder(
-                        side: const BorderSide(
-                          color: Colors.transparent,
-                        ),
-                        borderRadius: BorderRadius.circular(12.0),
+                .map(
+                  (item) => Chip(
+                    label: Text(item,
+                        style: const TextStyle(
+                            color: Color(0xFF001C37),
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500)),
+                    backgroundColor: const Color(0xFFD2E4FF),
+                    padding: const EdgeInsets.all(5),
+                    shape: RoundedRectangleBorder(
+                      side: const BorderSide(
+                        color: Colors.transparent,
                       ),
-                      deleteIcon: Image.asset('assets/icons/x.png'),
-                      onDeleted: () {
-                        ref.read(provider.notifier).removeItem(item);
-                      },
-                    ))
+                      borderRadius: BorderRadius.circular(12.0),
+                    ),
+                    deleteIcon: Image.asset('assets/icons/x.png'),
+                    onDeleted: () {
+                      ref.read(provider.notifier).removeItem(item);
+                    },
+                  ),
+                )
                 .toList(),
           ),
         ],

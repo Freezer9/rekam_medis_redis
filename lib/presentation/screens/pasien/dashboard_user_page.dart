@@ -14,6 +14,10 @@ class DashboardUserPage extends ConsumerWidget {
       resizeToAvoidBottomInset: false,
       body: ref.watch(authUserProvider).when(
         data: (user) {
+          if (user == null) {
+            return const Center(child: CircularProgressIndicator());
+          }
+
           return Stack(
             children: [
               Container(
@@ -44,7 +48,7 @@ class DashboardUserPage extends ConsumerWidget {
                                 ),
                               ),
                               Text(
-                                user!.userMetadata!['nama'],
+                                user.userMetadata!['nama'],
                                 style: const TextStyle(
                                     fontSize: 16, fontWeight: FontWeight.bold),
                               ),
@@ -119,6 +123,14 @@ class DashboardUserPage extends ConsumerWidget {
                             .watch(getPasienRecordProvider(id: user.id))
                             .when(
                           data: (data) {
+                            if (data.isEmpty) {
+                              return Container(
+                                margin:
+                                    const EdgeInsets.only(top: 20, bottom: 20),
+                                child: const Text('Tidak ada histori pasien'),
+                              );
+                            }
+
                             return ListView.builder(
                               physics: const NeverScrollableScrollPhysics(),
                               padding: EdgeInsets.zero,
@@ -126,12 +138,13 @@ class DashboardUserPage extends ConsumerWidget {
                               itemBuilder: (BuildContext context, int index) {
                                 final pasienData = data.last;
                                 return GestureDetector(
-                                    onTap: () => context.push('/detail-pasien',
-                                        extra: pasienData["record"]),
-                                    child: PasienRecordCard(
-                                        dokter: pasienData["dokter"],
-                                        data: pasienData["record"],
-                                        user: user));
+                                  onTap: () => context.push('/detail-pasien',
+                                      extra: pasienData["record"]),
+                                  child: PasienRecordCard(
+                                      dokter: pasienData["dokter"],
+                                      data: pasienData["record"],
+                                      user: user),
+                                );
                               },
                             );
                           },

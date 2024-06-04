@@ -2,19 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:rekam_medis_redis/data/models/obat_model.dart';
 import 'package:rekam_medis_redis/data/models/record_model.dart';
 import 'package:rekam_medis_redis/domain/dokter/resep_pasien_provider.dart';
-import 'package:rekam_medis_redis/themes.dart';
-import 'package:rekam_medis_redis/data/enums/catatan.dart';
+import 'package:rekam_medis_redis/constant/themes.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class DetailRiwayatPage extends ConsumerWidget {
   final RecordModel record;
 
-  DetailRiwayatPage({
-    super.key,
-    required this.record,
-  });
-
-  final catatan = catatanDokter[0];
+  const DetailRiwayatPage({super.key, required this.record});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -45,17 +39,23 @@ class DetailRiwayatPage extends ConsumerWidget {
                     catatanTitle('assets/icons/resep.png', "Resep"),
                     const SizedBox(height: 12.5),
                     ref.watch(getResepPasienProvider(record.id!)).when(
-                          data: (data) {
-                            return Column(
-                              children:
-                                  data.map<Widget>((e) => resepBox(e)).toList(),
-                            );
-                          },
-                          loading: () => const Center(
-                            child: CircularProgressIndicator(),
-                          ),
-                          error: (error, _) => Text('Error: $error'),
-                        ),
+                      data: (data) {
+                        return Column(
+                          children:
+                              data.map<Widget>((e) => resepBox(e)).toList(),
+                        );
+                      },
+                      loading: () {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      },
+                      error: (error, stackTrace) {
+                        return Center(
+                          child: Text('Error: $error'),
+                        );
+                      },
+                    ),
                   ],
                 ),
               ),

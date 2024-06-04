@@ -6,7 +6,7 @@ part of 'pasien_notifier.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$getAllPasienHash() => r'f00978ae4dbb4f3901684e8d43f5941f314d2bbc';
+String _$getAllPasienHash() => r'10e368a24ac25d81d25682d0095abce10d3eb05f';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -34,7 +34,8 @@ class _SystemHash {
 const getAllPasienProvider = GetAllPasienFamily();
 
 /// See also [getAllPasien].
-class GetAllPasienFamily extends Family<AsyncValue<List<PasienModel>>> {
+class GetAllPasienFamily
+    extends Family<AsyncValue<List<Map<String, dynamic>>>> {
   /// See also [getAllPasien].
   const GetAllPasienFamily();
 
@@ -73,7 +74,7 @@ class GetAllPasienFamily extends Family<AsyncValue<List<PasienModel>>> {
 
 /// See also [getAllPasien].
 class GetAllPasienProvider
-    extends AutoDisposeFutureProvider<List<PasienModel>> {
+    extends AutoDisposeFutureProvider<List<Map<String, dynamic>>> {
   /// See also [getAllPasien].
   GetAllPasienProvider(
     String id,
@@ -108,7 +109,8 @@ class GetAllPasienProvider
 
   @override
   Override overrideWith(
-    FutureOr<List<PasienModel>> Function(GetAllPasienRef provider) create,
+    FutureOr<List<Map<String, dynamic>>> Function(GetAllPasienRef provider)
+        create,
   ) {
     return ProviderOverride(
       origin: this,
@@ -125,7 +127,7 @@ class GetAllPasienProvider
   }
 
   @override
-  AutoDisposeFutureProviderElement<List<PasienModel>> createElement() {
+  AutoDisposeFutureProviderElement<List<Map<String, dynamic>>> createElement() {
     return _GetAllPasienProviderElement(this);
   }
 
@@ -143,13 +145,14 @@ class GetAllPasienProvider
   }
 }
 
-mixin GetAllPasienRef on AutoDisposeFutureProviderRef<List<PasienModel>> {
+mixin GetAllPasienRef
+    on AutoDisposeFutureProviderRef<List<Map<String, dynamic>>> {
   /// The parameter `id` of this provider.
   String get id;
 }
 
 class _GetAllPasienProviderElement
-    extends AutoDisposeFutureProviderElement<List<PasienModel>>
+    extends AutoDisposeFutureProviderElement<List<Map<String, dynamic>>>
     with GetAllPasienRef {
   _GetAllPasienProviderElement(super.provider);
 

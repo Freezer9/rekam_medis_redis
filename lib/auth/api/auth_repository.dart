@@ -76,7 +76,6 @@ class AuthRepository {
     }
   }
 
-  // Change password
   Future<void> changePassword(String newPassword) async {
     final user = _client.auth.currentUser;
 

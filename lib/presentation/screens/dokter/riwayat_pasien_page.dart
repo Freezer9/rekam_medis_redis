@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:rekam_medis_redis/data/models/pasien_model.dart';
 import 'package:rekam_medis_redis/domain/dokter/history_pasien_provider.dart';
 import 'package:rekam_medis_redis/presentation/widgets/pasien_card.dart';
+import 'package:rekam_medis_redis/presentation/widgets/profile_text.dart';
 
 class RiwayatPasienPage extends ConsumerWidget {
   final PasienModel user;
@@ -51,6 +52,8 @@ class RiwayatPasienPage extends ConsumerWidget {
                         child: const Text('Tidak ada histori pasien'),
                       );
                     }
+
+                    data.sort((a, b) => b.createdAt!.compareTo(a.createdAt!));
 
                     return ListView.builder(
                       physics: const NeverScrollableScrollPhysics(),
@@ -140,35 +143,13 @@ class RiwayatPasienPage extends ConsumerWidget {
       padding: const EdgeInsets.all(20.0),
       child: Column(
         children: [
-          _buildTextField('Nama', 'assets/icons/profile.png', user.nama),
-          _buildTextField('NRP / NIP', 'assets/icons/nrp.png', user.nrpOrNip),
-          _buildTextField(
-              'Tanggal Lahir', 'assets/icons/tanggal.png', user.ttl),
-          _buildTextField('Program Studi / Departemen',
-              'assets/icons/prodi.png', user.prodiOrDepartemen),
-          _buildTextField('Angkatan', 'assets/icons/time.png', user.tahun),
+          buildTextField('Nama', 'assets/icons/profile.png', user.nama),
+          buildTextField('NRP / NIP', 'assets/icons/nrp.png', user.nrpOrNip),
+          buildTextField('Tanggal Lahir', 'assets/icons/tanggal.png', user.ttl),
+          buildTextField('Program Studi / Departemen', 'assets/icons/prodi.png',
+              user.prodiOrDepartemen),
+          buildTextField('Angkatan', 'assets/icons/time.png', user.tahun),
         ],
-      ),
-    );
-  }
-
-  Widget _buildTextField(String labelText, String iconPath, String data) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 20),
-      child: TextField(
-        style:
-            const TextStyle(color: Colors.black, fontWeight: FontWeight.w500),
-        controller: TextEditingController(text: data),
-        readOnly: true,
-        decoration: InputDecoration(
-          labelText: labelText,
-          prefixIcon: Image.asset(iconPath, width: 24, height: 24),
-          enabledBorder: const UnderlineInputBorder(
-            borderSide: BorderSide(color: Colors.black),
-            borderRadius: BorderRadius.horizontal(left: Radius.zero),
-          ),
-          contentPadding: const EdgeInsets.only(left: 15),
-        ),
       ),
     );
   }

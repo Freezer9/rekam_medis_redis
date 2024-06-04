@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rekam_medis_redis/auth/api/auth_repository.dart';
 import 'package:rekam_medis_redis/core/utils.dart';
 
 class SuccessDialog extends ConsumerWidget {
@@ -51,6 +52,7 @@ class SuccessDialog extends ConsumerWidget {
                 height: 40,
                 child: ElevatedButton.icon(
                   onPressed: () {
+                    ref.read(authRepositoryProvider).signOut();
                     context.clearAndNavigate('/');
                   },
                   style: ElevatedButton.styleFrom(

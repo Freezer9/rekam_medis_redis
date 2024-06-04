@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rekam_medis_redis/auth/auth.dart';
@@ -20,6 +19,10 @@ class _DashboardDokterPageState extends ConsumerState<DashboardDokterPage> {
     return Scaffold(
       body: ref.watch(authUserProvider).when(
         data: (user) {
+          if (user == null) {
+            return const Center(child: CircularProgressIndicator());
+          }
+
           return Stack(
             children: [
               Positioned.fill(
@@ -50,7 +53,7 @@ class _DashboardDokterPageState extends ConsumerState<DashboardDokterPage> {
                                   ),
                                 ),
                                 Text(
-                                  user?.userMetadata?['nama'],
+                                  user.userMetadata?['nama'],
                                   style: const TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold),
@@ -61,7 +64,7 @@ class _DashboardDokterPageState extends ConsumerState<DashboardDokterPage> {
                             GestureDetector(
                               onTap: () {
                                 context.push('/profile-dokter',
-                                    extra: user?.userMetadata);
+                                    extra: user.userMetadata);
                               },
                               child: Image.asset(
                                 "assets/icons/avatar.png",
@@ -76,32 +79,33 @@ class _DashboardDokterPageState extends ConsumerState<DashboardDokterPage> {
                         GestureDetector(
                           onTap: () => context.push('/search-pasien'),
                           child: Container(
-                              padding: const EdgeInsets.all(10),
-                              margin: const EdgeInsets.only(top: 20),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  border:
-                                      Border.all(color: Colors.grey, width: 1),
-                                  color: Colors.white),
-                              child: Container(
-                                margin:
-                                    const EdgeInsets.only(left: 10, right: 10),
-                                child: const Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      "Cari Pasien Anda",
-                                      style: TextStyle(
-                                          color: Colors.grey, fontSize: 15),
-                                    ),
-                                    Icon(
-                                      Icons.search,
-                                      color: Colors.grey,
-                                    ),
-                                  ],
-                                ),
-                              )),
+                            padding: const EdgeInsets.all(10),
+                            margin: const EdgeInsets.only(top: 20),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                border:
+                                    Border.all(color: Colors.grey, width: 1),
+                                color: Colors.white),
+                            child: Container(
+                              margin:
+                                  const EdgeInsets.only(left: 10, right: 10),
+                              child: const Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Cari Pasien Anda",
+                                    style: TextStyle(
+                                        color: Colors.grey, fontSize: 15),
+                                  ),
+                                  Icon(
+                                    Icons.search,
+                                    color: Colors.grey,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
                         ),
                       ],
                     ),
@@ -124,7 +128,7 @@ class _DashboardDokterPageState extends ConsumerState<DashboardDokterPage> {
                         color: Colors.transparent,
                         child: ref
                             .watch(
-                                getAllPasienProvider(user?.userMetadata?['id']))
+                                getAllPasienProvider(user.userMetadata?['id']))
                             .when(
                           data: (data) {
                             if (data.isEmpty) {
@@ -132,6 +136,10 @@ class _DashboardDokterPageState extends ConsumerState<DashboardDokterPage> {
                                 child: Text('Tidak ada data pasien'),
                               );
                             }
+
+                            data.sort((a, b) => b["record"]
+                                .createdAt
+                                .compareTo(a["record"].createdAt));
 
                             return ListView.builder(
                               padding: EdgeInsets.zero,
@@ -141,9 +149,14 @@ class _DashboardDokterPageState extends ConsumerState<DashboardDokterPage> {
                                 return GestureDetector(
                                   onTap: () async {
                                     context.push('/riwayat-pasien',
-                                        extra: patientData);
+                                        extra: patientData["pasien"]);
                                   },
-                                  child: PasienCard(data: patientData),
+                                  child: PasienCard(
+                                    data: patientData["pasien"],
+                                    date: patientData["record"]
+                                        .createdAt
+                                        .toString(),
+                                  ),
                                 );
                               },
                             );

@@ -1,8 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:rekam_medis_redis/auth/api/auth_repository.dart';
 import 'package:rekam_medis_redis/core/utils.dart';
 
 class DashboardAdminPage extends ConsumerWidget {
@@ -70,9 +69,9 @@ class DashboardAdminPage extends ConsumerWidget {
                         borderRadius: BorderRadius.circular(10),
                         color: const Color.fromRGBO(230, 234, 242, 1),
                       ),
-                      child: TextField(
-                       enabled: false,
-                        decoration: const InputDecoration(
+                      child: const TextField(
+                        enabled: false,
+                        decoration: InputDecoration(
                           hintText: 'search user',
                           border: InputBorder.none,
                           contentPadding: EdgeInsets.symmetric(vertical: 12),
@@ -173,29 +172,32 @@ class DashboardAdminPage extends ConsumerWidget {
                     ),
                   ),
                   const SizedBox(height: 20),
-              GestureDetector(
-                  onTap: () => context.clearAndNavigate('/'),
-                  child: Container(
-                    alignment: Alignment.center,
-                    margin: const EdgeInsets.only(bottom: 20),
-                    width: width * 0.85,
-                    padding: const EdgeInsets.symmetric(vertical: 8),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(25),
-                      color: Colors.red,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset('assets/icons/logout.png',
-                            color: Colors.white),
-                        const SizedBox(width: 5),
-                        const Text("Keluar",
-                            style: TextStyle(color: Colors.white)),
-                      ],
+                  GestureDetector(
+                    onTap: () {
+                      ref.read(authRepositoryProvider).signOut();
+                      context.clearAndNavigate('/');
+                    },
+                    child: Container(
+                      alignment: Alignment.center,
+                      margin: const EdgeInsets.only(bottom: 20),
+                      width: width * 0.85,
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(25),
+                        color: Colors.red,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset('assets/icons/logout.png',
+                              color: Colors.white),
+                          const SizedBox(width: 5),
+                          const Text("Keluar",
+                              style: TextStyle(color: Colors.white)),
+                        ],
+                      ),
                     ),
                   ),
-                ),
                 ],
               ),
             ),

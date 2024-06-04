@@ -5,9 +5,9 @@ import 'package:rekam_medis_redis/data/models/pasien_model.dart';
 
 class PasienCard extends StatelessWidget {
   final PasienModel data;
-  String? date;
+  final String? date;
 
-  PasienCard({
+  const PasienCard({
     super.key,
     required this.data,
     this.date,

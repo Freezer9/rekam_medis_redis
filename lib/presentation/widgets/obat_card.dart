@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rekam_medis_redis/data/models/obat_model.dart';
 import 'package:rekam_medis_redis/domain/dokter/obat_notifier.dart';
 import 'package:rekam_medis_redis/presentation/widgets/input_dialog.dart';
-import 'package:rekam_medis_redis/themes.dart';
+import 'package:rekam_medis_redis/constant/themes.dart';
 
 class ObatCard extends ConsumerWidget {
   const ObatCard({super.key, required this.obat, required this.index});
