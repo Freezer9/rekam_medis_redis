@@ -16,66 +16,64 @@ class ArtikelCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Flexible(
+    return Container(
+      width: double.infinity,
+      margin: const EdgeInsets.only(left: 20, right: 20),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: containerColor, width: 1),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.25),
+            spreadRadius: 0,
+            blurRadius: 4,
+          ),
+        ],
+      ),
       child: Container(
-        width: double.infinity,
-        margin: const EdgeInsets.only(left: 20, right: 20),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: containerColor, width: 1),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.25),
-              spreadRadius: 0,
-              blurRadius: 4,
+        margin: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              data.judul,
+              style: const TextStyle(
+                  fontSize: 18,
+                  color: Colors.black,
+                  fontWeight: FontWeight.w500),
+            ),
+            const SizedBox(height: 10),
+            Image.network(
+              getSupabaseImage(data.image),
+              width: double.infinity,
+              fit: BoxFit.fitWidth,
+              height: 200,
+            ),
+            const SizedBox(height: 5),
+            Text(
+              DateFormat.yMMMMEEEEd("id_ID")
+                  .format(DateTime.parse(data.createdAt))
+                  .toString(),
+              style: const TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w400,
+                color: primarycolor,
+              ),
+            ),
+            const SizedBox(height: 5),
+            Text(
+              substring
+                  ? data.isi.length > 90
+                      ? '${data.isi.substring(0, 90)}...'
+                      : data.isi
+                  : data.isi,
+              style: const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
+              ),
             ),
           ],
-        ),
-        child: Container(
-          margin: const EdgeInsets.all(20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                data.judul,
-                style: const TextStyle(
-                    fontSize: 18,
-                    color: Colors.black,
-                    fontWeight: FontWeight.w500),
-              ),
-              const SizedBox(height: 10),
-              Image.network(
-                getSupabaseImage(data.image),
-                width: double.infinity,
-                fit: BoxFit.fitWidth,
-                height: 200,
-              ),
-              const SizedBox(height: 5),
-              Text(
-                DateFormat.yMMMMEEEEd("id_ID")
-                    .format(DateTime.parse(data.createdAt))
-                    .toString(),
-                style: const TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w400,
-                  color: primarycolor,
-                ),
-              ),
-              const SizedBox(height: 5),
-              Text(
-                substring
-                    ? data.isi.length > 90
-                        ? '${data.isi.substring(0, 90)}...'
-                        : data.isi
-                    : data.isi,
-                style: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-            ],
-          ),
         ),
       ),
     );
