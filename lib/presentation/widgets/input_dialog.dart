@@ -242,7 +242,7 @@ class InputObatDialogState extends ConsumerState<InputObatDialog> {
                       },
                       value: widget.caraPenggunaan,
                     ),
-                    const SizedBox(width: 20),
+                    const SizedBox(width: 50),
                     const Text("Sekali", style: TextStyle(fontSize: 14)),
                   ],
                 ),
@@ -252,8 +252,10 @@ class InputObatDialogState extends ConsumerState<InputObatDialog> {
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
                 ),
                 DropdownMenu(
+                  width: 270,
                   initialSelection: widget.waktuPenggunaan,
                   inputDecorationTheme: const InputDecorationTheme(
+                    constraints: BoxConstraints(minHeight: 50, maxHeight: 50),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(8.0)),
                     ),
