@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:rekam_medis_redis/auth/api/auth_repository.dart';
-import 'package:rekam_medis_redis/core/utils.dart';
+import 'package:rekam_medis_redis/presentation/widgets/button_sign_out.dart';
 
 class DashboardAdminPage extends ConsumerWidget {
   const DashboardAdminPage({super.key});
@@ -97,11 +97,11 @@ class DashboardAdminPage extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
-                    'Input data...',
+                    'Input Data',
                     style: TextStyle(
-                      color: Color.fromARGB(255, 210, 228, 255),
+                      color: Color(0xff38608F),
                       fontSize: 18,
-                      fontWeight: FontWeight.normal,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                   const SizedBox(height: 20),
@@ -129,7 +129,7 @@ class DashboardAdminPage extends ConsumerWidget {
                                   ),
                                   const SizedBox(height: 10),
                                   const Text(
-                                    'Input Data Pasien',
+                                    'Pasien',
                                     style: TextStyle(
                                       color: Color(0xFF38608F),
                                     ),
@@ -158,7 +158,7 @@ class DashboardAdminPage extends ConsumerWidget {
                                   ),
                                   const SizedBox(height: 10),
                                   const Text(
-                                    'Input Data Dokter',
+                                    'Dokter',
                                     style: TextStyle(
                                       color: Color(0xFF38608F),
                                     ),
@@ -174,30 +174,34 @@ class DashboardAdminPage extends ConsumerWidget {
                   const SizedBox(height: 20),
                   GestureDetector(
                     onTap: () {
-                      ref.read(authRepositoryProvider).signOut();
-                      context.clearAndNavigate('/');
+                      context.push('/input-artikel');
                     },
                     child: Container(
-                      alignment: Alignment.center,
-                      margin: const EdgeInsets.only(bottom: 20),
-                      width: width * 0.85,
-                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      margin: const EdgeInsets.only(left: 10, right: 10),
+                      padding: const EdgeInsets.all(20),
+                      width: width / 2.5,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(25),
-                        color: Colors.red,
+                        borderRadius: BorderRadius.circular(10),
+                        color: const Color(0xFFD2E4FF),
                       ),
-                      child: Row(
+                      child: const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Image.asset('assets/icons/logout.png',
-                              color: Colors.white),
-                          const SizedBox(width: 5),
-                          const Text("Keluar",
-                              style: TextStyle(color: Colors.white)),
+                          Icon(Icons.article,
+                              size: 20, color: Color(0xFF38608F)),
+                          SizedBox(width: 5),
+                          Text(
+                            "Artikel",
+                            style: TextStyle(
+                              color: Color(0xFF38608F),
+                            ),
+                          ),
                         ],
                       ),
                     ),
                   ),
+                  const SizedBox(height: 20),
+                  ButtonSignOut(width: width),
                 ],
               ),
             ),

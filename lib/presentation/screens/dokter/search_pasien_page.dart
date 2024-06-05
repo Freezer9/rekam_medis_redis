@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:rekam_medis_redis/data/models/pasien_model.dart';
 import 'package:rekam_medis_redis/domain/admin/search_notifier.dart';
 
 class SearchPasienPage extends ConsumerWidget {
@@ -38,12 +37,12 @@ class SearchPasienPage extends ConsumerWidget {
               ),
               const SizedBox(height: 20),
               Expanded(
-                child: ListView.builder(
-                  itemCount: data.length,
-                  itemBuilder: (context, index) {
-                    final pasienData = data[index];
-                    return pasienData is PasienModel
-                        ? GestureDetector(
+                child: data.isNotEmpty
+                    ? ListView.builder(
+                        itemCount: data.length,
+                        itemBuilder: (context, index) {
+                          final pasienData = data[index];
+                          return GestureDetector(
                             onTap: () {
                               context.push('/riwayat-pasien',
                                   extra: pasienData);
@@ -62,12 +61,13 @@ class SearchPasienPage extends ConsumerWidget {
                                     style: const TextStyle(fontSize: 16)),
                               ),
                             ),
-                          )
-                        : const Center(
-                            child: Text('Data tidak ditemukan'),
                           );
-                  },
-                ),
+                        },
+                      )
+                    : const Center(
+                        child: Text('Data tidak ditemukan',
+                            style: TextStyle(fontSize: 16)),
+                      ),
               ),
             ],
           ),

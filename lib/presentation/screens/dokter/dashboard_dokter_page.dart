@@ -5,17 +5,11 @@ import 'package:rekam_medis_redis/auth/auth.dart';
 import 'package:rekam_medis_redis/domain/dokter/pasien_notifier.dart';
 import 'package:rekam_medis_redis/presentation/widgets/pasien_card.dart';
 
-class DashboardDokterPage extends ConsumerStatefulWidget {
+class DashboardDokterPage extends ConsumerWidget {
   const DashboardDokterPage({super.key});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() =>
-      _DashboardDokterPageState();
-}
-
-class _DashboardDokterPageState extends ConsumerState<DashboardDokterPage> {
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       body: ref.watch(authUserProvider).when(
         data: (user) {
@@ -133,7 +127,8 @@ class _DashboardDokterPageState extends ConsumerState<DashboardDokterPage> {
                           data: (data) {
                             if (data.isEmpty) {
                               return const Center(
-                                child: Text('Tidak ada data pasien'),
+                                child: Text('Tidak ada data pasien',
+                                    style: TextStyle(fontSize: 16)),
                               );
                             }
 

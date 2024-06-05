@@ -49,7 +49,8 @@ class RiwayatPasienPage extends ConsumerWidget {
                     if (data.isEmpty) {
                       return Container(
                         margin: const EdgeInsets.only(top: 20, bottom: 20),
-                        child: const Text('Tidak ada histori pasien'),
+                        child: const Text('Tidak ada histori pasien',
+                            style: TextStyle(fontSize: 16)),
                       );
                     }
 

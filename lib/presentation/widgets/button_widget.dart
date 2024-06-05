@@ -5,6 +5,7 @@ Widget buttonSimpan({
   Function()? onPressed,
   Color btnColor = buttonColor,
   Color textColor = Colors.black,
+  String text = "SIMPAN",
 }) {
   return ElevatedButton(
     style: ElevatedButton.styleFrom(
@@ -17,7 +18,7 @@ Widget buttonSimpan({
     ),
     onPressed: onPressed,
     child: Text(
-      "SIMPAN",
+      text,
       style: TextStyle(
         color: textColor,
         fontSize: 14,

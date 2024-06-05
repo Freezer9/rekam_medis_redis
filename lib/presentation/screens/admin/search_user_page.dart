@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:rekam_medis_redis/data/models/dokter_model.dart';
-import 'package:rekam_medis_redis/data/models/pasien_model.dart';
 import 'package:rekam_medis_redis/domain/admin/search_notifier.dart';
 
 class SearchUserPage extends ConsumerWidget {
@@ -42,12 +40,12 @@ class SearchUserPage extends ConsumerWidget {
               ),
               const SizedBox(height: 20),
               Expanded(
-                child: ListView.builder(
-                  itemCount: data.length,
-                  itemBuilder: (context, index) {
-                    final user = data[index];
-                    return user is PasienModel || user is DokterModel
-                        ? GestureDetector(
+                child: data.isNotEmpty
+                    ? ListView.builder(
+                        itemCount: data.length,
+                        itemBuilder: (context, index) {
+                          final user = data[index];
+                          return GestureDetector(
                             onTap: () {
                               context.push('/data-user', extra: user);
                             },
@@ -65,15 +63,15 @@ class SearchUserPage extends ConsumerWidget {
                                     style: const TextStyle(fontSize: 16)),
                               ),
                             ),
-                          )
-                        : const Center(
-                            child: Text(
-                              'Data tidak ditemukan',
-                              style: TextStyle(color: Colors.black),
-                            ),
                           );
-                  },
-                ),
+                        },
+                      )
+                    : const Center(
+                        child: Text(
+                          'Data tidak ditemukan',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      ),
               ),
             ],
           ),

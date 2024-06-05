@@ -176,7 +176,7 @@ class _LupaPasswordPageState extends ConsumerState<LupaPasswordPage> {
     );
   }
 
-  void _validateAndSubmit() {
+  void _validateAndSubmit() async {
     String newPassword = newPasswordController.text;
     String confirmPassword = confirmPasswordController.text;
 
@@ -185,7 +185,7 @@ class _LupaPasswordPageState extends ConsumerState<LupaPasswordPage> {
     });
 
     if (_errorMessage == null) {
-      ref.read(authRepositoryProvider).changePassword(newPassword);
+      await ref.read(authRepositoryProvider).changePassword(newPassword);
       _showSuccessDialog();
     }
   }

@@ -38,6 +38,8 @@ dev_dependencies:
   flutter_lints: ^3.0.0
   custom_lint: ^0.6.4
   riverpod_lint: ^2.3.10
+  image_picker: ^1.1.2
+  uuid: ^4.4.0
 
 flutter:
   uses-material-design: true

@@ -9,3 +9,7 @@ extension ClearAndNavigate on BuildContext {
     pushReplacement(path);
   }
 }
+
+String getSupabaseImage(String path) {
+  return 'https://kytlboobxypxkuaesorc.supabase.co/storage/v1/object/public/$path';
+}

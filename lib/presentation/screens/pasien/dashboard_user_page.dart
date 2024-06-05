@@ -1,15 +1,32 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rekam_medis_redis/auth/auth.dart';
+import 'package:rekam_medis_redis/domain/admin/artikel_provider.dart';
 import 'package:rekam_medis_redis/domain/pasien/riwayat_provider.dart';
+import 'package:rekam_medis_redis/presentation/widgets/artikel_card.dart';
 import 'package:rekam_medis_redis/presentation/widgets/pasien_record_card.dart';
 
-class DashboardUserPage extends ConsumerWidget {
+class DashboardUserPage extends ConsumerStatefulWidget {
   const DashboardUserPage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<DashboardUserPage> createState() => _DashboardUserPageState();
+}
+
+class _DashboardUserPageState extends ConsumerState<DashboardUserPage> {
+  @override
+  void initState() {
+    super.initState();
+    ref.read(artikelNotifierProvider.notifier).getAllArtikel();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final artikel = ref.watch(artikelNotifierProvider);
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: ref.watch(authUserProvider).when(
@@ -80,38 +97,11 @@ class DashboardUserPage extends ConsumerWidget {
                 child: Column(
                   children: [
                     const SizedBox(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        const Padding(
-                          padding: EdgeInsets.only(left: 20),
-                          child: Text(
-                            'Riwayat Terakhir',
-                            style: TextStyle(
-                              color: Color(0xff38608F),
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(right: 40),
-                          child: GestureDetector(
-                            onTap: () {
-                              context.push('/riwayat-rekam-medis');
-                            },
-                            child: const Text(
-                              'More...',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
+                    subtitleSection(
+                      context,
+                      title1: "Riwayat Terakhir",
+                      title2: "Lihat Lainnya..",
+                      onTap: () => context.push('/riwayat-rekam-medis'),
                     ),
                     Expanded(
                       flex: 2,
@@ -127,7 +117,8 @@ class DashboardUserPage extends ConsumerWidget {
                               return Container(
                                 margin:
                                     const EdgeInsets.only(top: 20, bottom: 20),
-                                child: const Text('Tidak ada histori pasien'),
+                                child: const Text('Tidak ada histori pasien',
+                                    style: TextStyle(fontSize: 16)),
                               );
                             }
 
@@ -159,6 +150,24 @@ class DashboardUserPage extends ConsumerWidget {
                         ),
                       ),
                     ),
+                    subtitleSection(
+                      context,
+                      title1: "Pengumuman",
+                      title2: "Lihat Lainnya..",
+                      onTap: () => context.push('/detail-artikel'),
+                    ),
+                    Expanded(
+                      flex: 5,
+                      child: ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: min(artikel.length, 1),
+                        padding: const EdgeInsets.only(top: 10, bottom: 10),
+                        itemBuilder: (context, index) {
+                          final data = artikel.first;
+                          return ArtikelCard(data: data);
+                        },
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -172,6 +181,44 @@ class DashboardUserPage extends ConsumerWidget {
           return const Center(child: CircularProgressIndicator());
         },
       ),
+    );
+  }
+
+  Widget subtitleSection(
+    BuildContext context, {
+    String? title1,
+    String? title2,
+    void Function()? onTap,
+  }) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 20),
+          child: Text(
+            title1!,
+            style: const TextStyle(
+              color: Color(0xff38608F),
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(right: 40),
+          child: GestureDetector(
+            onTap: onTap,
+            child: Text(
+              title2!,
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
