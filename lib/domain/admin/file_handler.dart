@@ -162,7 +162,13 @@ class FileHandler {
                           content: Text('File $fileName berhasil disimpan')),
                     );
                   } catch (e) {
-                    print('Gagal download file: $e');
+                    SnackBar(
+                      content: Text(
+                        'File gagal disimpan',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      backgroundColor: Colors.red,
+                    );
                   }
                 },
                 child: const Text('OK'),
