@@ -88,7 +88,9 @@ class _InputDataPageState extends ConsumerState<InputDataMedisPage> {
                         .simpanObatDatabase(id[0]['id'].toString())
                         .then((value) {
                       ScaffoldMessenger.of(context).showSnackBar(
-                          buildSuccessSnackBar("Data berhasil disimpan"));
+                        buildSuccessSnackBar("Data berhasil disimpan"),
+                      );
+
                       ref.invalidate(getAllPasienProvider(loginUser.id));
                       ref.read(keluhanProvider.notifier).clearItems();
                       ref.read(riwayatPenyakitProvider.notifier).clearItems();

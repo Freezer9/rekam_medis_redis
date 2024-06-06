@@ -7,6 +7,7 @@ import 'package:rekam_medis_redis/auth/auth.dart';
 import 'package:rekam_medis_redis/domain/admin/artikel_provider.dart';
 import 'package:rekam_medis_redis/domain/pasien/riwayat_provider.dart';
 import 'package:rekam_medis_redis/presentation/widgets/artikel_card.dart';
+import 'package:rekam_medis_redis/presentation/widgets/error_message.dart';
 import 'package:rekam_medis_redis/presentation/widgets/pasien_record_card.dart';
 
 class DashboardUserPage extends ConsumerStatefulWidget {
@@ -140,7 +141,7 @@ class _DashboardUserPageState extends ConsumerState<DashboardUserPage> {
                             );
                           },
                           error: (error, stackTrace) {
-                            return Text(error.toString());
+                            return errorMessage();
                           },
                           loading: () {
                             return const Center(
@@ -158,15 +159,19 @@ class _DashboardUserPageState extends ConsumerState<DashboardUserPage> {
                     ),
                     Expanded(
                       flex: 5,
-                      child: ListView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: min(artikel.length, 1),
-                        padding: const EdgeInsets.only(top: 10, bottom: 10),
-                        itemBuilder: (context, index) {
-                          final data = artikel.first;
-                          return ArtikelCard(data: data);
-                        },
-                      ),
+                      child: artikel.isNotEmpty
+                          ? ListView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: min(artikel.length, 1),
+                              padding:
+                                  const EdgeInsets.only(top: 10, bottom: 10),
+                              itemBuilder: (context, index) {
+                                final data = artikel.last;
+
+                                return ArtikelCard(data: data);
+                              },
+                            )
+                          : errorMessage(message: "Tidak ada pengumuman"),
                     ),
                   ],
                 ),
@@ -175,7 +180,7 @@ class _DashboardUserPageState extends ConsumerState<DashboardUserPage> {
           );
         },
         error: (error, stackTrace) {
-          return Center(child: Text('Error: $error'));
+          return errorMessage();
         },
         loading: () {
           return const Center(child: CircularProgressIndicator());

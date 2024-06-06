@@ -28,7 +28,7 @@ class MainApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final routes = ref.read(routeProvider);
     return MaterialApp.router(
-      title: "Supabase Flutter",
+      title: "ReDis",
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         appBarTheme: const AppBarTheme(

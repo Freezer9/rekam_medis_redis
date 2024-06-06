@@ -1,8 +1,11 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:path/path.dart' as path;
+import 'package:rekam_medis_redis/presentation/widgets/snackbar.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:gpassword/gpassword.dart';
 import 'package:excel/excel.dart';
@@ -139,7 +142,8 @@ class FileHandler {
             records[i]["password"] = password;
           }
         } else {
-          print('Email field is missing or empty.');
+          ScaffoldMessenger.of(context).showSnackBar(
+              buildErrorSnackBar("Email field is missing or empty."));
         }
       }
       showDialog(
@@ -158,11 +162,11 @@ class FileHandler {
                     final fileName = 'user_data_$currentDateTime.csv';
                     FileStorage.writeCounter(csvContent, fileName);
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                          content: Text('File $fileName berhasil disimpan')),
-                    );
+                        buildSuccessSnackBar(
+                            "File $fileName berhasil disimpan"));
                   } catch (e) {
-                    print('Gagal download file: $e');
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        buildErrorSnackBar("Gagal menyimpan file"));
                   }
                 },
                 child: const Text('OK'),

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rekam_medis_redis/data/models/pasien_model.dart';
 import 'package:rekam_medis_redis/domain/dokter/history_pasien_provider.dart';
+import 'package:rekam_medis_redis/presentation/widgets/error_message.dart';
 import 'package:rekam_medis_redis/presentation/widgets/pasien_card.dart';
 import 'package:rekam_medis_redis/presentation/widgets/profile_text.dart';
 
@@ -74,9 +75,7 @@ class RiwayatPasienPage extends ConsumerWidget {
                     );
                   },
                   error: (error, stackTrace) {
-                    return Center(
-                      child: Text('Error: $error'),
-                    );
+                    return errorMessage();
                   },
                   loading: () {
                     return const Center(

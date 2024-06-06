@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:rekam_medis_redis/auth/auth.dart';
 import 'package:rekam_medis_redis/domain/pasien/riwayat_provider.dart';
+import 'package:rekam_medis_redis/presentation/widgets/error_message.dart';
 import 'package:rekam_medis_redis/presentation/widgets/pasien_record_card.dart';
 
 class SearchRiwayatMedisPage extends ConsumerStatefulWidget {
@@ -129,16 +130,13 @@ class _SearchRiwayatMedisPageState
                             .when(
                           data: (data) {
                             if (data.isEmpty) {
-                              return const Center(
-                                child: Text(
-                                  'Data tidak ditemukan',
-                                  style: TextStyle(fontSize: 20),
-                                ),
-                              );
+                              return errorMessage(
+                                  message: "Data tidak ditemukan");
                             }
 
                             return ListView.builder(
                               padding: EdgeInsets.zero,
+                              reverse: true,
                               itemCount: data.length,
                               itemBuilder: (BuildContext context, int index) {
                                 final record = data[index];
@@ -156,12 +154,7 @@ class _SearchRiwayatMedisPageState
                             );
                           },
                           error: (error, stackTrace) {
-                            return Center(
-                              child: Text(
-                                'Error: $error',
-                                style: const TextStyle(fontSize: 20),
-                              ),
-                            );
+                            return errorMessage();
                           },
                           loading: () {
                             return const Center(
