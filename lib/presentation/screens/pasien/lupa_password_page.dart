@@ -185,8 +185,16 @@ class _LupaPasswordPageState extends ConsumerState<LupaPasswordPage> {
     });
 
     if (_errorMessage == null) {
-      await ref.read(authRepositoryProvider).changePassword(newPassword);
-      _showSuccessDialog();
+      await ref
+          .read(authRepositoryProvider)
+          .changePassword(newPassword)
+          .then((value) {
+        _showSuccessDialog();
+      }).catchError((error) {
+        setState(() {
+          _errorMessage = error.message;
+        });
+      });
     }
   }
 }
