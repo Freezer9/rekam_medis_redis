@@ -17,7 +17,6 @@ class FileStorage {
     }
 
     final exPath = _directory.path;
-    print("Saved Path: $exPath");
     await Directory(exPath).create(recursive: true);
     return exPath;
   }
@@ -30,7 +29,6 @@ class FileStorage {
   static Future<File> writeCounter(String content, String name) async {
     final path = await _localPath;
     File file = File('$path/$name');
-    print("Save file");
     return file.writeAsString(content);
   }
 }
