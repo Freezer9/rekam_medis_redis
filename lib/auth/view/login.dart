@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_final_fields, unused_element
+// ignore_for_file: prefer_final_fields, unused_element, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -75,7 +75,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                         ? null
                         : () {
                             if (_formKey.currentState!.validate()) {
-                              _signIn(widget.role);
+                              _checkSignIn(widget.role);
                             } else {
                               setState(() {
                                 _autovalidateMode = AutovalidateMode.always;
@@ -120,56 +120,48 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     );
   }
 
-  void _signIn(Role role) async {
-    if (role.index == 0) {
-      _signInAdmin();
-    } else if (role.index == 1) {
-      _signInPasien();
-    } else if (role.index == 2) {
-      _signInDokter();
+  void _checkSignIn(Role role) {
+    if (role == Role.admin) {
+      _signIn(
+          loginMethod: ref
+              .read(authRepositoryProvider)
+              .signInAdmin(
+                  email: _usernameCtrl.text, password: _passwordCtrl.text)
+              .then((_) {
+        context.clearAndNavigate('/home/${role.index}');
+      }));
+    } else if (role == Role.dokter) {
+      _signIn(
+          loginMethod: ref
+              .read(authRepositoryProvider)
+              .signInDokter(
+                  email: _usernameCtrl.text, password: _passwordCtrl.text)
+              .then((_) {
+        context.clearAndNavigate('/home/${role.index}');
+      }));
+    } else {
+      _signIn(
+          loginMethod: ref
+              .read(authRepositoryProvider)
+              .signInPasien(
+                  username: _usernameCtrl.text, password: _passwordCtrl.text)
+              .then((_) {
+        context.clearAndNavigate('/home/${role.index}');
+      }));
     }
   }
 
-  void _signInAdmin() {
-    ref
-        .read(authRepositoryProvider)
-        .signInAdmin(email: _usernameCtrl.text, password: _passwordCtrl.text)
-        .then((_) {
-      context.clearAndNavigate('/home/${widget.role.index}');
-    }).catchError((error) {
+  void _signIn({Future? loginMethod}) async {
+    try {
+      await loginMethod;
+    } catch (error) {
       if (error is AuthApiException) {
         ScaffoldMessenger.of(context)
             .showSnackBar(buildErrorSnackBar(error.message));
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+            buildErrorSnackBar('Terjadi kesalahan, silahkan coba lagi'));
       }
-    });
-  }
-
-  void _signInPasien() {
-    ref
-        .read(authRepositoryProvider)
-        .signInPasien(
-            username: _usernameCtrl.text, password: _passwordCtrl.text)
-        .then((_) {
-      context.clearAndNavigate('/home/${widget.role.index}');
-    }).catchError((error) {
-      if (error is AuthApiException) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(buildErrorSnackBar(error.message));
-      }
-    });
-  }
-
-  void _signInDokter() {
-    ref
-        .read(authRepositoryProvider)
-        .signInDokter(email: _usernameCtrl.text, password: _passwordCtrl.text)
-        .then((_) {
-      context.clearAndNavigate('/home/${widget.role.index}');
-    }).catchError((error) {
-      if (error is AuthApiException) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(buildErrorSnackBar(error.message));
-      }
-    });
+    }
   }
 }

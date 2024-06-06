@@ -130,16 +130,13 @@ class _SearchRiwayatMedisPageState
                             .when(
                           data: (data) {
                             if (data.isEmpty) {
-                              return const Center(
-                                child: Text(
-                                  'Data tidak ditemukan',
-                                  style: TextStyle(fontSize: 20),
-                                ),
-                              );
+                              return errorMessage(
+                                  message: "Data tidak ditemukan");
                             }
 
                             return ListView.builder(
                               padding: EdgeInsets.zero,
+                              reverse: true,
                               itemCount: data.length,
                               itemBuilder: (BuildContext context, int index) {
                                 final record = data[index];
