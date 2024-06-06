@@ -24,7 +24,7 @@ class _InputDataPageState extends State<InputDataPage> {
         title: Text(
           'Input Data ${widget.data}',
           textAlign: TextAlign.center,
-          style: TextStyle(
+          style: const TextStyle(
               color: Colors.black, fontSize: 16, fontWeight: FontWeight.w500),
         ),
         centerTitle: true,

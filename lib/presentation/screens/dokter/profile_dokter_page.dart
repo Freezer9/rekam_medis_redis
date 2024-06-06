@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rekam_medis_redis/auth/auth.dart';
 import 'package:rekam_medis_redis/presentation/widgets/button_lupa_password.dart';
 import 'package:rekam_medis_redis/presentation/widgets/button_sign_out.dart';
+import 'package:rekam_medis_redis/presentation/widgets/error_message.dart';
 import 'package:rekam_medis_redis/presentation/widgets/profile_text.dart';
 
 class ProfileDokterPage extends ConsumerWidget {
@@ -96,12 +97,7 @@ class ProfileDokterPage extends ConsumerWidget {
           );
         },
         error: (error, stackTrace) {
-          return Center(
-            child: Text(
-              'Error: $error',
-              style: const TextStyle(color: Colors.red),
-            ),
-          );
+          return errorMessage();
         },
         loading: () {
           return const Center(child: CircularProgressIndicator());

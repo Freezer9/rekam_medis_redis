@@ -4,6 +4,7 @@ import 'package:rekam_medis_redis/data/models/record_model.dart';
 import 'package:rekam_medis_redis/domain/dokter/resep_pasien_provider.dart';
 import 'package:rekam_medis_redis/constant/themes.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rekam_medis_redis/presentation/widgets/error_message.dart';
 
 class DetailRiwayatPage extends ConsumerWidget {
   final RecordModel record;
@@ -45,14 +46,12 @@ class DetailRiwayatPage extends ConsumerWidget {
                               data.map<Widget>((e) => resepBox(e)).toList(),
                         );
                       },
+                      error: (error, stackTrace) {
+                        return errorMessage();
+                      },
                       loading: () {
                         return const Center(
                           child: CircularProgressIndicator(),
-                        );
-                      },
-                      error: (error, stackTrace) {
-                        return Center(
-                          child: Text('Error: $error'),
                         );
                       },
                     ),

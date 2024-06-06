@@ -8,6 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:rekam_medis_redis/constant/themes.dart';
 import 'package:rekam_medis_redis/domain/admin/artikel_provider.dart';
 import 'package:rekam_medis_redis/presentation/widgets/button_widget.dart';
+import 'package:rekam_medis_redis/presentation/widgets/snackbar.dart';
 
 class InputArtikel extends ConsumerStatefulWidget {
   const InputArtikel({super.key});
@@ -25,7 +26,7 @@ class _InputArtikelState extends ConsumerState<InputArtikel> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Input Artikel'),
+        title: const Text('Input Pengumuman'),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -73,14 +74,14 @@ class _InputArtikelState extends ConsumerState<InputArtikel> {
               const SizedBox(height: 10),
               inputTextField(
                   maxLines: 1,
-                  hint: 'Masukkan Judul Artikel',
+                  hint: 'Masukkan Judul Pengumuman',
                   controller: judulController),
               const SizedBox(height: 20),
               titleTextField("Isi"),
               const SizedBox(height: 10),
               inputTextField(
                   maxLines: 7,
-                  hint: 'Masukkan Isi Artikel',
+                  hint: 'Masukkan Isi Pengumuman',
                   controller: isiController),
               const SizedBox(height: 20),
               Align(
@@ -89,10 +90,22 @@ class _InputArtikelState extends ConsumerState<InputArtikel> {
                   btnColor: buttonColor2,
                   textColor: Colors.white,
                   onPressed: () {
-                    ref.read(artikelNotifierProvider.notifier).insertDatabase(
-                        judulController.text,
-                        isiController.text,
-                        selectedImage!);
+                    if (judulController.text.isEmpty ||
+                        isiController.text.isEmpty ||
+                        selectedImage == null) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          buildErrorSnackBar("Semua field harus diisi!"));
+                    } else {
+                      ref
+                          .read(artikelNotifierProvider.notifier)
+                          .insertDatabase(judulController.text,
+                              isiController.text, selectedImage!)
+                          .then((value) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          buildSuccessSnackBar("Berhasil menambah pengumuman!"),
+                        );
+                      }).whenComplete(() => Navigator.pop(context));
+                    }
                   },
                 ),
               ),

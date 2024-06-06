@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rekam_medis_redis/domain/admin/artikel_provider.dart';
 import 'package:rekam_medis_redis/presentation/widgets/artikel_card.dart';
+import 'package:rekam_medis_redis/presentation/widgets/error_message.dart';
 
 class DetailArtikel extends ConsumerStatefulWidget {
   const DetailArtikel({
@@ -40,18 +41,21 @@ class _DetailArtikelState extends ConsumerState<DetailArtikel> {
           ),
           Container(
             margin: const EdgeInsets.only(top: 20, bottom: 20),
-            child: ListView.builder(
-              itemCount: data.length,
-              itemBuilder: (context, index) {
-                return Container(
-                  margin: const EdgeInsets.only(bottom: 20),
-                  child: ArtikelCard(
-                    data: data[index],
-                    substring: false,
-                  ),
-                );
-              },
-            ),
+            child: data.isNotEmpty
+                ? ListView.builder(
+                    itemCount: data.length,
+                    reverse: true,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        margin: const EdgeInsets.only(bottom: 20),
+                        child: ArtikelCard(
+                          data: data[index],
+                          substring: false,
+                        ),
+                      );
+                    },
+                  )
+                : errorMessage(message: "Tidak ada pengumuman"),
           ),
         ],
       ),
