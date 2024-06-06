@@ -16,7 +16,9 @@ class _DetailArtikelState extends ConsumerState<DetailArtikel> {
   @override
   void initState() {
     super.initState();
-    ref.read(artikelNotifierProvider.notifier).getAllArtikel();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(artikelNotifierProvider.notifier).getAllArtikel();
+    });
   }
 
   @override
@@ -27,20 +29,31 @@ class _DetailArtikelState extends ConsumerState<DetailArtikel> {
         title: const Text("Pengumuman"),
         backgroundColor: const Color(0xFFA2C9FE),
       ),
-      body: Container(
-        margin: const EdgeInsets.only(top: 20, bottom: 20),
-        child: ListView.builder(
-          itemCount: data.length,
-          itemBuilder: (context, index) {
-            return Container(
-              margin: const EdgeInsets.only(bottom: 20),
-              child: ArtikelCard(
-                data: data[index],
-                substring: false,
-              ),
-            );
-          },
-        ),
+      body: Stack(
+        children: [
+          SizedBox(
+            width: double.infinity,
+            child: Image.asset(
+              "assets/images/background.png",
+              fit: BoxFit.cover,
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.only(top: 20, bottom: 20),
+            child: ListView.builder(
+              itemCount: data.length,
+              itemBuilder: (context, index) {
+                return Container(
+                  margin: const EdgeInsets.only(bottom: 20),
+                  child: ArtikelCard(
+                    data: data[index],
+                    substring: false,
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
