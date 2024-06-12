@@ -5,6 +5,8 @@ import 'package:rekam_medis_redis/data/models/pasien_model.dart';
 import 'package:rekam_medis_redis/data/models/record_model.dart';
 import 'package:rekam_medis_redis/presentation/screens/admin/data_user_page.dart';
 import 'package:rekam_medis_redis/presentation/screens/admin/input_artikel.dart';
+import 'package:rekam_medis_redis/auth/view/reset_password_page.dart';
+import 'package:rekam_medis_redis/auth/view/send_token_page.dart';
 import 'package:rekam_medis_redis/presentation/screens/dokter/input_data_page.dart';
 import 'package:rekam_medis_redis/presentation/screens/dokter/profile_dokter_page.dart';
 import 'package:rekam_medis_redis/presentation/screens/admin/input_data_page.dart';
@@ -48,6 +50,14 @@ final _routes = GoRouter(
       builder: (context, state) => LoginPage(
         role: Role.values[int.parse(state.pathParameters['role']!)],
       ),
+    ),
+    GoRoute(
+      path: '/send-token',
+      builder: (context, state) => const SendTokenPage(),
+    ),
+    GoRoute(
+      path: '/reset-password',
+      builder: (context, state) => const ResetPasswordPage(),
     ),
     GoRoute(
       path: '/home/:role',

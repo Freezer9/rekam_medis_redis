@@ -136,10 +136,10 @@ class _SearchRiwayatMedisPageState
 
                             return ListView.builder(
                               padding: EdgeInsets.zero,
-                              reverse: true,
                               itemCount: data.length,
                               itemBuilder: (BuildContext context, int index) {
-                                final record = data[index];
+                                final reversed = data.reversed.toList();
+                                final record = reversed[index];
                                 return GestureDetector(
                                   onTap: () {
                                     context.push('/detail-pasien',

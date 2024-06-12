@@ -2,9 +2,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:rekam_medis_redis/auth/auth.dart';
+import 'package:rekam_medis_redis/constant/themes.dart';
 import 'package:rekam_medis_redis/core/utils.dart';
 import 'package:rekam_medis_redis/data/enums/role.dart';
+import 'package:rekam_medis_redis/presentation/widgets/input_field.dart';
 import 'package:rekam_medis_redis/presentation/widgets/snackbar.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -53,11 +56,19 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  inputLogin(
-                      _usernameCtrl, 'Username', 'Please enter your username'),
+                  InputField(
+                    controller: _usernameCtrl,
+                    labelText: 'Username',
+                    validatorMessage: 'Please enter your username',
+                    isSubmitting: _isSubmitting,
+                    obscureText: false,
+                  ),
                   const SizedBox(height: 20),
-                  inputLogin(
-                      _passwordCtrl, 'Password', 'Please enter your password',
+                  InputField(
+                      controller: _passwordCtrl,
+                      labelText: 'Password',
+                      validatorMessage: 'Please enter your password',
+                      isSubmitting: _isSubmitting,
                       obscureText: true),
                   const SizedBox(height: 20),
                   TextButton(
@@ -88,35 +99,31 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                           color: Colors.white, fontWeight: FontWeight.w500),
                     ),
                   ),
+                  const SizedBox(height: 10),
+                  GestureDetector(
+                    onTap: () => context.push('/send-token'),
+                    child: const Text(
+                      "Lupa Password?",
+                      style: TextStyle(
+                        shadows: [
+                          Shadow(
+                            color: primarycolor,
+                            offset: Offset(0, -5),
+                          )
+                        ],
+                        color: Colors.transparent,
+                        fontWeight: FontWeight.normal,
+                        decoration: TextDecoration.underline,
+                        decorationColor: primarycolor,
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
           ),
         ),
       ),
-    );
-  }
-
-  TextFormField inputLogin(TextEditingController controller, String labelText,
-      String validatorMessage,
-      {bool obscureText = false}) {
-    return TextFormField(
-      obscureText: obscureText,
-      controller: controller,
-      readOnly: _isSubmitting,
-      decoration: InputDecoration(
-        labelText: labelText,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-      ),
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return validatorMessage;
-        }
-
-        return null;
-      },
     );
   }
 
