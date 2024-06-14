@@ -44,12 +44,13 @@ class _DetailArtikelState extends ConsumerState<DetailArtikel> {
             child: data.isNotEmpty
                 ? ListView.builder(
                     itemCount: data.length,
-                    reverse: true,
                     itemBuilder: (context, index) {
+                      final reversed = data.reversed.toList();
+                      final artikelData = reversed[index];
                       return Container(
                         margin: const EdgeInsets.only(bottom: 20),
                         child: ArtikelCard(
-                          data: data[index],
+                          data: artikelData,
                           substring: false,
                         ),
                       );
