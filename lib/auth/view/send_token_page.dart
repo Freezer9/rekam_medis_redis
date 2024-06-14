@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:rekam_medis_redis/constant/themes.dart';
 import 'package:rekam_medis_redis/presentation/widgets/button_widget.dart';
 import 'package:rekam_medis_redis/presentation/widgets/input_field.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SendTokenPage extends StatefulWidget {
   const SendTokenPage({super.key});
@@ -51,9 +52,24 @@ class _SendTokenPageState extends State<SendTokenPage> {
                       textColor: Colors.white,
                       onPressed: isSubmitting
                           ? null
-                          : () {
+                          : () async {
                               if (formKey.currentState!.validate()) {
-                                print("Kirim Token");
+                                final client = Supabase.instance.client;
+
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                    content: Container(
+                                      child: const Text(
+                                        'Silahkan Cek Email & Folder Spam Untuk TOKEN nya Jika Tidak Ada di Kotak Masuk!',
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                  ),
+                                );
+
+                                await client.auth
+                                    .resetPasswordForEmail(controller.text);
                               } else {
                                 setState(() {
                                   autoValidateMode = AutovalidateMode.always;

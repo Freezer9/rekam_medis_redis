@@ -41,6 +41,7 @@ dev_dependencies:
   image_picker: ^1.1.2
   uuid: ^4.4.0
   connectivity_plus: ^6.0.3
+  email_validator: ^2.1.17
 
 flutter:
   uses-material-design: true
