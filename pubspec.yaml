@@ -40,8 +40,8 @@ dev_dependencies:
   riverpod_lint: ^2.3.10
   image_picker: ^1.1.2
   uuid: ^4.4.0
-  connectivity_plus: ^6.0.3
   email_validator: ^2.1.17
+  flutter_dotenv: ^5.1.0
 
 flutter:
   uses-material-design: true
@@ -49,6 +49,7 @@ flutter:
     - assets/
     - assets/images/
     - assets/icons/
+    - .env
 
 font:
   - family: Plus Jakarta Sans
